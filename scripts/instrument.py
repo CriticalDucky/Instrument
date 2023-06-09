@@ -1,5 +1,6 @@
 from time import sleep
 import fluidsynth
+import platform
 
 def note_to_midi(note):
     # Define the mapping of note names to MIDI note numbers
@@ -27,7 +28,13 @@ def findsf2file(name):
                 return os.path.join(root, file)
 
 fs = fluidsynth.Synth()
-fs.start()
+
+isRaspberryPi = platform.system() == "Linux" and platform.machine() == "armv7l"
+print(platform.system(), platform.machine(), isRaspberryPi)
+if isRaspberryPi:
+    fs.start(driver="alsa")
+else:
+    fs.start()
 
 def play(instrument = "Acid SQ Neutral.sf2", note = "C4"):
     midi = note_to_midi(note)
