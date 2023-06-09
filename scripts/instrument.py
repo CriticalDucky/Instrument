@@ -38,7 +38,12 @@ else:
 
 def play(instrument = "Acid SQ Neutral.sf2", note = "C4"):
     midi = note_to_midi(note)
-    sfid = fs.sfload(findsf2file(instrument))
+    file = findsf2file(instrument)
+
+    if file is None:
+        raise Exception("Could not find soundfont file for instrument " + instrument)
+
+    sfid = fs.sfload(file)
     fs.program_select(0, sfid, 0, 0)
 
     fs.noteon(0, midi, 127)
