@@ -13,6 +13,6 @@ melody = [
 ]
 
 for note, duration in melody:
-    stop = instrument.play(note = note, instrument="Analog Saw.sf2")
+    stop = instrument.play(note = note, instrument="Piano.sf2")
     sleep(duration / 1000)
     stop()
