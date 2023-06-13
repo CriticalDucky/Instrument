@@ -27,7 +27,7 @@ while True:
             
             continue
 
-        if note not in active_notes:
+        if note not in active_notes or note in BURST_INSTRUMENTS:
             print("Playing note", note)
             active_notes[note] = play("Acid SQ Neutral.sf2", note)
 
