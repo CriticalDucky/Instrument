@@ -34,7 +34,9 @@ while True:
                 if active_note != note:
                     active_notes[active_note] = (stop_func, False)
 
-            if note not in active_notes or selected_instrument in BURST_INSTRUMENTS and not is_primed:
+            stop_func, is_primed = active_notes.get(note, (None, False))
+
+            if note not in active_notes or (selected_instrument in BURST_INSTRUMENTS and not is_primed):
                 print("Playing note", note)
                 active_notes[note] = (play(selected_instrument, note), True)
 
