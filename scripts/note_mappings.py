@@ -18,4 +18,4 @@ def get_note_name(sensor_number, distance):
         return None
 
     note = octave_notes[(sensor_number - 1)]
-    return note + str()
+    return note + str(octave)
