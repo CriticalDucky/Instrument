@@ -5,7 +5,7 @@ from instrument import play, get_selected_instrument
 
 UPDATE_INTERVAL = 0.05 # 20 Hz
 BURST_INSTRUMENTS = [ # Instruments that we do not need to stop playing when we change notes
-    "Acid SQ Neutral",
+    "Acid SQ Neutral.sf2",
 ]
 NUM_SENSORS = 1
 
