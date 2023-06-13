@@ -28,6 +28,7 @@ while True:
             continue
 
         if note not in active_notes:
+            print("Playing note", note)
             active_notes[note] = play("Acid SQ Neutral.sf2", note)
 
     sleep(UPDATE_INTERVAL)
