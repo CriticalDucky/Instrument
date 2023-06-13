@@ -29,11 +29,14 @@ while True:
         else:
             for tup in active_notes.copy().items():
                 active_note = tup[0]
+                print(1)
 
                 if not active_note.startswith(note[1]): # We only want the notes this sensor is responsible for
+                    print(2)
                     continue
 
                 if active_note != note:
+                    print(3)
                     active_notes[active_note] = (stop_func, False)
 
             stop_func, is_primed = active_notes.get(note, (None, False))
