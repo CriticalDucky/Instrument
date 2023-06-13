@@ -54,5 +54,5 @@ def play(instrument = "Acid SQ Neutral.sf2", note = "C4"):
 
     return stop
 
-def play_selected(note = "C4"):
-    return play("Acid SQ Neutral.sf2", note)
+def get_selected_instrument():
+    return "Acid SQ Neutral.sf2"
