@@ -20,7 +20,7 @@ while True:
         selected_instrument = get_selected_instrument()
         stop_func, is_primed = active_notes.get(note, (None, False))
 
-        if note is None and note not in BURST_INSTRUMENTS:
+        if note is None and selected_instrument not in BURST_INSTRUMENTS:
             if stop_func:
                 stop_func()
                 del active_notes[note]
@@ -31,11 +31,9 @@ while True:
                 active_note = tup[0]
 
                 if not active_note.startswith(note[:-1]): # We only want the notes this sensor is responsible for
-                    print(note[:-1])
                     continue
 
                 if active_note != note:
-                    print(3)
                     active_notes[active_note] = (stop_func, False)
 
             stop_func, is_primed = active_notes.get(note, (None, False))
