@@ -9,7 +9,10 @@ num_octaves = 7
 # The distance is mapped to an octave, and the sensor number is mapped to a note in that octave
 # Octaves are separated by 4 cm.
 def get_note_name(sensor_number, distance):
-    octave = (distance + 4) // 4
+    if distance < 4:
+        return None
+
+    octave = (distance - 4) // 4
 
     if octave > num_octaves:
         return None
