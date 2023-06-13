@@ -12,10 +12,10 @@ def get_note_name(sensor_number, distance):
     if distance < 4:
         return None
 
-    octave = (distance - 4) // 4
+    octave = int((distance - 4) // 4)
 
     if octave > num_octaves:
         return None
 
     note = octave_notes[(sensor_number - 1)]
-    return note + str(octave)
+    return note + str()
