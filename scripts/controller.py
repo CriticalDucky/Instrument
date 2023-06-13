@@ -27,7 +27,7 @@ while True:
             
             continue
         else:
-            for index, active_note in active_notes:
+            for index, active_note in active_notes.copy():
                 if not active_note.startswith(note[1]): # We only want the notes this sensor is responsible for
                     continue
 
