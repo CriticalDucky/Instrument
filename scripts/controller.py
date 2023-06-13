@@ -1,4 +1,4 @@
-from note_mappings import get_note_name
+from note_mappings import get_note_name, octave_notes
 from time import sleep
 from ultrasonic import get_distance
 from instrument import play, get_selected_instrument
@@ -26,11 +26,19 @@ while True:
                 del active_notes[note]
             
             continue
+        elif note is None:
+            for tup in active_notes.copy().items():
+                active_note = tup[0]
+
+                if not active_note.startswith(octave_notes[sensor_number]): # We only want the notes this sensor is responsible for
+                    continue
+
+                active_notes[active_note] = (None, False)
         else:
             for tup in active_notes.copy().items():
                 active_note = tup[0]
 
-                if not active_note.startswith(note[:-1]): # We only want the notes this sensor is responsible for
+                if not active_note.startswith(octave_notes[sensor_number]): # We only want the notes this sensor is responsible for
                     continue
 
                 if active_note != note:
