@@ -27,12 +27,12 @@ while True:
             
             continue
         else:
-            for _, active_note in active_notes:
+            for index, active_note in active_notes:
                 if not active_note.startswith(note[1]): # We only want the notes this sensor is responsible for
                     continue
 
                 if active_note != note:
-                    active_notes[active_note] = (stop_func, False)
+                    active_notes[index] = (stop_func, False)
 
             stop_func, is_primed = active_notes.get(note, (None, False))
 
