@@ -20,7 +20,7 @@ def note_to_midi(note):
 
     return midi_note
 
-def findsf2file(name):
+def find_sf2_file(name):
     import os
     for root, _, files in os.walk("sounds"):
         for file in files:
@@ -38,7 +38,7 @@ else:
 
 def play(instrument = "Acid SQ Neutral.sf2", note = "C4"):
     midi = note_to_midi(note)
-    file = findsf2file(instrument)
+    file = find_sf2_file(instrument)
 
     if file is None:
         raise Exception("Could not find soundfont file for instrument " + instrument)
@@ -48,9 +48,11 @@ def play(instrument = "Acid SQ Neutral.sf2", note = "C4"):
 
     fs.noteon(0, midi, 127)
     
-    def stop(secondsUntilStop = 0):
-        sleep(secondsUntilStop)
-        fs.noteoff(0, midi) 
+    def stop(secondsUntilStop):
+        if secondsUntilStop: sleep(secondsUntilStop)
+        fs.noteoff(0, midi)
 
     return stop
 
+def play_selected(note = "C4"):
+    return play("Acid SQ Neutral.sf2", note)
