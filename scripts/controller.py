@@ -30,8 +30,8 @@ while True:
             for tup in active_notes.copy().items():
                 active_note = tup[0]
 
-                if not active_note.startswith(note[1]): # We only want the notes this sensor is responsible for
-                    print(active_note.startswith(note[1]), active_note, note[1])
+                if not active_note.startswith(note[:-1]): # We only want the notes this sensor is responsible for
+                    print(note[:-1])
                     continue
 
                 if active_note != note:
