@@ -3,7 +3,7 @@ from time import sleep
 from ultrasonic import get_distance
 from instrument import play, get_selected_instrument
 
-UPDATE_INTERVAL = 0.05 # 20 Hz
+UPDATE_INTERVAL = 0.02 # 20 Hz
 BURST_INSTRUMENTS = [ # Instruments that we do not need to stop playing when we change notes
     "Acid SQ Neutral.sf2",
 ]
