@@ -1,6 +1,8 @@
 '''
 Module for mapping ultrasonic sensor readings to notes
 '''
+BASELINE_DISTANCE = 5 # cm
+NOTE_DISTANCE = 8 # cm
 
 octave_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 num_octaves = 7
@@ -9,10 +11,10 @@ num_octaves = 7
 # The distance is mapped to an octave, and the sensor number is mapped to a note in that octave
 # Octaves are separated by 4 cm.
 def get_note_name(sensor_number, distance):
-    if distance < 4:
+    if distance < BASELINE_DISTANCE:
         return None
 
-    octave = int((distance - 4) // 4)
+    octave = int((distance - NOTE_DISTANCE) // NOTE_DISTANCE)
 
     if octave > num_octaves:
         return None
