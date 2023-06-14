@@ -7,7 +7,7 @@ factory = PiGPIOFactory()
 Device.pin_factory = factory
 
 sensors = [
-    DistanceSensor(echo=24, trigger=23)
+    DistanceSensor(echo=24, trigger=23,partial = True)
 ]
 
 def get_distance(sensor_number):
