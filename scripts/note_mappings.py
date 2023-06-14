@@ -14,7 +14,7 @@ def get_note_name(sensor_number, distance):
     if distance < BASELINE_DISTANCE:
         return None
 
-    octave = int((distance - NOTE_DISTANCE) // NOTE_DISTANCE)
+    octave = int((distance - BASELINE_DISTANCE) // NOTE_DISTANCE)
 
     if octave > num_octaves:
         return None
