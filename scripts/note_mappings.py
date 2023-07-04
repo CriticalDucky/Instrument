@@ -1,5 +1,5 @@
 '''
-Module for mapping ultrasonic sensor readings to notes
+Module for mapping tof sensor readings to notes
 '''
 BASELINE_DISTANCE = 5 # cm
 NOTE_DISTANCE = 8 # cm
