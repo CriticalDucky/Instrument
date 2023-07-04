@@ -1,4 +1,3 @@
-import time
 import VL53L0X #type: ignore
 
 # Create a VL53L0X object
@@ -9,17 +8,11 @@ tof.open()
 # Start ranging
 tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
-timing = tof.get_timing()
-if timing < 20000:
-    timing = 20000
-print("Timing %d ms" % (timing/1000))
+def get_distance(sensor_number):
+    distance = tof.get_distance()/10
+    print(distance)
+    return distance # cm
 
-for count in range(1, 101):
-    distance = tof.get_distance()
-    if distance > 0:
-        print("%d mm, %d cm, %d" % (distance, (distance/10), count))
 
-    time.sleep(timing/1000000.00)
-
-tof.stop_ranging()
-tof.close()
+# tof.stop_ranging()
+# tof.close()
