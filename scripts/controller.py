@@ -1,6 +1,6 @@
 from note_mappings import get_note_name, octave_notes
 from time import sleep
-from ultrasonic import get_distance
+from tof import get_distance
 from instrument import play, get_selected_instrument
 
 UPDATE_INTERVAL = 0.01 # 100 Hz
