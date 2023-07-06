@@ -25,7 +25,7 @@ def get_note_name(sensor_number, distance):
     octave = int(distance // area_group_size)
     
     if distance % area_group_size > OCTAVE_SPAN_SIZE:
-        if octave == num_octaves:
+        if octave >= num_octaves:
             return RESPONSE_TOO_FAR
 
         return RESPONSE_IN_SPACING
