@@ -1,9 +1,9 @@
 '''
 Module for mapping tof sensor readings to notes
 '''
-BASELINE_DISTANCE = 5 # cm; distance from sensor to first octave
-OCTAVE_SPAN_SIZE = 4 # cm; size of activation area of each octave
-OCTAVE_SPACING = 4 # cm; distance between octaves
+BASELINE_DISTANCE = 4 # cm; distance from sensor to first octave
+OCTAVE_SPAN_SIZE = 3 # cm; size of activation area of each octave
+OCTAVE_SPACING = 2 # cm; distance between octaves
 FINGER_WIDTH_HALF = 1.5/2 # cm; width of finger divided by 2
 
 RESPONSE_TOO_CLOSE = "rTC"
@@ -24,10 +24,7 @@ def get_note_name(sensor_number, distance):
     area_group_size = OCTAVE_SPAN_SIZE + OCTAVE_SPACING
     octave = int(distance // area_group_size)
     
-    if distance % area_group_size > OCTAVE_SPAN_SIZE:
-        if octave >= num_octaves:
-            return RESPONSE_TOO_FAR
-
+    if distance % area_group_size <= OCTAVE_SPACING:
         return RESPONSE_IN_SPACING
 
     if octave > num_octaves:
