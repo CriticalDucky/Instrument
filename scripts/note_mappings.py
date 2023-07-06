@@ -23,12 +23,12 @@ def get_note_name(sensor_number, distance):
     distance -= BASELINE_DISTANCE
     area_group_size = OCTAVE_SPAN_SIZE + OCTAVE_SPACING
     octave = int(distance // area_group_size)
-    
-    if distance % area_group_size <= OCTAVE_SPACING:
-        return RESPONSE_IN_SPACING
 
     if octave > num_octaves:
         return RESPONSE_TOO_FAR
+    
+    if distance % area_group_size <= OCTAVE_SPACING:
+        return RESPONSE_IN_SPACING
 
     note = octave_notes[(sensor_number - 1)]
     return note + str(octave)
