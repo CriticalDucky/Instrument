@@ -1,10 +1,13 @@
-from note_mappings import get_note_name, octave_notes
+import note_mappings
 from time import sleep
 from tof import get_distance
 from instrument import play, get_selected_instrument
 
-UPDATE_INTERVAL = 0.01 # 100 Hz
-BURST_INSTRUMENTS = [ # Instruments that we do not need to stop playing when we change notes
+get_note_name = note_mappings.get_note_name
+octave_notes = note_mappings.octave_notes
+
+UPDATE_INTERVAL = 0.01  # 100 Hz
+BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
     "Acid SQ Neutral.sf2",
 ]
 NUM_SENSORS = 1
@@ -20,25 +23,38 @@ while True:
         selected_instrument = get_selected_instrument()
         stop_func, is_primed = active_notes.get(note, (None, False))
 
-        if note is None and selected_instrument not in BURST_INSTRUMENTS:
+        if note in [
+            note_mappings.RESPONSE_NOT_IN_PATH,
+            note_mappings.RESPONSE_TOO_CLOSE,
+            note_mappings.RESPONSE_TOO_FAR
+        ] and selected_instrument not in BURST_INSTRUMENTS:
             if stop_func:
                 stop_func()
                 del active_notes[note]
-            
+
             continue
-        elif note is None:
+        elif note in [
+            note_mappings.RESPONSE_NOT_IN_PATH,
+            note_mappings.RESPONSE_TOO_CLOSE,
+            note_mappings.RESPONSE_TOO_FAR
+        ]:
             for tup in active_notes.copy().items():
                 active_note = tup[0]
 
-                if not active_note.startswith(octave_notes[sensor_number - 1]): # We only want the notes this sensor is responsible for
+                # We only want the notes this sensor is responsible for
+                if not active_note.startswith(octave_notes[sensor_number - 1]):
                     continue
 
                 active_notes[active_note] = (None, False)
+        elif note == note_mappings.RESPONSE_IN_SPACING:
+            print("In spacing")
+            continue
         else:
             for tup in active_notes.copy().items():
                 active_note = tup[0]
 
-                if not active_note.startswith(octave_notes[sensor_number - 1]): # We only want the notes this sensor is responsible for
+                # We only want the notes this sensor is responsible for
+                if not active_note.startswith(octave_notes[sensor_number - 1]):
                     continue
 
                 if active_note != note:
