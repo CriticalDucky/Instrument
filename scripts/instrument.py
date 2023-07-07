@@ -55,4 +55,4 @@ def play(instrument = "Acid SQ Neutral.sf2", note = "C4"):
     return stop
 
 def get_selected_instrument():
-    return "Perfect Sine.sf2"
+    return "Piano.sf2"
