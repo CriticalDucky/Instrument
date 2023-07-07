@@ -38,7 +38,7 @@ while True:
                 if not active_note.startswith(octave_notes[sensor_number - 1]):
                     continue
 
-                if selected_instrument in BURST_INSTRUMENTS and active_notes[active_note][0]:
+                if selected_instrument not in BURST_INSTRUMENTS and active_notes[active_note][0]:
                     active_notes[active_note][0]()
                     del active_notes[active_note]
                 else:
