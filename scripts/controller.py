@@ -44,7 +44,6 @@ while True:
             note_mappings.RESPONSE_TOO_CLOSE,
             note_mappings.RESPONSE_TOO_FAR
         ]:
-            print("Possibility 3")
 
             for tup in active_notes.copy().items():
                 active_note = tup[0]
@@ -54,6 +53,7 @@ while True:
                     continue
 
                 active_notes[active_note] = (None, False)
+                print("This better not be printing 1")
         elif note == note_mappings.RESPONSE_IN_SPACING:
             print("In spacing")
             continue
@@ -68,6 +68,7 @@ while True:
                     continue
 
                 if active_note != note:
+                    print("This better not be printing 2")
                     active_notes[active_note] = (stop_func, False)
 
             stop_func, is_primed = active_notes.get(note, (None, False))
