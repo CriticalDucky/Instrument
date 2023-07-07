@@ -23,7 +23,6 @@ while True:
         distance = get_distance(sensor_number)
         note = get_note_name(sensor_number, distance)
         selected_instrument = get_selected_instrument()
-        stop_func, is_primed = active_notes.get(note, (None, False))
 
         if note in [
             note_mappings.RESPONSE_NOT_IN_PATH,
@@ -55,9 +54,8 @@ while True:
                     continue
 
                 if active_note != note:
+                    stop_func, is_primed = active_notes.get(active_note, (None, False))
                     active_notes[active_note] = (stop_func, False)
-                    if not stop_func:
-                        print("SOMETHING HAS GONE HORRIBLY WRONG:", active_note, stop_func, active_notes)
 
             stop_func, is_primed = active_notes.get(note, (None, False))
 
