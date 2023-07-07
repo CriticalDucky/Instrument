@@ -1,45 +1,29 @@
-import instrument
+import matplotlib.pyplot as plt
+import numpy as np
 from time import sleep
 
-melody = [
-('C4', 500), # Twin-
-('C4', 500), # kle
-('G4', 500), # twin-
-('G4', 500), # kle
-('A4', 500), # lit-
-('A4', 500), # tle
-('G4', 1000), # star
-('F4', 500), # How
-('F4', 500), # I
-('E4', 500), # won-
-('E4', 500), # der
-('D4', 500), # what
-('D4', 500), # you
-('C4', 1000), # are
-('G4', 500), # Up
-('G4', 500), # a-
-('F4', 500), # bove
-('F4', 500), # the
-('E4', 500), # world
-('E4', 500), # so
-('D4', 1000), # high
-('G4', 500), # Like
-('G4', 500), # a
-('F4', 500), # dia-
-('F4', 500), # mond
-('E4', 500), # in
-('E4', 500), # the
-('D4', 1000), # sky
-('C4', 500), # Twin-
-('C4', 500), # kle
-('G4', 500), # twin-
-('G4', 500), # kle
-('A4', 500), # lit-
-('A4', 500), # tle
-('G4', 1000) # star
-]
+history_length = 50  # Number of past measurements to display
+distance_history = np.zeros(history_length)  # Initialize an array to store the distance history
 
-for note, duration in melody:
-    stop = instrument.play(note = note)
-    sleep(duration / 1000)
-    stop()
+plt.figure()
+ax = plt.axes()
+ax.set_xlim([-history_length, 0])
+ax.set_ylim([0, 200])  # Adjust the y-axis limits as needed
+
+bars = ax.bar(np.arange(-history_length, 0), distance_history)  # Create an initial set of empty bars
+plt.ion()
+plt.show()
+
+while True:
+    # Read the distance measurement from your VL53L0X sensor
+    distance = np.random.randint(0, 200)
+
+    # Shift the distance history array to the left and append the new measurement
+    distance_history = np.roll(distance_history, -1)
+    distance_history[-1] = distance
+
+    # Update the heights of the bars to reflect the new distance measurements
+    for bar, dist in zip(bars, distance_history):
+        bar.set_height(dist)
+
+    plt.pause(0.01)
