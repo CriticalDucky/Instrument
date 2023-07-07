@@ -48,7 +48,7 @@ def play(instrument = "Acid SQ Neutral.sf2", note = "C4"):
 
     fs.noteon(0, midi, 127)
     
-    def stop(secondsUntilStop):
+    def stop(secondsUntilStop=0):
         if secondsUntilStop: sleep(secondsUntilStop)
         fs.noteoff(0, midi)
 
