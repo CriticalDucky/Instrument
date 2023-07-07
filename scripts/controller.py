@@ -29,20 +29,6 @@ while True:
             note_mappings.RESPONSE_NOT_IN_PATH,
             note_mappings.RESPONSE_TOO_CLOSE,
             note_mappings.RESPONSE_TOO_FAR
-        ] and selected_instrument not in BURST_INSTRUMENTS:
-            if stop_func:
-                stop_func()
-                del active_notes[note]
-
-                print("Possibility 1")
-
-            print(stop_func, is_primed, note, selected_instrument, active_notes)
-
-            continue
-        elif note in [
-            note_mappings.RESPONSE_NOT_IN_PATH,
-            note_mappings.RESPONSE_TOO_CLOSE,
-            note_mappings.RESPONSE_TOO_FAR
         ]:
 
             for tup in active_notes.copy().items():
@@ -52,7 +38,11 @@ while True:
                 if not active_note.startswith(octave_notes[sensor_number - 1]):
                     continue
 
-                active_notes[active_note] = (None, False)
+                if active_notes[active_note][0]:
+                    active_notes[active_note][0]()
+                    del active_notes[active_note]
+                else:
+                    active_notes[active_note] = (None, False)
         elif note == note_mappings.RESPONSE_IN_SPACING:
             print("In spacing")
             continue
