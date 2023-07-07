@@ -6,14 +6,14 @@ import threading
 # Create a VL53L0X object
 tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 history_length = 50  # Number of past measurements to display
-distance_history = np.zeros(history_length)  # Initialize an array to store the distance history
+history = np.zeros(history_length)  # Initialize an array to store the distance history
 
 plt.figure()
 ax = plt.axes()
 ax.set_xlim([-history_length, 0])
 ax.set_ylim([0, 50])  # Adjust the y-axis limits as needed
 
-bars = ax.bar(np.arange(-history_length, 0), distance_history)  # Create an initial set of empty bars
+bars = ax.bar(np.arange(-history_length, 0), history)  # Create an initial set of empty bars
 plt.show(block=False)  # Set block=False to allow non-blocking plotting
 
 # I2C Address can change before tof.open()
@@ -24,7 +24,7 @@ tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
 def get_distance(sensor_number):
     distance = tof.get_distance()/10
-    print(distance)
+    # print(distance)
     return distance # cm
 
 # tof.stop_ranging()
@@ -36,7 +36,7 @@ def update_graph():
         distance = get_distance(1)
 
         # Shift the distance history array to the left and append the new measurement
-        distance_history = np.roll(distance_history, -1)
+        distance_history = np.roll(history, -1)
         distance_history[-1] = distance
 
         # Update the heights of the bars to reflect the new distance measurements
