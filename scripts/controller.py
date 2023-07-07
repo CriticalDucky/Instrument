@@ -55,7 +55,12 @@ while True:
 
                 if active_note != note:
                     stop_func, is_primed = active_notes.get(active_note, (None, False))
-                    active_notes[active_note] = (stop_func, False)
+
+                    if selected_instrument in BURST_INSTRUMENTS:
+                        active_notes[active_note] = (stop_func, False)
+                    else:
+                        stop_func()
+                        del active_notes[active_note]
 
             stop_func, is_primed = active_notes.get(note, (None, False))
 
