@@ -9,7 +9,7 @@ history_length = 50  # Number of past measurements to display
 history = np.zeros(history_length)  # Initialize an array to store the distance history
 
 plt.figure()
-plt.switch_backend('agg')
+# plt.switch_backend('agg')
 ax = plt.axes()
 ax.set_xlim([-history_length, 0])
 ax.set_ylim([0, 50])  # Adjust the y-axis limits as needed
