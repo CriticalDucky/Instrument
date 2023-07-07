@@ -14,7 +14,8 @@ RESPONSE_IN_SPACING = "rIP"
 
 octave_notes = ['C', 'C#', 'D', 'D#', 'E',
                 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-num_octaves = 7
+first_octave = 1
+num_octaves = 7 - first_octave
 
 
 def get_note_name(sensor_number, distance):
@@ -25,7 +26,7 @@ def get_note_name(sensor_number, distance):
 
     distance -= BASELINE_DISTANCE
     area_group_size = OCTAVE_SPAN_SIZE + OCTAVE_SPACING
-    octave = int(distance // area_group_size)
+    octave = int(distance // area_group_size) + first_octave
 
     if (
             distance % area_group_size <= OCTAVE_SPACING and
