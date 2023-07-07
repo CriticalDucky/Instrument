@@ -75,5 +75,6 @@ while True:
             if note not in active_notes or (selected_instrument in BURST_INSTRUMENTS and not is_primed):
                 print("Playing note", note, distance, "cm")
                 active_notes[note] = (play(selected_instrument, note), True)
+                print("THIS SHOULD BE RUNNING!!!")
 
     sleep(1 / UPDATE_HZ)
