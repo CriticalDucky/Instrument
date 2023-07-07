@@ -15,7 +15,7 @@ RESPONSE_IN_SPACING = "rIP"
 octave_notes = ['C', 'C#', 'D', 'D#', 'E',
                 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 first_octave = 1
-num_octaves = 7 - first_octave
+last_octave = 7
 
 
 def get_note_name(sensor_number, distance):
@@ -30,14 +30,14 @@ def get_note_name(sensor_number, distance):
 
     if (
             distance % area_group_size <= OCTAVE_SPACING and
-            octave <= num_octaves
+            octave <= last_octave
         ) or (
             distance % area_group_size <= BASELINE_DISTANCE and
-            octave == num_octaves + 1
+            octave == last_octave + 1
     ):
         return RESPONSE_IN_SPACING
 
-    if octave > num_octaves:
+    if octave > last_octave:
         return RESPONSE_TOO_FAR
 
     note = octave_notes[(sensor_number - 1)]
