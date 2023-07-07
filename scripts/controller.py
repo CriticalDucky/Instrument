@@ -7,7 +7,7 @@ import numpy as np
 
 UPDATE_HZ = 300
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
-    "Acid SQ Neutral.sf2",
+    "Perfect Sine.sf2",
 ]
 NUM_SENSORS = 1
 
