@@ -9,6 +9,7 @@ history_length = 50  # Number of past measurements to display
 history = np.zeros(history_length)  # Initialize an array to store the distance history
 
 plt.figure()
+plt.switch_backend('agg')
 ax = plt.axes()
 ax.set_xlim([-history_length, 0])
 ax.set_ylim([0, 50])  # Adjust the y-axis limits as needed
@@ -47,4 +48,5 @@ def update_graph():
 
 # Create a separate thread for updating the graph
 graph_thread = threading.Thread(target=update_graph)
+graph_thread.daemon = True
 graph_thread.start()
