@@ -34,12 +34,18 @@ while True:
                 stop_func()
                 del active_notes[note]
 
+                print("Possibility 1")
+
+            print("Possibility 2")
+
             continue
         elif note in [
             note_mappings.RESPONSE_NOT_IN_PATH,
             note_mappings.RESPONSE_TOO_CLOSE,
             note_mappings.RESPONSE_TOO_FAR
         ]:
+            print("Possibility 3")
+
             for tup in active_notes.copy().items():
                 active_note = tup[0]
 
@@ -52,6 +58,8 @@ while True:
             print("In spacing")
             continue
         else:
+            print("Possibility 4")
+
             for tup in active_notes.copy().items():
                 active_note = tup[0]
 
