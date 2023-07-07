@@ -56,6 +56,8 @@ while True:
 
                 if active_note != note:
                     active_notes[active_note] = (stop_func, False)
+                    if not stop_func:
+                        print("SOMETHING HAS GONE HORRIBLY WRONG")
 
             stop_func, is_primed = active_notes.get(note, (None, False))
 
