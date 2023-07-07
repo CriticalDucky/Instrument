@@ -53,7 +53,7 @@ while True:
                     continue
 
                 active_notes[active_note] = (None, False)
-                print("This better not be printing 1")
+                print("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
         elif note == note_mappings.RESPONSE_IN_SPACING:
             print("In spacing")
             continue
@@ -68,7 +68,7 @@ while True:
                     continue
 
                 if active_note != note:
-                    print("This better not be printing 2")
+                    print("This better not be printing", active_note, note, stop_func)
                     active_notes[active_note] = (stop_func, False)
 
             stop_func, is_primed = active_notes.get(note, (None, False))
