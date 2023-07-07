@@ -5,7 +5,7 @@ from instrument import play, get_selected_instrument
 import matplotlib.pyplot as plt
 import numpy as np
 
-UPDATE_INTERVAL = 0.01  # 100 Hz
+UPDATE_HZ = 300
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
     "Acid SQ Neutral.sf2",
 ]
@@ -17,31 +17,6 @@ octave_notes = note_mappings.octave_notes
 active_notes = {
     # "C4": (stop_func, is_primed)
 }
-
-history_length = 50  # Number of past measurements to display
-history = np.zeros(history_length)  # Initialize an array to store the distance history
-
-plt.figure()
-ax = plt.axes()
-ax.set_xlim([-history_length, 0])
-ax.set_ylim([0, 50])  # Adjust the y-axis limits as needed
-
-bars = ax.bar(np.arange(-history_length, 0), history)  # Create an initial set of empty bars
-plt.show(block=False)  # Set block=False to allow non-blocking plotting
-
-def update_graph():
-    # Read the distance measurement from your VL53L0X sensor
-    distance = get_distance(1)
-
-    # Shift the distance history array to the left and append the new measurement
-    distance_history = np.roll(history, -1)
-    distance_history[-1] = distance
-
-    # Update the heights of the bars to reflect the new distance measurements
-    for bar, dist in zip(bars, distance_history):
-        bar.set_height(dist)
-
-    plt.pause(0.01)
 
 while True:
     for sensor_number in range(1, NUM_SENSORS + 1):
@@ -93,5 +68,4 @@ while True:
                 print("Playing note", note, distance, "cm")
                 active_notes[note] = (play(selected_instrument, note), True)
 
-    update_graph()
-    # sleep(UPDATE_INTERVAL)
+    sleep(1 / UPDATE_HZ)
