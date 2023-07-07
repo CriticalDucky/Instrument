@@ -36,7 +36,7 @@ while True:
 
                 print("Possibility 1")
 
-            print("Possibility 2")
+            print(stop_func, is_primed, note, selected_instrument, active_notes)
 
             continue
         elif note in [
@@ -53,13 +53,10 @@ while True:
                     continue
 
                 active_notes[active_note] = (None, False)
-                print("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
         elif note == note_mappings.RESPONSE_IN_SPACING:
             print("In spacing")
             continue
         else:
-            print("Possibility 4")
-
             for tup in active_notes.copy().items():
                 active_note = tup[0]
 
@@ -68,7 +65,6 @@ while True:
                     continue
 
                 if active_note != note:
-                    print("This better not be printing", active_note, note, stop_func)
                     active_notes[active_note] = (stop_func, False)
 
             stop_func, is_primed = active_notes.get(note, (None, False))
@@ -76,6 +72,5 @@ while True:
             if note not in active_notes or (selected_instrument in BURST_INSTRUMENTS and not is_primed):
                 print("Playing note", note, distance, "cm")
                 active_notes[note] = (play(selected_instrument, note), True)
-                print("THIS SHOULD BE RUNNING!!!")
 
     sleep(1 / UPDATE_HZ)
