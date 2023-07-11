@@ -15,9 +15,12 @@ for tof in tofs:
 def get_distance(sensor_number):
     distance = tofs[sensor_number - 1].get_distance()/10
 
-    if distance < 700:
+    if distance < 700 and distance > 0:
         print("Sensor", sensor_number, "distance", distance, "cm")
-    # print(distance)
+    
+    if distance < 0:
+        print("Unable to read sensor", sensor_number)
+
     return distance # cm
 
 # tof.stop_ranging()
