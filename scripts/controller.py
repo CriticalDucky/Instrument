@@ -2,15 +2,13 @@ import note_mappings
 from time import sleep
 from tof import get_distance
 from instrument import play, get_selected_instrument
-import matplotlib.pyplot as plt
-import numpy as np
 
 UPDATE_HZ = 300
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
     "Acid SQ Neutral.sf2",
     "Piano.sf2"
 ]
-NUM_SENSORS = 1
+NUM_SENSORS = 4
 
 get_note_name = note_mappings.get_note_name
 octave_notes = note_mappings.octave_notes
