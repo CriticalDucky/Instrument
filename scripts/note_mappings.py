@@ -19,9 +19,6 @@ last_octave = 7
 
 
 def get_note_name(sensor_number, distance):
-    if distance < 700:
-        print("Sensor", sensor_number, "distance", distance, "cm")
-
     distance += FINGER_WIDTH_HALF
 
     if distance < BASELINE_DISTANCE:

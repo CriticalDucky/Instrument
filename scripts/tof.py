@@ -14,6 +14,9 @@ for tof in tofs:
 
 def get_distance(sensor_number):
     distance = tofs[sensor_number - 1].get_distance()/10
+
+    if distance < 700:
+        print("Sensor", sensor_number, "distance", distance, "cm")
     # print(distance)
     return distance # cm
 
