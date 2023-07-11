@@ -42,7 +42,6 @@ while True:
                 else:
                     active_notes[active_note] = (None, False)
         elif note == note_mappings.RESPONSE_IN_SPACING:
-            print("In spacing")
             continue
         else:
             for tup in active_notes.copy().items():
