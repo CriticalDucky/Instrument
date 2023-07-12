@@ -7,16 +7,16 @@ sensor1_shutdown = 20
 # GPIO for Sensor 2 shutdown pin
 sensor2_shutdown = 16
 
-GPIO.setwarnings(False)
+# GPIO.setwarnings(False)
 
-# Setup GPIO for shutdown pins on each VL53L0X
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(sensor1_shutdown, GPIO.OUT)
-GPIO.setup(sensor2_shutdown, GPIO.OUT)
+# # Setup GPIO for shutdown pins on each VL53L0X
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(sensor1_shutdown, GPIO.OUT)
+# GPIO.setup(sensor2_shutdown, GPIO.OUT)
 
-# Set all shutdown pins low to turn off each VL53L0X
-GPIO.output(sensor1_shutdown, GPIO.LOW)
-GPIO.output(sensor2_shutdown, GPIO.LOW)
+# # Set all shutdown pins low to turn off each VL53L0X
+# GPIO.output(sensor1_shutdown, GPIO.LOW)
+# GPIO.output(sensor2_shutdown, GPIO.LOW)
 
 # Keep all low for 500 ms or so to make sure they reset
 sleep(0.50)
@@ -28,8 +28,8 @@ sleep(0.50)
 tofs = [
     VL53L0X.VL53L0X(tca9548a_num=1, tca9548a_addr=0x70),
     VL53L0X.VL53L0X(tca9548a_num=2, tca9548a_addr=0x70),
-    VL53L0X.VL53L0X(i2c_address=0x2B, i2c_bus=0),
-    VL53L0X.VL53L0X(i2c_address=0x2D, i2c_bus=0),
+    # VL53L0X.VL53L0X(i2c_address=0x2B, i2c_bus=0),
+    # VL53L0X.VL53L0X(i2c_address=0x2D, i2c_bus=0),
 ]
 
 for tof in tofs:
