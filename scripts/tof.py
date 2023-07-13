@@ -51,5 +51,10 @@ def get_distance(sensor_number):
 
     return distance  # cm
 
+def close_sensors():
+    for tof in tofs:
+        tof.stop_ranging()
+        tof.close()
+
 # tof.stop_ranging()
 # tof.close()
