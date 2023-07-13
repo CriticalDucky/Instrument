@@ -1,29 +1,38 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from time import sleep
+import time
+import VL53L0X # type: ignore
 
-history_length = 50  # Number of past measurements to display
-distance_history = np.zeros(history_length)  # Initialize an array to store the distance history
+# Create a VL53L0X object for device on TCA9548A bus 1
+tof1 = VL53L0X.VL53L0X(tca9548a_num=1, tca9548a_addr=0x70)
+# Create a VL53L0X object for device on TCA9548A bus 2
+tof2 = VL53L0X.VL53L0X(tca9548a_num=2, tca9548a_addr=0x70)
+tof1.open()
+tof2.open()
 
-plt.figure()
-ax = plt.axes()
-ax.set_xlim([-history_length, 0])
-ax.set_ylim([0, 50])  # Adjust the y-axis limits as needed
+# Start ranging on TCA9548A bus 1
+tof1.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
+# Start ranging on TCA9548A bus 2
+tof2.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
-bars = ax.bar(np.arange(-history_length, 0), distance_history)  # Create an initial set of empty bars
-plt.ion()
-plt.show()
+timing = tof1.get_timing()
+if timing < 20000:
+    timing = 20000
+print("Timing %d ms" % (timing/1000))
 
-while True:
-    # Read the distance measurement from your VL53L0X sensor
-    distance = np.random.randint(0, 50)
+for count in range(1, 101):
+    # Get distance from VL53L0X  on TCA9548A bus 1
+    distance = tof1.get_distance()
+    if distance > 0:
+        print("1: %d mm, %d cm, %d" % (distance, (distance/10), count))
 
-    # Shift the distance history array to the left and append the new measurement
-    distance_history = np.roll(distance_history, -1)
-    distance_history[-1] = distance
+    # Get distance from VL53L0X  on TCA9548A bus 2
+    distance = tof2.get_distance()
+    if distance > 0:
+        print("2: %d mm, %d cm, %d" % (distance, (distance/10), count))
 
-    # Update the heights of the bars to reflect the new distance measurements
-    for bar, dist in zip(bars, distance_history):
-        bar.set_height(dist)
+    time.sleep(timing/1000000.00)
 
-    plt.pause(0.01)
+tof1.stop_ranging()
+tof2.stop_ranging()
+
+tof1.close()
+tof2.close()
