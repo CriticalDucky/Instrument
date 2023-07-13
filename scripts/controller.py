@@ -17,10 +17,7 @@ active_notes = {
     # "C4": (stop_func, is_primed)
 }
 
-def noteBelongsToSensor(note, sensor_number):
-    if not note.startswith(octave_notes[sensor_number - 1]):
-        print("THIS IS CORRECT")
-
+def noteBelongsToSensor(note: str, sensor_number):
     return note.startswith(octave_notes[sensor_number - 1])
 
 while True:
