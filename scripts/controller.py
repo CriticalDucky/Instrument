@@ -17,6 +17,12 @@ active_notes = {
     # "C4": (stop_func, is_primed)
 }
 
+def noteBelongsToSensor(note, sensor_number):
+    if not note.startswith(octave_notes[sensor_number - 1]):
+        print("THIS IS CORRECT")
+
+    return note.startswith(octave_notes[sensor_number - 1])
+
 while True:
     for sensor_number in range(1, NUM_SENSORS + 1):
         distance = get_distance(sensor_number)
@@ -33,7 +39,7 @@ while True:
                 active_note = tup[0]
 
                 # We only want the notes this sensor is responsible for
-                if not active_note.startswith(octave_notes[sensor_number - 1]):
+                if not noteBelongsToSensor(active_note, sensor_number):
                     continue
 
                 if selected_instrument not in BURST_INSTRUMENTS and active_notes[active_note][0]:
@@ -48,9 +54,10 @@ while True:
                 active_note = tup[0]
 
                 # We only want the notes this sensor is responsible for
-                if not active_note.startswith(octave_notes[sensor_number - 1]):
+                if not noteBelongsToSensor(active_note, sensor_number):
                     continue
 
+                # If the note is not the one we want to play, stop it
                 if active_note != note:
                     stop_func, is_primed = active_notes.get(active_note, (None, False))
 
