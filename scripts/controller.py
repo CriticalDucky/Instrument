@@ -67,8 +67,7 @@ while True:
             stop_func, is_primed = active_notes.get(note, (None, False))
 
             if note not in active_notes or (selected_instrument in BURST_INSTRUMENTS and not is_primed):
-                # if sensor_number == 2:
-                #     print("Playing note", note, distance, "cm")
+                print("Playing note", note, distance, "cm")
                 active_notes[note] = (play(selected_instrument, note), True)
 
     sleep(1 / UPDATE_HZ)
