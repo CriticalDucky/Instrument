@@ -31,7 +31,7 @@ while True:
             note_mappings.RESPONSE_TOO_CLOSE,
             note_mappings.RESPONSE_TOO_FAR
         ]:
-            print(active_notes.get(note, "Unset"))
+            print(sensor_number, active_notes.get(note, "Unset"))
             for tup in active_notes.copy().items():
                 active_note = tup[0]
 
