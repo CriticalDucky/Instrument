@@ -56,6 +56,7 @@ while True:
 
                 # If the note is not the one we want to play, stop it
                 if active_note != note:
+                    print("Stopping note", active_note, "because", note, "is being played")
                     stop_func, is_primed = active_notes.get(active_note, (None, False))
 
                     if selected_instrument in BURST_INSTRUMENTS:
