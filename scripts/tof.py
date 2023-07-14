@@ -29,6 +29,7 @@ tofs = [
     # VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29),
     VL53L0X.VL53L0X(tca9548a_num=1, tca9548a_addr=0x70),
     VL53L0X.VL53L0X(tca9548a_num=2, tca9548a_addr=0x70),
+    VL53L0X.VL53L0X(tca9548a_num=3, tca9548a_addr=0x70),
     # VL53L0X.VL53L0X(i2c_address=0x2B, i2c_bus=0),
     # VL53L0X.VL53L0X(i2c_address=0x2D, i2c_bus=0),
 ]
