@@ -60,6 +60,7 @@ while True:
                     stop_func, is_primed = active_notes.get(active_note, (None, False))
 
                     if selected_instrument in BURST_INSTRUMENTS:
+                        print("Active note is", active_note, "and playing note is", note)
                         active_notes[active_note] = (stop_func, False)
                     else:
                         stop_func()
