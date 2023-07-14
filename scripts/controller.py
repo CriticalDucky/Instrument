@@ -31,7 +31,7 @@ while True:
             note_mappings.RESPONSE_TOO_CLOSE,
             note_mappings.RESPONSE_TOO_FAR
         ]:
-            print(active_notes[note])
+            print(active_notes.get(note, "Unset"))
             for tup in active_notes.copy().items():
                 active_note = tup[0]
 
@@ -70,7 +70,7 @@ while True:
             if note not in active_notes or (selected_instrument in BURST_INSTRUMENTS and not is_primed):
                 print(note not in active_notes, selected_instrument in BURST_INSTRUMENTS, not is_primed)
                 print("Playing note", note, distance, "cm")
-                print("Before set:", active_notes[note])
+                print("Before set:", active_notes.get(note, "Unset"))
                 active_notes[note] = (play(selected_instrument, note), True)
 
     sleep(1 / UPDATE_HZ)
