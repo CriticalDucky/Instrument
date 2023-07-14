@@ -18,7 +18,7 @@ active_notes = {
 }
 
 def noteBelongsToSensor(note: str, sensor_number):
-    return note.startswith(octave_notes[sensor_number - 1])
+    return note[0:-1] == octave_notes[sensor_number - 1]
 
 while True:
     for sensor_number in range(1, NUM_SENSORS + 1):
