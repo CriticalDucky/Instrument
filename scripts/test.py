@@ -1,11 +1,24 @@
 import time
 import VL53L0X # type: ignore
+import RPi.GPIO as GPIO # type: ignore
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.OUT)
+GPIO.output(17, GPIO.LOW)
+
+time.sleep(0.50)
+
 
 # Create a VL53L0X object
 tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 # I2C Address can change before tof.open()
 # tof.change_address(0x32)
 tof.open()
+
+GPIO.output(17, GPIO.HIGH)
+
+time.sleep(0.50)
+
 # Start ranging
 tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
