@@ -3,8 +3,8 @@ import VL53L0X # type: ignore
 import RPi.GPIO as GPIO # type: ignore
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(17, GPIO.OUT)
-GPIO.output(17, GPIO.LOW)
+GPIO.setup(18, GPIO.OUT)
+GPIO.output(18, GPIO.LOW)
 
 time.sleep(0.50)
 
@@ -15,7 +15,7 @@ tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 # tof.change_address(0x32)
 tof.open()
 
-GPIO.output(17, GPIO.HIGH)
+GPIO.output(18, GPIO.HIGH)
 
 time.sleep(0.50)
 
