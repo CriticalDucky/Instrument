@@ -4,8 +4,76 @@ Module for mapping tof sensor readings to notes
 BASELINE_DISTANCE = 4  # cm; distance from sensor to first octave
 OCTAVE_SPAN_SIZE = 1  # cm; size of activation area of each octave
 OCTAVE_SPACING = 3  # cm; distance between octaves
-FINGER_WIDTH_HALF = 1.5/2  # cm; width of finger divided by 2
+FINGER_WIDTH_HALF = 0#1.5/2  # cm; width of finger divided by 2
 DIAMETER = BASELINE_DISTANCE * 2 + 7 * (OCTAVE_SPAN_SIZE + OCTAVE_SPACING)
+
+'''
+0 
+
+1 
+
+2    
+
+3 
+
+4  
+    ██ 2
+5  
+    ░░
+6  
+    ░░
+7  
+    ░░
+8  
+    ██ 3
+9  
+    ░░
+10 
+    ░░
+11 
+    ░░
+12 
+    ██ 4
+13 
+    ░░
+14 
+    ░░
+15 
+    ░░
+16 
+    ██ 5
+17 
+    ░░
+18 
+    ░░
+19 
+    ░░
+20 
+    ██ 6
+21
+    ░░
+22
+    ░░
+23
+    ░░
+24
+    ██ 7
+25
+    ░░
+26
+    ░░
+27
+    ░░
+28
+   
+29
+   
+30
+   
+31
+   
+32
+'''
 
 RESPONSE_TOO_CLOSE = "rTC"
 RESPONSE_TOO_FAR = "rTF"
