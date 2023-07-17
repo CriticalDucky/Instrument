@@ -29,9 +29,9 @@ tofs = [
     VL53L0X.VL53L0X(i2c_address=0x29),
 ]
 
-for tof in tofs:
+for tof in tofs: 
     tof.open()
-    tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.HIGH_SPEED)
+    tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BEST)
 
 def get_distance(sensor_number):
     distance = tofs[sensor_number - 1].get_distance()/10
