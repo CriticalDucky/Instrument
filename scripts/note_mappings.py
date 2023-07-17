@@ -23,7 +23,7 @@ DIAMETER = BASELINE_DISTANCE * 2 + 7 * (OCTAVE_SPAN_SIZE + OCTAVE_SPACING)
 6  
     ░░
 7  
-    ░░
+    ░░ 2
 8  
     ██ 3
 9  
@@ -31,7 +31,7 @@ DIAMETER = BASELINE_DISTANCE * 2 + 7 * (OCTAVE_SPAN_SIZE + OCTAVE_SPACING)
 10 
     ░░
 11 
-    ░░
+    ░░ 3
 12 
     ██ 4
 13 
@@ -39,7 +39,7 @@ DIAMETER = BASELINE_DISTANCE * 2 + 7 * (OCTAVE_SPAN_SIZE + OCTAVE_SPACING)
 14 
     ░░
 15 
-    ░░
+    ░░ 4
 16 
     ██ 5
 17 
@@ -55,7 +55,7 @@ DIAMETER = BASELINE_DISTANCE * 2 + 7 * (OCTAVE_SPAN_SIZE + OCTAVE_SPACING)
 22
     ░░
 23
-    ░░
+    ░░ 6
 24
     ██ 7
 25
