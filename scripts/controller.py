@@ -69,4 +69,4 @@ while True:
                 print("Playing note", note, distance, "cm")
                 active_notes[note] = (play(selected_instrument, note), True)
 
-    sleep(1 / UPDATE_HZ)
+    # sleep(1 / UPDATE_HZ)
