@@ -31,7 +31,7 @@ tofs = [
 
 for tof in tofs: 
     tof.open()
-    tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.LONG_RANGE)
+    tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.HIGH_SPEED)
 
 def get_distance(sensor_number):
     distance = tofs[sensor_number - 1].get_distance()/10
