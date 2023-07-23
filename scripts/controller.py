@@ -1,7 +1,12 @@
 import note_mappings
 from time import sleep
-from tof import get_distance, close_sensors
 from instrument import play, get_selected_instrument
+from sys import argv
+
+if argv[1] == "1":
+    from tof import get_distance, close_sensors
+else:
+    from tof2 import get_distance, close_sensors
 
 UPDATE_HZ = 100
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
