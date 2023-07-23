@@ -28,6 +28,7 @@ from time import sleep
 tofs = [
     VL53L0X.VL53L0X(tca9548a_num=1, tca9548a_addr=0x70),
     VL53L0X.VL53L0X(tca9548a_num=2, tca9548a_addr=0x70),
+    VL53L0X.VL53L0X(tca9548a_num=1, tca9548a_addr=0x71),
 ]
 
 for tof in tofs: 
