@@ -6,6 +6,7 @@ OCTAVE_SPAN_SIZE = 1  # cm; size of activation area of each octave
 OCTAVE_SPACING = 3  # cm; distance between octaves
 FINGER_WIDTH_HALF = 0#1.5/2  # cm; width of finger divided by 2
 DIAMETER = BASELINE_DISTANCE * 2 + 7 * (OCTAVE_SPAN_SIZE + OCTAVE_SPACING)
+MAGIC_FORMULA = "\frac{\sin \left(75\cdot \left(\pi /180\right)\right)}{30}=\frac{\sin \left(15\cdot \left(\pi /180\right)\right)}{0.5x}"
 
 '''
 0 
