@@ -8,7 +8,7 @@ BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we
     "Acid SQ Neutral.sf2",
     "Piano.sf2"
 ]
-NUM_SENSORS = 3
+NUM_SENSORS = 2
 
 get_note_name = note_mappings.get_note_name
 octave_notes = note_mappings.octave_notes
