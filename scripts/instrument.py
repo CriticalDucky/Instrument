@@ -29,7 +29,7 @@ def find_sf2_file(name):
 
 fs = fluidsynth.Synth()
 
-isRaspberryPi = platform.system() == "Linux" and platform.machine() == "armv7l"
+isRaspberryPi = platform.system() == "Linux" and (platform.machine() == "armv7l" or platform.machine() == "aarch64")
 print(platform.system(), platform.machine(), isRaspberryPi)
 if isRaspberryPi:
     fs.start(driver="alsa")
