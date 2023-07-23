@@ -34,6 +34,7 @@ print(platform.system(), platform.machine(), isRaspberryPi)
 if isRaspberryPi:
     fs.start(driver="alsa")
 else:
+    print("You are not on a Raspberry Pi.")
     fs.start()
 
 def play(instrument = "Acid SQ Neutral.sf2", note = "C4"):
