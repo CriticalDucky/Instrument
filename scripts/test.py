@@ -1,3 +1,3 @@
 import fluidsynth
 
-print(dir(fluidsynth, fluidsynth.__file__))
+print(dir(fluidsynth), fluidsynth.__file__)
