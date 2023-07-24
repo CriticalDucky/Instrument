@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import time
 import sys
 import signal
@@ -5,42 +7,35 @@ import signal
 import VL53L1X
 
 
-# Open and start the VL53L1X sensor.
-# If you've previously used change-address.py then you
-# should use the new i2c address here.
-# If you're using a software i2c bus (ie: HyperPixel4) then
-# you should `ls /dev/i2c-*` and use the relevant bus number.
-tof = VL53L1X.VL53L1X(i2c_bus=1, i2c_address=0x29)
-tof.open()
+print("""distance.py
 
-# Optionally set an explicit timing budget
-# These values are measurement time in microseconds,
-# and inter-measurement time in milliseconds.
-# If you uncomment the line below to set a budget you
-# should use `tof.start_ranging(0)`
-# tof.set_timing(66000, 70)
+Display the distance read from the sensor.
 
-tof.start_ranging(1)  # Start ranging
-                      # 0 = Unchanged
-                      # 1 = Short Range
-                      # 2 = Medium Range
-                      # 3 = Long Range
+Press Ctrl+C to exit.
 
-running = True
+""")
+
+
+"""
+Open and start the VL53L1X ranging sensor for each channel of the TCA9548A
+"""
+tof1 = VL53L1X.VL53L1X(i2c_bus=1, i2c_address=0x29, tca9548a_num=1, tca9548a_addr=0x70)
+tof1.open()
+tof1.start_ranging(3)  # Start ranging, 1 = Short Range, 2 = Medium Range, 3 = Long Range
 
 
 def exit_handler(signal, frame):
     global running
     running = False
-    tof.stop_ranging()
+    tof1.stop_ranging()
     print()
     sys.exit(0)
 
 
-# Attach a signal handler to catch SIGINT (Ctrl+C) and exit gracefully
+running = True
 signal.signal(signal.SIGINT, exit_handler)
 
 while running:
-    distance_in_mm = tof.get_distance()
-    print("Distance: {}mm".format(distance_in_mm))
+    distance_in_mm = tof1.get_distance()
+    print("Sensor 1 distance: {}mm".format(distance_in_mm))
     time.sleep(0.1)
