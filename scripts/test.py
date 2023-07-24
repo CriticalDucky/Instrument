@@ -1,46 +1,46 @@
+#!/usr/bin/python
+
+# MIT License
+# 
+# Copyright (c) 2017 John Bryan Moore
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import time
-import sys
-import signal
+import VL53L0X
 
-import VL53L1X
+# Create a VL53L0X object
+tof = VL53L0X.VL53L0X()
 
+# Start ranging
+tof.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
-# Open and start the VL53L1X sensor.
-# If you've previously used change-address.py then you
-# should use the new i2c address here.
-# If you're using a software i2c bus (ie: HyperPixel4) then
-# you should `ls /dev/i2c-*` and use the relevant bus number.
-tof = VL53L1X.VL53L1X(i2c_bus=1, i2c_address=0x29)
-tof.open()
+timing = tof.get_timing()
+if (timing < 20000):
+    timing = 20000
+print ("Timing %d ms" % (timing/1000))
 
-# Optionally set an explicit timing budget
-# These values are measurement time in microseconds,
-# and inter-measurement time in milliseconds.
-# If you uncomment the line below to set a budget you
-# should use `tof.start_ranging(0)`
-# tof.set_timing(66000, 70)
+for count in range(1,101):
+    distance = tof.get_distance()
+    if (distance > 0):
+        print ("%d mm, %d cm, %d" % (distance, (distance/10), count))
 
-tof.start_ranging(1)  # Start ranging
-                      # 0 = Unchanged
-                      # 1 = Short Range
-                      # 2 = Medium Range
-                      # 3 = Long Range
+    time.sleep(timing/1000000.00)
 
-running = True
-
-
-def exit_handler(signal, frame):
-    global running
-    running = False
-    tof.stop_ranging()
-    print()
-    sys.exit(0)
-
-
-# Attach a signal handler to catch SIGINT (Ctrl+C) and exit gracefully
-signal.signal(signal.SIGINT, exit_handler)
-
-while running:
-    distance_in_mm = tof.get_distance()
-    print("Distance: {}mm".format(distance_in_mm))
-    time.sleep(0.1)
+tof.stop_ranging()
