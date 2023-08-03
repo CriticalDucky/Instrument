@@ -49,4 +49,4 @@ while running:
     # distance_in_mm = tof2.get_distance()
     # print("Sensor 2 distance: {}mm".format(distance_in_mm))
     
-    time.sleep(0.1)
+    # time.sleep(0.1)
