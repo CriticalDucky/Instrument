@@ -24,6 +24,8 @@ tof1 = VL53L1X.VL53L1X(i2c_bus=1, i2c_address=0x29)#, tca9548a_num=1, tca9548a_a
 
 tof1.open()
 tof1.start_ranging(2)  # Start ranging, 1 = Short Range, 2 = Medium Range, 3 = Long Range
+tof1.set_timing(100, 100)
+
 
 # tof2.open()
 # tof2.start_ranging(3)  # Start ranging, 1 = Short Range, 2 = Medium Range, 3 = Long Range
