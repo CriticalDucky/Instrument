@@ -5,14 +5,14 @@ import utime #type: ignore
 # Function to set up a sensor
 def setup_sensor(i2c, xshut_pin, address):
     xshut_pin.value(1)
-    tof = setup_tofl_device(i2c, 40000, 12, 8, 0x29)
+    tof = setup_tofl_device(i2c, 40000, 12, 8)
     tof.set_address(address)
     utime.sleep_us(TBOOT)  # Give time for the sensor to boot up
     xshut_pin.value(0)
     return tof
 
 # Number of sensors you want to use
-num_sensors = 2
+num_sensors = 6
 xshut_pins_gpio = [16, 17, 18, 19, 20, 21]
 sensor_addresses = [0x29 + i for i in range(num_sensors)]
 
@@ -31,13 +31,11 @@ try:
     # Turn on all sensors
     for pin in sensor_xshut_pins:
         pin.value(1)
-    
-    newSensors = [setup_tofl_device(i2c, 40000, 12, 8, sensor_addresses[i]) for i in range(num_sensors)]
 
-    utime.sleep_us(TBOOT)  # Give time for the sensor to boot up
+        utime.sleep_us(TBOOT)  # Give time for the sensor to boot up
 
     while True:
-        distances = [sensor.ping() for sensor in newSensors]
+        distances = [sensor.ping() for sensor in sensors]
         print("Distances:", distances)
 finally:
     # Restore default addresses
