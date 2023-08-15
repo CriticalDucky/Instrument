@@ -687,8 +687,8 @@ class VL53L0X:
         self._register(SYSRANGE_START, 0x00)
         return True
 
-def setup_tofl_device(i2c, timing_budget, pre_range, final_range):
-    tofl = VL53L0X(i2c)
+def setup_tofl_device(i2c, timing_budget, pre_range, final_range, address):
+    tofl = VL53L0X(i2c, address)
     # initialise timing budget
     # the measuring_timing_budget is a value in ms, the longer the budget, the more accurate the reading.
     #budget_0 = tof.measurement_timing_budget_us
