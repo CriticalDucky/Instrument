@@ -4,9 +4,11 @@ import utime #type: ignore
 
 device_1_xshut = Pin(16, Pin.OUT)
 device_2_xshut = Pin(17, Pin.OUT)
+device_3_xshut = Pin(18, Pin.OUT)
 i2c_1 = I2C(id=1, sda=Pin(14), scl=Pin(15))
 
 device_2_xshut.value(0)
+device_3_xshut.value(0)
 device_1_xshut.value(1)
 utime.sleep_us(TBOOT)
 tofl1 = setup_tofl_device(i2c_1, 40000, 12, 8)
@@ -17,9 +19,20 @@ utime.sleep_us(TBOOT)
 tofl2 = setup_tofl_device(i2c_1, 40000, 12, 8)
 tofl2.set_address(0x32)
 
-while True:
-        left, right = tofl1.ping(), tofl2.ping()
-        print(left, 'mm, ', right, 'mm')
+device_3_xshut.value(1)
+utime.sleep_us(TBOOT)
+tofl3 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl3.set_address(0x33)
+
+try:
+    while True:
+            a, b, c = tofl1.ping(), tofl2.ping(), tofl3.ping()
+            print(a, 'mm, ', b, 'mm', c, 'mm')
+finally:
+    # Restore default address
+    tofl1.set_address(0x29)
+    tofl2.set_address(0x29)
+    tofl3.set_address(0x29)
 
 
 # # Function to set up a sensor
