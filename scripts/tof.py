@@ -1,5 +1,6 @@
 import serial
 import serial.tools.list_ports
+import threading
 
 def find_serial_port(device_name):
     ports = list(serial.tools.list_ports.comports())
@@ -16,22 +17,21 @@ ser = serial.Serial(serial_port, 9600)
 cached_data_cm = [0] * 12
 
 def get_data():
-    data = ser.readline().decode().strip()
-    if data:
-        data = data.split()
-        data = [float(x) for x in data]
+    while True:
+        data = ser.readline().decode().strip()
+        if data:
+            data = data.split()
+            data = [float(x) for x in data]
 
-        global cached_data_cm
-        cached_data_cm = data
-
-    return cached_data_cm
+            global cached_data_cm
+            cached_data_cm = data
 
 def get_distance(sensor_number):
     if not serial_port:
         print(f"{device_name}X not found")
         return 0
 
-    distance_cm = get_data()[sensor_number - 1]
+    distance_cm = cached_data_cm[sensor_number - 1]
 
     if distance_cm < 700 and distance_cm > 0:
         print("Sensor", sensor_number, "distance", distance_cm, "cm")
@@ -40,3 +40,6 @@ def get_distance(sensor_number):
         print("Waiting for sensor data", sensor_number)
 
     return distance_cm  # cm
+
+new_thread = threading.Thread(target=get_data)
+new_thread.start()
