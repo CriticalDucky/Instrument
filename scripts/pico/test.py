@@ -110,6 +110,8 @@ def update_distances_1():
         for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]:
             tofl.set_address(0x29)
 
+_thread.start_new_thread(update_distances_1, ())
+
 def update_distances_0():
     try:
         while True:
@@ -125,9 +127,6 @@ def update_distances_0():
         # Restore default address
         for tofl in [tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]:
             tofl.set_address(0x29)
-
-_thread.start_new_thread(update_distances_1, ())
-_thread.start_new_thread(update_distances_0, ())
 
 # from machine import Pin, I2C #type: ignore
 # from vl53l0x import setup_tofl_device, TBOOT
