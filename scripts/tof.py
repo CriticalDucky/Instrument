@@ -16,7 +16,9 @@ ser = serial.Serial(serial_port, 9600)
 cached_data_cm = [0] * 12
 
 def get_data():
+    print(1)
     data = ser.readline().decode().strip()
+    print(2)
     if data:
         data = data.split()
         data = [float(x) for x in data]
