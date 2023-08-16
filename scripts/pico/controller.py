@@ -1,6 +1,11 @@
-from machine import Pin, I2C #type: ignore
+from machine import Pin, I2C, UART  # type: ignore
 from vl53l0x import setup_tofl_device, TBOOT
-import utime #type: ignore
+import utime  # type: ignore
+import json
+
+uart = UART(0, baudrate=9600, tx=Pin(0), rx=Pin(1))
+
+tofl_data = []
 
 i2c_1_xshut = [
     Pin(16, Pin.OUT),
@@ -92,7 +97,16 @@ tofl12.set_address(0x36)
 
 try:
     while True:
-        print('   '.join([str(tofl.ping()/10) for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]]))
+        for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
+            distance_cm = tofl.ping()/10
+            tofl_data[idx] = distance_cm
+
+            print(distance_cm, end=' ')
+
+        uart.write(json.dumps(tofl_data))
+
+        print()
+
 finally:
     # Restore default address
     for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]:

@@ -1,19 +1,14 @@
 import note_mappings
-from time import sleep
 from instrument import play, get_selected_instrument
-from sys import argv
+from tof import get_distance
+from time import sleep
 
-if argv[1] == "1":
-    from tof import get_distance, close_sensors
-else:
-    from tof2 import get_distance, close_sensors
-
-UPDATE_HZ = 100
+UPDATE_HZ = 300
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
     "Acid SQ Neutral.sf2",
     "Piano.sf2"
 ]
-NUM_SENSORS = 2
+NUM_SENSORS = 12
 
 get_note_name = note_mappings.get_note_name
 octave_notes = note_mappings.octave_notes
@@ -27,7 +22,7 @@ def noteBelongsToSensor(note: str, sensor_number):
 
 while True:
     for sensor_number in range(1, NUM_SENSORS + 1):
-        distance = get_distance(sensor_number) - 0 # For some reason, the sensor is off by 1 cm
+        distance = get_distance(sensor_number)
         note = get_note_name(sensor_number, distance)
         selected_instrument = get_selected_instrument()
 
@@ -74,4 +69,4 @@ while True:
                 print("Playing note", note, distance, "cm")
                 active_notes[note] = (play(selected_instrument, note), True)
 
-    # sleep(1 / UPDATE_HZ)
+    sleep(1 / UPDATE_HZ)
