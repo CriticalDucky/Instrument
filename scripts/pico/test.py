@@ -90,14 +90,13 @@ utime.sleep_us(TBOOT)
 tofl12 = setup_tofl_device(i2c_0, 40000, 12, 8)
 tofl12.set_address(0x36)
 
-def update_distances_1():
-    try:
-        while True:
-            print('   '.join([str(tofl.ping()/10) for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]]))
-    finally:
-        # Restore default address
-        for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]:
-            tofl.set_address(0x29)
+try:
+    while True:
+        print('   '.join([str(tofl.ping()/10) for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]]))
+finally:
+    # Restore default address
+    for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]:
+        tofl.set_address(0x29)
 
 # from machine import Pin, I2C #type: ignore
 # from vl53l0x import setup_tofl_device, TBOOT
