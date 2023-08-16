@@ -31,6 +31,7 @@ def get_distance(sensor_number):
         print(f"{device_name}X not found")
         return 0
 
+    print("ok noob", sensor_number - 1)
     distance_cm = cached_data_cm[sensor_number - 1]
 
     if distance_cm < 700 and distance_cm > 0:
