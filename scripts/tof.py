@@ -1,7 +1,18 @@
-import json
 import serial
+import serial.tools.list_ports
 
-ser = serial.Serial('/dev/ttyACM0', 9600)
+def find_serial_port(device_name):
+    ports = list(serial.tools.list_ports.comports())
+    for port in ports:
+        if device_name in port.device:
+            print("Found", device_name, "at", port.device)
+            return port.device
+    return None
+
+device_name = "ttyACM"  # Adjust this to match your device name
+serial_port = find_serial_port(device_name)
+    
+ser = serial.Serial(serial_port, 9600)
 cached_data_cm = [0] * 12
 
 def get_data():
@@ -16,6 +27,10 @@ def get_data():
     return cached_data_cm
 
 def get_distance(sensor_number):
+    if not serial_port:
+        print(f"{device_name}X not found")
+        return 0
+
     distance_cm = get_data()[sensor_number - 1]
 
     if distance_cm < 700 and distance_cm > 0:
