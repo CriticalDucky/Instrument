@@ -5,7 +5,7 @@ import json
 
 uart = UART(0, baudrate=9600, tx=Pin(0), rx=Pin(1))
 
-tofl_data = []
+tofl_data = [0] * 12
 
 i2c_1_xshut = [
     Pin(16, Pin.OUT),

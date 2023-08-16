@@ -7,6 +7,8 @@ cached_data_cm = [0] * 12
 def get_data():
     data = ser.readline().decode().strip()
     if data:
+        print("Received data:", data)
+
         global cached_data_cm
         cached_data_cm = json.loads(data)
 
