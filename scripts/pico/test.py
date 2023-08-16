@@ -1,10 +1,6 @@
 from machine import Pin, I2C #type: ignore
 from vl53l0x import setup_tofl_device, TBOOT
 import utime #type: ignore
-import _thread 
-
-reported_0_distances = [0] * 6
-reported_1_distances = [0] * 6
 
 i2c_1_xshut = [
     Pin(16, Pin.OUT),
@@ -97,35 +93,10 @@ tofl12.set_address(0x36)
 def update_distances_1():
     try:
         while True:
-            distances_1_cm = [tofl.ping()/10 for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]]
-            
-            # edit the values in the table (we are not going to overwrite the table)
-            for i in range(6):
-                reported_1_distances[i] = distances_1_cm[i]
-
-            print('   '.join([str(d) for d in reported_1_distances + reported_0_distances]))
-
+            print('   '.join([str(tofl.ping()/10) for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]]))
     finally:
         # Restore default address
-        for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]:
-            tofl.set_address(0x29)
-
-_thread.start_new_thread(update_distances_1, ())
-
-def update_distances_0():
-    try:
-        while True:
-            distances_0_cm = [tofl.ping()/10 for tofl in [tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]]
-            
-            # edit the values in the table (we are not going to overwrite the table)
-            for i in range(6):
-                reported_0_distances[i] = distances_0_cm[i]
-
-            print('   '.join([str(d) for d in reported_1_distances + reported_0_distances]))
-
-    finally:
-        # Restore default address
-        for tofl in [tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]:
+        for tofl in [tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]:
             tofl.set_address(0x29)
 
 # from machine import Pin, I2C #type: ignore
