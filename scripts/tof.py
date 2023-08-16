@@ -23,6 +23,7 @@ def get_data():
             data = data.split()
             data = [float(x) for x in data]
 
+            print("yo check me out", data)
             global cached_data_cm
             cached_data_cm = data
 
