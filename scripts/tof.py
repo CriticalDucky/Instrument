@@ -10,7 +10,7 @@ def get_data():
         print("Received data:", data)
 
         global cached_data_cm
-        cached_data_cm = json.loads(data)
+        cached_data_cm = data
 
     return cached_data_cm
 
