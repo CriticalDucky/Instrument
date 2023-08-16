@@ -24,7 +24,9 @@ def get_data():
             data = [float(x) for x in data]
 
             global cached_data_cm
-            cached_data_cm = data
+
+            for idx, val in enumerate(data):
+                cached_data_cm[idx] = val
 
 def get_distance(sensor_number):
     if not serial_port:
