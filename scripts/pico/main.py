@@ -36,6 +36,7 @@ for pin in i2c_0_xshut + i2c_1_xshut:
 
 def thread0():
     global i2c_0_xshut
+    global i2c_0
 
     i2c_0_xshut[0].value(1)
     utime.sleep_us(TBOOT)
@@ -81,6 +82,7 @@ def thread0():
 
 def thread1():
     global i2c_1_xshut
+    global i2c_1
     
     i2c_1_xshut[0].value(1)
     utime.sleep_us(TBOOT)
