@@ -26,8 +26,8 @@ i2c_1_xshut = [
     Pin(3, Pin.OUT),
 ]
 
-i2c_0 = I2C(id=0, sda=Pin(0), scl=Pin(1))
-i2c_1 = I2C(id=1, sda=Pin(14), scl=Pin(15))
+i2c_0 = I2C(id=0, sda=Pin(14), scl=Pin(15))
+i2c_1 = I2C(id=1, sda=Pin(0), scl=Pin(1))
 
 for pin in i2c_0_xshut + i2c_1_xshut:
     pin.value(0)
