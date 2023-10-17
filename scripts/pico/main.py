@@ -34,41 +34,77 @@ for pin in i2c_0_xshut + i2c_1_xshut:
 
 # i2c_0
 
+i2c_0_xshut[0].value(1)
+utime.sleep_us(TBOOT)
+tofl1 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl1.set_address(0x31)
+
+i2c_0_xshut[1].value(1)
+utime.sleep_us(TBOOT)
+tofl2 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl2.set_address(0x32)
+
+i2c_0_xshut[2].value(1)
+utime.sleep_us(TBOOT)
+tofl3 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl3.set_address(0x33)
+
+i2c_0_xshut[3].value(1)
+utime.sleep_us(TBOOT)
+tofl4 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl4.set_address(0x34)
+
+i2c_0_xshut[4].value(1)
+utime.sleep_us(TBOOT)
+tofl5 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl5.set_address(0x35)
+
+i2c_0_xshut[5].value(1)
+utime.sleep_us(TBOOT)
+tofl6 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl6.set_address(0x36)
+
+# i2c_1
+
+i2c_1_xshut[0].value(1)
+utime.sleep_us(TBOOT)
+tofl7 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl7.set_address(0x31)
+
+i2c_1_xshut[1].value(1)
+utime.sleep_us(TBOOT)
+tofl8 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl8.set_address(0x32)
+
+i2c_1_xshut[2].value(1)
+utime.sleep_us(TBOOT)
+tofl9 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl9.set_address(0x33)
+
+i2c_1_xshut[3].value(1)
+utime.sleep_us(TBOOT)
+tofl10 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl10.set_address(0x34)
+
+i2c_1_xshut[4].value(1)
+utime.sleep_us(TBOOT)
+tofl11 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl11.set_address(0x35)
+
+i2c_1_xshut[5].value(1)
+utime.sleep_us(TBOOT)
+tofl12 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl12.set_address(0x36)
+
 def thread0():
-    global i2c_0_xshut
-    global i2c_0
-
-    i2c_0_xshut[0].value(1)
-    utime.sleep_us(TBOOT)
-    tofl1 = setup_tofl_device(i2c_0, 40000, 12, 8)
-    tofl1.set_address(0x31)
-
-    i2c_0_xshut[1].value(1)
-    utime.sleep_us(TBOOT)
-    tofl2 = setup_tofl_device(i2c_0, 40000, 12, 8)
-    tofl2.set_address(0x32)
-
-    i2c_0_xshut[2].value(1)
-    utime.sleep_us(TBOOT)
-    tofl3 = setup_tofl_device(i2c_0, 40000, 12, 8)
-    tofl3.set_address(0x33)
-
-    i2c_0_xshut[3].value(1)
-    utime.sleep_us(TBOOT)
-    tofl4 = setup_tofl_device(i2c_0, 40000, 12, 8)
-    tofl4.set_address(0x34)
-
-    i2c_0_xshut[4].value(1)
-    utime.sleep_us(TBOOT)
-    tofl5 = setup_tofl_device(i2c_0, 40000, 12, 8)
-    tofl5.set_address(0x35)
-
-    i2c_0_xshut[5].value(1)
-    utime.sleep_us(TBOOT)
-    tofl6 = setup_tofl_device(i2c_0, 40000, 12, 8)
-    tofl6.set_address(0x36)
-
     while True: # only if distance cm is less than 800, then print:
+        global tofl1
+        global tofl2
+        global tofl3
+        global tofl4
+        global tofl5
+        global tofl6
+
         for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
             distance_cm = tofl.ping()/10
             tofl_data[idx] = distance_cm
@@ -81,40 +117,14 @@ def thread0():
         print()
 
 def thread1():
-    global i2c_1_xshut
-    global i2c_1
-    
-    i2c_1_xshut[0].value(1)
-    utime.sleep_us(TBOOT)
-    tofl7 = setup_tofl_device(i2c_1, 40000, 12, 8)
-    tofl7.set_address(0x31)
-
-    i2c_1_xshut[1].value(1)
-    utime.sleep_us(TBOOT)
-    tofl8 = setup_tofl_device(i2c_1, 40000, 12, 8)
-    tofl8.set_address(0x32)
-
-    i2c_1_xshut[2].value(1)
-    utime.sleep_us(TBOOT)
-    tofl9 = setup_tofl_device(i2c_1, 40000, 12, 8)
-    tofl9.set_address(0x33)
-
-    i2c_1_xshut[3].value(1)
-    utime.sleep_us(TBOOT)
-    tofl10 = setup_tofl_device(i2c_1, 40000, 12, 8)
-    tofl10.set_address(0x34)
-
-    i2c_1_xshut[4].value(1)
-    utime.sleep_us(TBOOT)
-    tofl11 = setup_tofl_device(i2c_1, 40000, 12, 8)
-    tofl11.set_address(0x35)
-
-    i2c_1_xshut[5].value(1)
-    utime.sleep_us(TBOOT)
-    tofl12 = setup_tofl_device(i2c_1, 40000, 12, 8)
-    tofl12.set_address(0x36)
-
     while True:
+        global tofl7
+        global tofl8
+        global tofl9
+        global tofl10
+        global tofl11
+        global tofl12
+
         for idx, tofl in enumerate([tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
             global tofl_data
 
