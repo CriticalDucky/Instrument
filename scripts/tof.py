@@ -20,10 +20,14 @@ def get_data():
     while True:
         data = ser.readline().decode().strip()
         if data:
+            print("1:", data)
+
             data = data.split()
+
+            print("2:", data)
             data = [float(x) for x in data]
 
-            print(data)
+            print("3:", data)
 
             global cached_data_cm
 
