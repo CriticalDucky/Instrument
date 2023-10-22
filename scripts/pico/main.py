@@ -108,48 +108,48 @@ while True: # only if distance cm is less than 800, then print:
 
     print()
 
-# def thread0():
-#     while True: # only if distance cm is less than 800, then print:
-#         global tofl1
-#         global tofl2
-#         global tofl3
-#         global tofl4
-#         global tofl5
-#         global tofl6
+def thread0():
+    global tofl1
+    global tofl2
+    global tofl3
+    global tofl4
+    global tofl5
+    global tofl6
 
-#         for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
-#             distance_cm = tofl.ping()/10
-#             tofl_data[idx] = distance_cm
+    while True:
+        for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
+            distance_cm = tofl.ping()/10
+            tofl_data[idx] = distance_cm
 
-#             if distance_cm < 800:
-#                 print(idx + 1, distance_cm, end=' ')
+            if distance_cm < 800:
+                print(idx + 1, distance_cm, end=' ')
 
-#         uart.write(json.dumps(tofl_data))
+        uart.write(json.dumps(tofl_data))
 
-#         print()
+        print()
 
-# def thread1():
-#     while True:
-#         global tofl7
-#         global tofl8
-#         global tofl9
-#         global tofl10
-#         global tofl11
-#         global tofl12
+def thread1():
+    global tofl7
+    global tofl8
+    global tofl9
+    global tofl10
+    global tofl11
+    global tofl12
 
-#         for idx, tofl in enumerate([tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
-#             global tofl_data
+    while True:
+        for idx, tofl in enumerate([tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
+            global tofl_data
 
-#             distance_cm = tofl.ping()/10
-#             tofl_data[idx + 6] = distance_cm
+            distance_cm = tofl.ping()/10
+            tofl_data[idx + 6] = distance_cm
 
-#             if distance_cm < 800:
-#                 print(idx + 7, distance_cm, end=' ')
+            if distance_cm < 800:
+                print(idx + 7, distance_cm, end=' ')
 
-#         # uart.write(json.dumps(tofl_data))
+        # uart.write(json.dumps(tofl_data))
 
-#         print()
+        print()
 
-# _thread.start_new_thread(thread0, ())
+_thread.start_new_thread(thread0, ())
 
-# thread1()
+thread1()
