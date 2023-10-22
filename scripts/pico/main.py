@@ -104,6 +104,8 @@ def thread0():
     global tofl5
     global tofl6
 
+    global tofl_data
+
     while True:
         for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
             distance_cm = tofl.ping()/10
@@ -124,10 +126,10 @@ def thread1():
     global tofl11
     global tofl12
 
+    global tofl_data
+
     while True:
         for idx, tofl in enumerate([tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
-            global tofl_data
-
             distance_cm = tofl.ping()/10
             tofl_data[idx + 6] = distance_cm
 
