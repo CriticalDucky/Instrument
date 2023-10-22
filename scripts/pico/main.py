@@ -36,64 +36,64 @@ for pin in i2c_0_xshut + i2c_1_xshut:
 
 i2c_0_xshut[0].value(1)
 utime.sleep_us(TBOOT)
-tofl1 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl1 = setup_tofl_device(i2c_0, 40000, 18, 14)
 tofl1.set_address(0x31)
 
 i2c_0_xshut[1].value(1)
 utime.sleep_us(TBOOT)
-tofl2 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl2 = setup_tofl_device(i2c_0, 40000, 18, 14)
 tofl2.set_address(0x32)
 
 i2c_0_xshut[2].value(1)
 utime.sleep_us(TBOOT)
-tofl3 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl3 = setup_tofl_device(i2c_0, 40000, 18, 14)
 tofl3.set_address(0x33)
 
 i2c_0_xshut[3].value(1)
 utime.sleep_us(TBOOT)
-tofl4 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl4 = setup_tofl_device(i2c_0, 40000, 18, 14)
 tofl4.set_address(0x34)
 
 i2c_0_xshut[4].value(1)
 utime.sleep_us(TBOOT)
-tofl5 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl5 = setup_tofl_device(i2c_0, 40000, 18, 14)
 tofl5.set_address(0x35)
 
 i2c_0_xshut[5].value(1)
 utime.sleep_us(TBOOT)
-tofl6 = setup_tofl_device(i2c_0, 40000, 12, 8)
+tofl6 = setup_tofl_device(i2c_0, 40000, 18, 14)
 tofl6.set_address(0x36)
 
 # i2c_1
 
 i2c_1_xshut[0].value(1)
 utime.sleep_us(TBOOT)
-tofl7 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl7 = setup_tofl_device(i2c_1, 40000, 18, 14)
 tofl7.set_address(0x31)
 
 i2c_1_xshut[1].value(1)
 utime.sleep_us(TBOOT)
-tofl8 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl8 = setup_tofl_device(i2c_1, 40000, 18, 14)
 tofl8.set_address(0x32)
 
 i2c_1_xshut[2].value(1)
 utime.sleep_us(TBOOT)
-tofl9 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl9 = setup_tofl_device(i2c_1, 40000, 18, 14)
 tofl9.set_address(0x33)
 
 i2c_1_xshut[3].value(1)
 utime.sleep_us(TBOOT)
-tofl10 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl10 = setup_tofl_device(i2c_1, 40000, 18, 14)
 tofl10.set_address(0x34)
 
 i2c_1_xshut[4].value(1)
 utime.sleep_us(TBOOT)
-tofl11 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl11 = setup_tofl_device(i2c_1, 40000, 18, 14)
 tofl11.set_address(0x35)
 
 i2c_1_xshut[5].value(1)
 utime.sleep_us(TBOOT)
-tofl12 = setup_tofl_device(i2c_1, 40000, 12, 8)
+tofl12 = setup_tofl_device(i2c_1, 40000, 18, 14)
 tofl12.set_address(0x36)
 
 while True: # only if distance cm is less than 800, then print:
@@ -121,7 +121,7 @@ def thread0():
             distance_cm = tofl.ping()/10
             tofl_data[idx] = distance_cm
 
-            if distance_cm < 800:
+            if distance_cm < 20 and distance_cm > 10:
                 print(idx + 1, distance_cm, end=' ')
 
         uart.write(json.dumps(tofl_data))
@@ -143,7 +143,7 @@ def thread1():
             distance_cm = tofl.ping()/10
             tofl_data[idx + 6] = distance_cm
 
-            if distance_cm < 800:
+            if distance_cm < 20 and distance_cm > 10:
                 print(idx + 7, distance_cm, end=' ')
 
         # uart.write(json.dumps(tofl_data))
