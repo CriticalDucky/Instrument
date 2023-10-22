@@ -23,12 +23,14 @@ def get_data():
             data = data.split()
             data = [float(x) for x in data]
 
+            print(data)
+
             global cached_data_cm
 
             for idx, val in enumerate(data):
                 cached_data_cm[idx] = val
 
-        print(cached_data_cm)
+        
 
 def get_distance(sensor_number):
     if not serial_port:
