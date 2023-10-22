@@ -111,7 +111,7 @@ def thread0():
             distance_cm = tofl.ping()/10
             tofl_data[idx] = distance_cm
 
-            if distance_cm < 20 and distance_cm > 10:
+            if distance_cm < 30 and distance_cm > 10:
                 print(idx + 1, distance_cm, end=' ')
 
         uart.write(json.dumps(tofl_data))
