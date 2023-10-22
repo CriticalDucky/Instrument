@@ -28,6 +28,8 @@ def get_data():
             for idx, val in enumerate(data):
                 cached_data_cm[idx] = val
 
+        print(cached_data_cm)
+
 def get_distance(sensor_number):
     if not serial_port:
         print(f"{device_name}X not found")
@@ -35,11 +37,11 @@ def get_distance(sensor_number):
 
     distance_cm = cached_data_cm[sensor_number - 1]
 
-    if distance_cm < 700 and distance_cm > 0:
-        print("Sensor", sensor_number, "distance", distance_cm, "cm")
+    # if distance_cm < 700 and distance_cm > 0:
+    #     print("Sensor", sensor_number, "distance", distance_cm, "cm")
 
-    if distance_cm <= 0:
-        print("Waiting for sensor data", sensor_number)
+    # if distance_cm <= 0:
+    #     print("Waiting for sensor data", sensor_number)
 
     return distance_cm  # cm
 
