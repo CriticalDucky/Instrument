@@ -18,7 +18,7 @@ cached_data_cm = [0] * 12
 
 def get_data():
     while True:
-        data = ser.readline().decode().strip()
+        data = ser.readline().decode().strip()[1:-1]
         if data:
             data = data.split()
             data = [float(x) for x in data]
