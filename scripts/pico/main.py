@@ -107,7 +107,7 @@ def thread0():
     global tofl_data
 
     while True:
-        print(json.dumps(tofl_data))
+        print(' '.join(map(str, tofl_data)))
         # print()
 
         for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
