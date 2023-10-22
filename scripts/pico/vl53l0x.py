@@ -637,7 +637,7 @@ class VL53L0X:
         pre_range_overhead = 660
         final_range_overhead = 550
 
-        min_timing_budget = 20000
+        min_timing_budget = 10000
 
         if budget_us < min_timing_budget:
             return False
