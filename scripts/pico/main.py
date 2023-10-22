@@ -107,15 +107,15 @@ def thread0():
     global tofl_data
 
     while True:
-        uart.write(json.dumps(tofl_data))
-        print()
+        print(json.dumps(tofl_data))
+        # print()
 
         for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
             distance_cm = tofl.ping()/10
             tofl_data[idx] = distance_cm
 
-            if distance_cm < 30 and distance_cm > 10:
-                print(idx + 1, distance_cm, end=' ')
+            # if distance_cm < 30 and distance_cm > 10:
+            #     print(idx + 1, distance_cm, end=' ')
 
 def thread1():
     global tofl7
@@ -128,14 +128,14 @@ def thread1():
     global tofl_data
 
     while True:
-        print()
+        # print()
 
         for idx, tofl in enumerate([tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
             distance_cm = tofl.ping()/10
             tofl_data[idx + 6] = distance_cm
 
-            if distance_cm < 20 and distance_cm > 10:
-                print(idx + 7, distance_cm, end=' ')
+            # if distance_cm < 20 and distance_cm > 10:
+            #     print(idx + 7, distance_cm, end=' ')
 
 _thread.start_new_thread(thread0, ())
 
