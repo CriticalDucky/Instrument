@@ -2,9 +2,8 @@
 Module for mapping tof sensor readings to notes
 '''
 BASELINE_DISTANCE = 10  # cm; distance from sensor to first octave
-OCTAVE_SPAN_SIZE = 8  # cm; size of activation area of each octave
-OCTAVE_SPACING = 1  # cm; distance between octaves
-DIAMETER = BASELINE_DISTANCE * 2 + 7 * (OCTAVE_SPAN_SIZE + OCTAVE_SPACING)
+OCTAVE_SPAN_SIZE = 10  # cm; size of activation area of each octave
+OCTAVE_SPACING = 2  # cm; distance between octaves
 
 RESPONSE_TOO_CLOSE = "rTC"
 RESPONSE_TOO_FAR = "rTF"
@@ -12,28 +11,20 @@ RESPONSE_NOT_IN_PATH = "rNP"
 RESPONSE_IN_SPACING = "rIP"
 
 octave_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-first_octave = 3
-last_octave = 4
+octave = 4
 
 def get_note_name(sensor_number, distance):
     if distance < BASELINE_DISTANCE:
         return RESPONSE_TOO_CLOSE
 
     distance -= BASELINE_DISTANCE
-    area_group_size = OCTAVE_SPAN_SIZE + OCTAVE_SPACING
-    octave = int(distance // area_group_size) + first_octave
 
-    if (
-            distance % area_group_size <= OCTAVE_SPACING and
-            octave <= last_octave
-        ) or (
-            distance % area_group_size <= BASELINE_DISTANCE and
-            octave == last_octave + 1
-    ):
+    if distance < OCTAVE_SPACING:
         return RESPONSE_IN_SPACING
+    
+    distance -= OCTAVE_SPACING
 
-    if octave > last_octave:
+    if distance > (OCTAVE_SPAN_SIZE):
         return RESPONSE_TOO_FAR
 
-    note = octave_notes[(sensor_number - 1)]
-    return note + str(octave)
+    return octave_notes[(sensor_number - 1)] + str(octave)
