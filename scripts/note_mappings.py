@@ -1,95 +1,21 @@
 '''
 Module for mapping tof sensor readings to notes
 '''
-BASELINE_DISTANCE = 4  # cm; distance from sensor to first octave
-OCTAVE_SPAN_SIZE = 1  # cm; size of activation area of each octave
-OCTAVE_SPACING = 3  # cm; distance between octaves
-FINGER_WIDTH_HALF = 0#1.5/2  # cm; width of finger divided by 2
+BASELINE_DISTANCE = 10  # cm; distance from sensor to first octave
+OCTAVE_SPAN_SIZE = 8  # cm; size of activation area of each octave
+OCTAVE_SPACING = 1  # cm; distance between octaves
 DIAMETER = BASELINE_DISTANCE * 2 + 7 * (OCTAVE_SPAN_SIZE + OCTAVE_SPACING)
-MAGIC_FORMULA = "\frac{\sin \left(75\cdot \left(\pi /180\right)\right)}{30}=\frac{\sin \left(15\cdot \left(\pi /180\right)\right)}{0.5x}"
-
-'''
-0 
-
-1 
-
-2    
-
-3 
-
-4  
-    ░░
-5  
-    ░░
-6  
-    ░░
-7  
-    ██ 2
-8  
-    ░░
-9  
-    ░░
-10 
-    ░░
-11 
-    ██ 3
-12 
-    ░░
-13 
-    ░░
-14 
-    ░░
-15 
-    ██ 4
-16 
-    ░░
-17 
-    ░░
-18 
-    ░░
-19 
-    ██ 5
-20 
-    ░░
-21
-    ░░
-22
-    ░░
-23
-    ██ 6
-24
-    ░░
-25
-    ░░
-26
-    ░░
-27
-    ██ 7
-28
-
-29
-
-30
-
-31
-   
-32
-'''
 
 RESPONSE_TOO_CLOSE = "rTC"
 RESPONSE_TOO_FAR = "rTF"
 RESPONSE_NOT_IN_PATH = "rNP"
 RESPONSE_IN_SPACING = "rIP"
 
-octave_notes = ['C', 'C#', 'D', 'D#', 'E',
-                'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-first_octave = 2
-last_octave = 7
-
+octave_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+first_octave = 3
+last_octave = 4
 
 def get_note_name(sensor_number, distance):
-    distance += FINGER_WIDTH_HALF
-
     if distance < BASELINE_DISTANCE:
         return RESPONSE_TOO_CLOSE
 
