@@ -1,8 +1,8 @@
 '''
 Module for mapping tof sensor readings to notes
 '''
-BASELINE_DISTANCE = 10  # cm; distance from sensor to first octave
-OCTAVE_SPAN_SIZE = 10  # cm; size of activation area of each octave
+BASELINE_DISTANCE = 0  # cm; distance from sensor to first octave
+OCTAVE_SPAN_SIZE = 20  # cm; size of activation area of each octave
 OCTAVE_SPACING = 2  # cm; distance between octaves
 
 RESPONSE_TOO_CLOSE = "rTC"
