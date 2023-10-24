@@ -23,7 +23,8 @@ def noteBelongsToSensor(note: str, sensor_number):
 while True:
     for sensor_number in range(1, NUM_SENSORS + 1):
         distance = get_distance(sensor_number)
-        note = get_note_name(sensor_number, distance)
+        distance_opp = get_distance((sensor_number + 6) % NUM_SENSORS)
+        note = get_note_name(sensor_number, distance, distance_opp)
         selected_instrument = get_selected_instrument()
 
         if note in [
