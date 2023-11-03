@@ -1,3 +1,4 @@
+
 LEDS_PER_NOTE = 10
 
 import subprocess
