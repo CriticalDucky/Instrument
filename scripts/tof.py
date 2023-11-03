@@ -1,3 +1,5 @@
+ACTIVATION_ZONE = 20 # cm
+
 import serial
 import serial.tools.list_ports
 import threading
@@ -29,8 +31,6 @@ def get_data():
             for idx, val in enumerate(data):
                 cached_data_cm[idx] = val
 
-        
-
 def get_distance(sensor_number):
     if not serial_port:
         print(f"{device_name}X not found")
@@ -45,6 +45,20 @@ def get_distance(sensor_number):
     #     print("Waiting for sensor data", sensor_number)
 
     return distance_cm  # cm
+
+def get_sensor_binaries(): # A table of 12 1s and 0s, 1 if the sensor has something within 20cm, 0 otherwise
+    binaries = []
+
+    for sensor_number in range(1, 13):
+        distance = get_distance(sensor_number)
+        distance_opp = get_distance((sensor_number + 6) % 12)
+        
+        if distance_opp < 800 and distance < ACTIVATION_ZONE:
+            binaries.append(1)
+        else:
+            binaries.append(0)
+
+    return binaries
 
 new_thread = threading.Thread(target=get_data)
 new_thread.start()
