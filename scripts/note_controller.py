@@ -16,7 +16,7 @@ def loop():
     octave = get_selected_octave()
     binaries = get_sensor_binaries()
     selected_instrument = get_selected_instrument()
-    isBurst = selected_instrument() in BURST_INSTRUMENTS
+    isBurst = selected_instrument in BURST_INSTRUMENTS
 
     for idx, val in enumerate(binaries):
         sensor_number = idx + 1
