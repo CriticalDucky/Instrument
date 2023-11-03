@@ -6,7 +6,7 @@ import json
 def write(data):
     data = json.dumps(data)
 
-    command = ["python3", "led_admin.py", data]
+    command = ["python3", "scripts/led_admin.py", data]
 
     try:
         subprocess.run(command, check=True)
