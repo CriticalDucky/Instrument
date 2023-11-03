@@ -1,4 +1,3 @@
-
 ACTIVATION_ZONE = 20 # cm
 
 import serial
