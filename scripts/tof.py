@@ -20,17 +20,22 @@ cached_data_cm = [0] * 12
 past_binaries = [0] * 12
 
 def get_data():
-    while True:
-        data = ser.readline().decode().strip()
-        if data:
-            data = data.split()
-            # print(data)
-            data = [float(x) for x in data]
+    data = None
 
-            global cached_data_cm
+    try:
+        while True:
+            data = ser.readline().decode().strip()
+            if data:
+                data1 = data.split()
+                # print(data)
+                data1 = [float(x) for x in data1]
 
-            for idx, val in enumerate(data):
-                cached_data_cm[idx] = val
+                global cached_data_cm
+
+                for idx, val in enumerate(data1):
+                    cached_data_cm[idx] = val
+    except:
+        print("The pico has something to say!", data)
 
 def get_distance(sensor_number):
     if not serial_port:
