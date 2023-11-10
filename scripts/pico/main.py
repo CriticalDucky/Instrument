@@ -106,19 +106,22 @@ def thread0():
 
     global tofl_data
 
+    current_sensor = 0
+
     try:
         while True:
             print(' '.join(map(str, tofl_data)))
             # print()
 
             for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
+                current_sensor = idx + 1
                 distance_cm = tofl.ping()/10
                 tofl_data[idx] = distance_cm
 
                 # if distance_cm < 30 and distance_cm > 10:
                 #     print(idx + 1, distance_cm, end=' ')
     except Exception as e:
-        print(e)
+        print(e, f"Sensor {current_sensor} failed")
 
 def thread1():
     global tofl7
@@ -130,18 +133,21 @@ def thread1():
 
     global tofl_data
 
+    current_sensor = 0
+
     try:
         while True:
             # print()
 
             for idx, tofl in enumerate([tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
+                current_sensor = idx + 7
                 distance_cm = tofl.ping()/10
                 tofl_data[idx + 6] = distance_cm
 
                 # if distance_cm < 20 and distance_cm > 10:
                 #     print(idx + 7, distance_cm, end=' ')
     except Exception as e:
-        print(e)
+        print(e, f"Sensor {current_sensor} failed")
 
 _thread.start_new_thread(thread0, ())
 
