@@ -28,7 +28,7 @@ def get_data():
             if data:
                 data1 = data.split()
                 # print(data)
-                data1 = [float(x) for x in data1]
+                data1 = [float(x)/10 for x in data1]
 
                 global cached_data_cm
 
