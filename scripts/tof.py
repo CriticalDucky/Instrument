@@ -26,7 +26,7 @@ def get_data():
             data = ser.readline().decode().strip()
             if data:
                 data1 = data.split()
-                print(data)
+                # print(data)
                 data1 = [float(x)/10 for x in data1]
 
                 global cached_data_cm
