@@ -13,7 +13,7 @@ def write(data):
     except subprocess.CalledProcessError as e:
         print("Error:", e)
 
-def shift_led_data(data, shift_amount=-5): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
+def shift_led_data(data, shift_amount=5): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
     reversed_list = list(reversed(data))
     shifted_list = reversed_list[shift_amount:] + reversed_list[:shift_amount]
     return shifted_list
