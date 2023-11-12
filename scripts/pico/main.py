@@ -105,9 +105,9 @@ while True:
         for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
             current_sensor = idx + 1
             distance_mm = tofl.ping()
-            if distance_mm < 450:
-                print(current_sensor, distance_mm)
-            utime.sleep_ms(2)
+            # if distance_mm < 450:
+            #     print(current_sensor, distance_mm)
+            utime.sleep_us(1200)
             tofl_data[idx] = distance_mm
 
     except Exception as e:
