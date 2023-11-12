@@ -17,7 +17,6 @@ serial_port = find_serial_port(device_name)
     
 ser = serial.Serial(serial_port, 9600)
 cached_data_cm = [0] * 12
-past_binaries = [0] * 12
 
 def get_data():
     while True:
@@ -63,16 +62,6 @@ def get_sensor_binaries(): # A table of 12 1s and 0s, 1 if the sensor has someth
             binaries.append(1)
         else:
             binaries.append(0)
-
-    global past_binaries # We use the past data to correct the current data
-
-    old_binaries = binaries.copy()
-
-    for idx, val in enumerate(old_binaries): # Sometimes the sensors are not accurate, so we use the past data to correct them
-        if past_binaries[idx] == 1 and val == 0:
-            binaries[idx] = 1
-
-    past_binaries = old_binaries # Update the past data
 
     return binaries
 
