@@ -1,4 +1,4 @@
-LEDS_PER_NOTE = 10
+LEDS_PER_NOTE = 13
 
 import subprocess
 import json
@@ -13,6 +13,9 @@ def write(data):
     except subprocess.CalledProcessError as e:
         print("Error:", e)
 
+def shift_led_data(data, shift_amount=-5): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
+    return (data[-shift_amount:] + data[:-shift_amount])[::-1]
+
 def update_with_binaries(binaries): # For debug purposes
     data = []
 
@@ -26,4 +29,4 @@ def update_with_binaries(binaries): # For debug purposes
             else:
                 data.append(color_off)
 
-    write(data)
+    write(shift_led_data(data))
