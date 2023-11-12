@@ -1,4 +1,5 @@
 LEDS_PER_NOTE = 13
+LED_GROUPS = 12
 
 import subprocess
 import json
@@ -24,12 +25,14 @@ def update_with_binaries(binaries): # For debug purposes
 
     binaries = shift_led_data(binaries)
 
-    for _, val in enumerate(binaries):
+    for note, val in enumerate(binaries):
         color_off = (0, 0, 0)
 
-        for i in range(LEDS_PER_NOTE):
+        for led in range(LEDS_PER_NOTE):
+            num_led = note * LEDS_PER_NOTE + led
+
             if val == 1:
-                data.append(rainbow.get_color_at_position(i/LEDS_PER_NOTE))
+                data.append(rainbow.get_color_at_position(num_led / (LED_GROUPS * LEDS_PER_NOTE)))
             else:
                 data.append(color_off)
 
