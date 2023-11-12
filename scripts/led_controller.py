@@ -30,3 +30,5 @@ def update_with_binaries(binaries): # For debug purposes
                 data.append(color_on)
             else:
                 data.append(color_off)
+
+    write(data)
