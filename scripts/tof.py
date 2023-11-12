@@ -58,9 +58,8 @@ def get_sensor_binaries(): # A table of 12 1s and 0s, 1 if the sensor has someth
 
     for sensor_number in range(1, 13): # 12 sensors
         distance = get_distance(sensor_number)
-        distance_opp = get_distance((sensor_number + 6) % 12)
         
-        if distance_opp < 800 and distance < ACTIVATION_ZONE:
+        if distance < ACTIVATION_ZONE:
             binaries.append(1)
         else:
             binaries.append(0)
