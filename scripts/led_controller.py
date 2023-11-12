@@ -25,7 +25,7 @@ def update_with_binaries(binaries): # For debug purposes
 
     for _, val in enumerate(binaries):
         color_off = [0, 0, 0]
-        color_on = [76, 0, 255]
+        color_on = [255, 0, 81]
 
         for _ in range(LEDS_PER_NOTE):
             if val == 1:
