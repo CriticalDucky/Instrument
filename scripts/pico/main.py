@@ -115,6 +115,7 @@ def thread0():
             for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
                 current_sensor = idx + 1
                 distance_mm = tofl.ping()
+                utime.sleep_ms(2)
                 tofl_data[idx] = distance_mm
 
         except Exception as e:
@@ -139,6 +140,7 @@ def thread1():
             for idx, tofl in enumerate([tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
                 current_sensor = idx + 7
                 distance_mm = tofl.ping()
+                utime.sleep_ms(2)
                 tofl_data[idx + 6] = distance_mm
         except Exception as e:
             print(e, f"Sensor {current_sensor} failed")
