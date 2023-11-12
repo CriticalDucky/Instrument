@@ -14,7 +14,9 @@ def write(data):
         print("Error:", e)
 
 def shift_led_data(data, shift_amount=-5): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
-    return list(reversed(data))
+    reversed_list = list(reversed(data))
+    shifted_list = reversed_list[shift_amount:] + reversed_list[:shift_amount]
+    return shifted_list
 
 def update_with_binaries(binaries): # For debug purposes
     data = []
