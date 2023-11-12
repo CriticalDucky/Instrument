@@ -2,6 +2,7 @@ LEDS_PER_NOTE = 13
 
 import subprocess
 import json
+from color_util import Gradient, rainbow
 #
 def write(data):
     data = json.dumps(data)
@@ -24,12 +25,11 @@ def update_with_binaries(binaries): # For debug purposes
     binaries = shift_led_data(binaries)
 
     for _, val in enumerate(binaries):
-        color_off = [0, 0, 0]
-        color_on = [255, 0, 81]
+        color_off = (0, 0, 0)
 
-        for _ in range(LEDS_PER_NOTE):
+        for i in range(LEDS_PER_NOTE):
             if val == 1:
-                data.append(color_on)
+                data.append(rainbow.get_color_at_position(i/LEDS_PER_NOTE))
             else:
                 data.append(color_off)
 
