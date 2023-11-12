@@ -1,3 +1,5 @@
+TIMING_BUDGET = 10000  # us
+
 from machine import Pin, I2C, UART  # type: ignore
 from vl53l0x import setup_tofl_device, TBOOT
 import utime  # type: ignore
@@ -36,115 +38,130 @@ for pin in i2c_0_xshut + i2c_1_xshut:
 
 i2c_0_xshut[0].value(1)
 utime.sleep_us(TBOOT)
-tofl1 = setup_tofl_device(i2c_0, 40000, 12, 14)
+tofl1 = setup_tofl_device(i2c_0, TIMING_BUDGET, 12, 14)
 tofl1.set_address(0x31)
 
 i2c_0_xshut[1].value(1)
 utime.sleep_us(TBOOT)
-tofl2 = setup_tofl_device(i2c_0, 40000, 12, 14)
+tofl2 = setup_tofl_device(i2c_0, TIMING_BUDGET, 12, 14)
 tofl2.set_address(0x32)
 
 i2c_0_xshut[2].value(1)
 utime.sleep_us(TBOOT)
-tofl3 = setup_tofl_device(i2c_0, 40000, 12, 14)
+tofl3 = setup_tofl_device(i2c_0, TIMING_BUDGET, 12, 14)
 tofl3.set_address(0x33)
 
 i2c_0_xshut[3].value(1)
 utime.sleep_us(TBOOT)
-tofl4 = setup_tofl_device(i2c_0, 40000, 12, 14)
+tofl4 = setup_tofl_device(i2c_0, TIMING_BUDGET, 12, 14)
 tofl4.set_address(0x34)
 
 i2c_0_xshut[4].value(1)
 utime.sleep_us(TBOOT)
-tofl5 = setup_tofl_device(i2c_0, 40000, 12, 14)
+tofl5 = setup_tofl_device(i2c_0, TIMING_BUDGET, 12, 14)
 tofl5.set_address(0x35)
 
 i2c_0_xshut[5].value(1)
 utime.sleep_us(TBOOT)
-tofl6 = setup_tofl_device(i2c_0, 40000, 12, 14)
+tofl6 = setup_tofl_device(i2c_0, TIMING_BUDGET, 12, 14)
 tofl6.set_address(0x36)
 
 # i2c_1
 
 i2c_1_xshut[0].value(1)
 utime.sleep_us(TBOOT)
-tofl7 = setup_tofl_device(i2c_1, 40000, 12, 14)
+tofl7 = setup_tofl_device(i2c_1, TIMING_BUDGET, 12, 14)
 tofl7.set_address(0x41)
 
 i2c_1_xshut[1].value(1)
 utime.sleep_us(TBOOT)
-tofl8 = setup_tofl_device(i2c_1, 40000, 12, 14)
+tofl8 = setup_tofl_device(i2c_1, TIMING_BUDGET, 12, 14)
 tofl8.set_address(0x42)
 
 i2c_1_xshut[2].value(1)
 utime.sleep_us(TBOOT)
-tofl9 = setup_tofl_device(i2c_1, 40000, 12, 14)
+tofl9 = setup_tofl_device(i2c_1, TIMING_BUDGET, 12, 14)
 tofl9.set_address(0x43)
 
 i2c_1_xshut[3].value(1)
 utime.sleep_us(TBOOT)
-tofl10 = setup_tofl_device(i2c_1, 40000, 12, 14)
+tofl10 = setup_tofl_device(i2c_1, TIMING_BUDGET, 12, 14)
 tofl10.set_address(0x44)
 
 i2c_1_xshut[4].value(1)
 utime.sleep_us(TBOOT)
-tofl11 = setup_tofl_device(i2c_1, 40000, 12, 14)
+tofl11 = setup_tofl_device(i2c_1, TIMING_BUDGET, 12, 14)
 tofl11.set_address(0x45)
 
 i2c_1_xshut[5].value(1)
 utime.sleep_us(TBOOT)
-tofl12 = setup_tofl_device(i2c_1, 40000, 12, 14)
+tofl12 = setup_tofl_device(i2c_1, TIMING_BUDGET, 12, 14)
 tofl12.set_address(0x46)
 
-def thread0():
-    global tofl1
-    global tofl2
-    global tofl3
-    global tofl4
-    global tofl5
-    global tofl6
+while True:
+    try:
+        print(' '.join(map(str, tofl_data)))
 
-    global tofl_data
+        for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6, tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
+            current_sensor = idx + 1
+            distance_mm = tofl.ping()
+            if distance_mm < 450:
+                print(current_sensor, distance_mm)
+            utime.sleep_ms(2)
+            tofl_data[idx] = distance_mm
 
-    current_sensor = 0
+    except Exception as e:
+        print(e, f"Sensor {current_sensor} failed")
 
-    while True:
-        try:
-            print(' '.join(map(str, tofl_data)))
+# def thread0():
+#     global tofl1
+#     global tofl2
+#     global tofl3
+#     global tofl4
+#     global tofl5
+#     global tofl6
 
-            for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
-                current_sensor = idx + 1
-                distance_mm = tofl.ping()
-                utime.sleep_ms(2)
-                tofl_data[idx] = distance_mm
+#     global tofl_data
 
-        except Exception as e:
-            print(e, f"Sensor {current_sensor} failed")
+#     current_sensor = 0
+
+#     while True:
+#         try:
+#             print(' '.join(map(str, tofl_data)))
+
+#             for idx, tofl in enumerate([tofl1, tofl2, tofl3, tofl4, tofl5, tofl6]):
+#                 current_sensor = idx + 1
+#                 distance_mm = tofl.ping()
+#                 utime.sleep_ms(2)
+#                 tofl_data[idx] = distance_mm
+
+#         except Exception as e:
+#             print(e, f"Sensor {current_sensor} failed")
 
     
 
-def thread1():
-    global tofl7
-    global tofl8
-    global tofl9
-    global tofl10
-    global tofl11
-    global tofl12
+# def thread1():
+#     global tofl7
+#     global tofl8
+#     global tofl9
+#     global tofl10
+#     global tofl11
+#     global tofl12
 
-    global tofl_data
+#     global tofl_data
 
-    current_sensor = 0
+#     current_sensor = 0
 
-    while True:
-        try:
-            for idx, tofl in enumerate([tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
-                current_sensor = idx + 7
-                distance_mm = tofl.ping()
-                utime.sleep_ms(2)
-                tofl_data[idx + 6] = distance_mm
-        except Exception as e:
-            print(e, f"Sensor {current_sensor} failed")
+#     while True:
+#         try:
+#             for idx, tofl in enumerate([tofl7, tofl8, tofl9, tofl10, tofl11, tofl12]):
+#                 current_sensor = idx + 7
+#                 distance_mm = tofl.ping()
+#                 utime.sleep_ms(2)
+#                 tofl_data[idx + 6] = distance_mm
+#         except Exception as e:
+#             print(e, f"Sensor {current_sensor} failed")
 
-_thread.start_new_thread(thread0, ())
+# _thread.start_new_thread(thread0, ())
 
-thread1()
+# thread1()
