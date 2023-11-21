@@ -22,6 +22,13 @@ root = tk.Tk()
 app = FullscreenApp(root)
 root.mainloop()
 
+# Create a temporary Tkinter root window
+root = tk.Tk()
+
+# List all available font families
 font_list = font.families()
 for font_family in font_list:
     print(font_family)
+
+# Close the temporary root window
+root.destroy()
