@@ -9,7 +9,7 @@ custom_font = font.Font(family="Quicksand", size=20, weight="bold")
 
 class RoundedButton(ttk.Button):
     def __init__(self, master=None, **kwargs):
-        ttk.Button.__init__(self, master, **kwargs)
+        tk.Button.__init__(self, master, **kwargs)
 
         # Configure the button style to have rounded corners
         self.style = ttk.Style()
