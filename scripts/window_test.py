@@ -1,6 +1,6 @@
 import tkinter as tk
-from tkinter import font
 import os
+from tkextrafont import Font
  
 current_dir = os.path.dirname(os.path.abspath(__file__))  
 parent_dir = os.path.dirname(current_dir)  
@@ -9,7 +9,7 @@ font_display1_path = os.path.join(fonts_folder, 'display1.otf')
 
 root = tk.Tk()
 
-font_display1 = font.Font(family="Display 1", file=font_display1_path, size=24)
+font_display1 = Font(family="Display 1", file=font_display1_path, size=24)
 
 class FullscreenApp:
     def __init__(self, master, **kwargs):
