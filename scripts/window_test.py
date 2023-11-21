@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import font
 
 class FullscreenApp:
     def __init__(self, master, **kwargs):
@@ -20,3 +21,7 @@ class FullscreenApp:
 root = tk.Tk()
 app = FullscreenApp(root)
 root.mainloop()
+
+font_list = font.families()
+for font_family in font_list:
+    print(font_family)
