@@ -7,6 +7,8 @@ parent_dir = os.path.dirname(current_dir)
 fonts_folder = os.path.join(parent_dir, 'fonts')
 font_display1_path = os.path.join(fonts_folder, 'display1.otf')
 
+root = tk.Tk()
+
 font_display1 = font.Font(family="Display 1", file=font_display1_path, size=24)
 
 class FullscreenApp:
@@ -26,17 +28,6 @@ class FullscreenApp:
     def exit_app(self, event=None):
         self.master.destroy()
 
-root = tk.Tk()
 app = FullscreenApp(root)
+
 root.mainloop()
-
-# Create a temporary Tkinter root window
-root = tk.Tk()
-
-# List all available font families
-font_list = font.families()
-for font_family in font_list:
-    print(font_family)
-
-# Close the temporary root window
-root.destroy()
