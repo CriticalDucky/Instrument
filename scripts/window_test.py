@@ -4,7 +4,7 @@ import os
 
 root = tk.Tk()
 
-custom_font = font.Font(family="Helvetica", size=20, weight="bold")
+custom_font = font.Font(family="Quicksand", size=20, weight="bold")
 class FullscreenApp:
     def __init__(self, master, **kwargs):
         self.master = master
