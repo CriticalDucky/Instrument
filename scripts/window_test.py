@@ -1,16 +1,10 @@
 import tkinter as tk
+from tkinter import font
 import os
-from tkextrafont import Font
- 
-current_dir = os.path.dirname(os.path.abspath(__file__))  
-parent_dir = os.path.dirname(current_dir)  
-fonts_folder = os.path.join(parent_dir, 'fonts')
-font_display1_path = os.path.join(fonts_folder, 'display1.otf')
 
 root = tk.Tk()
 
-font_display1 = Font(family="Display 1", file=font_display1_path, size=24)
-
+custom_font = font.Font(family="Helvetica", size=20, weight="bold")
 class FullscreenApp:
     def __init__(self, master, **kwargs):
         self.master = master
@@ -18,7 +12,7 @@ class FullscreenApp:
         master.bind('<Escape>', self.toggle_fullscreen)
         master.bind('<Button-1>', self.exit_app)
 
-        self.exit_button = tk.Button(master, text="Exit", command=self.exit_app, font=font_display1)
+        self.exit_button = tk.Button(master, text="Exit", command=self.exit_app, font=custom_font)
         self.exit_button.pack(expand=True)
 
     def toggle_fullscreen(self, event=None):
