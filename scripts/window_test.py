@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import font
-import os
 
 root = tk.Tk()
 root.geometry("800x480")
@@ -12,7 +11,6 @@ class FullscreenApp:
         self.master = master
         master.attributes('-fullscreen', True)
         master.bind('<Escape>', self.toggle_fullscreen)
-        master.bind('<Button-1>', self.exit_app)
 
     def toggle_fullscreen(self, event=None):
         self.state = not self.state
