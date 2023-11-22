@@ -13,9 +13,6 @@ class FullscreenApp:
         master.bind('<Escape>', self.toggle_fullscreen)
         master.bind('<Button-1>', self.exit_app)
 
-        self.exit_button = tk.Button(master, text="Exit", command=self.exit_app, font=custom_font)
-        self.exit_button.pack(expand=True)
-
     def toggle_fullscreen(self, event=None):
         self.state = not self.state
         self.master.attributes('-fullscreen', self.state)
@@ -24,5 +21,8 @@ class FullscreenApp:
         self.master.destroy()
 
 app = FullscreenApp(root)
+
+exit_button = tk.Button(root, text="Exit", command=app.exit_app, font=custom_font)
+exit_button.pack(expand=False)
 
 root.mainloop()
