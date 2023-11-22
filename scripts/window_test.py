@@ -44,6 +44,8 @@ class ToggleButton(tk.Button):
         old_value = self.var.get()
         self.var.set(False)
         self.config(relief=tk.RAISED) 
+        # remove the focus from the button
+        self.config(takefocus=0)
         if self.on_toggle_off is not None and old_value == True:
             self.on_toggle_off()
 
