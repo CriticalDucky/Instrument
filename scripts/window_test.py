@@ -46,11 +46,6 @@ class ToggleButton(tk.Button):
         if self.on_toggle_off is not None:
             self.on_toggle_off()
 
-    def config(self, **kwargs):
-        # Pass custom configs to the base Button config
-        super().config({opt:kwargs.get(opt) for opt in self.config_options if opt in kwargs})
-
-
 app = FullscreenApp(root)
 
 exit_button = tk.Button(root, text="Exit", command=app.exit_app, font=custom_font)
