@@ -23,6 +23,6 @@ class FullscreenApp:
 app = FullscreenApp(root)
 
 exit_button = tk.Button(root, text="Exit", command=app.exit_app, font=custom_font)
-exit_button.pack(expand=False)
+exit_button.pack(expand=True)
 
 root.mainloop()
