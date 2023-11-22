@@ -27,21 +27,24 @@ class ToggleButton(tk.Button):
         self.config(relief=tk.RAISED)
         
         self.bind("<ButtonPress-1>", self.on_tap)
+        self.bind("<Enter>", self.on_tap)
         self.bind("<ButtonRelease-1>", self.on_release)
         
         self.on_toggle_on = on_toggle_on
         self.on_toggle_off = on_toggle_off
         
     def on_tap(self, event):
+        old_value = self.var.get()
         self.var.set(True)
         self.config(relief=tk.SUNKEN)
-        if self.on_toggle_on is not None:
+        if self.on_toggle_on is not None and old_value == False:
             self.on_toggle_on()
 
     def on_release(self, event):
+        old_value = self.var.get()
         self.var.set(False)
         self.config(relief=tk.RAISED) 
-        if self.on_toggle_off is not None:
+        if self.on_toggle_off is not None and old_value == True:
             self.on_toggle_off()
 
 app = FullscreenApp(root)
