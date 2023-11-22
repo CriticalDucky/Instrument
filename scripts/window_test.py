@@ -54,9 +54,9 @@ class ToggleButton(tk.Button):
 app = FullscreenApp(root)
 
 exit_button = tk.Button(root, text="Exit", command=app.exit_app, font=custom_font)
-exit_button.place(relx=0.5, rely=0.5, anchor=tk.LEFT, width=200, height=100)
+exit_button.place(relx=0.5, rely=0.5, anchor=tk.W, width=200, height=100)
 
 toggle_button = ToggleButton(root, text="Toggle", font=custom_font)
-toggle_button.place(relx=0.5, rely=0.5, anchor=tk.RIGHT, width=200, height=100)
+toggle_button.place(relx=0.5, rely=0.5, anchor=tk.E, width=200, height=100)
 
 root.mainloop()
