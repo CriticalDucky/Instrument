@@ -3,6 +3,7 @@ from tkinter import font
 import os
 
 root = tk.Tk()
+root.geometry("800x480")
 
 custom_font = font.Font(family="Quicksand", size=20, weight="bold")
 
@@ -53,7 +54,6 @@ class ToggleButton(tk.Button):
 app = FullscreenApp(root)
 
 exit_button = tk.Button(root, text="Exit", command=app.exit_app, font=custom_font)
-exit_button.config(height=1, width=1)
-exit_button.pack()
+exit_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER, width=200, height=100)
 
 root.mainloop()
