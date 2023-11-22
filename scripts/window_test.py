@@ -20,9 +20,40 @@ class FullscreenApp:
     def exit_app(self, event=None):
         self.master.destroy()
 
+class ToggleButton(tk.Button):
+    def __init__(self, master, on_toggle_on=None, on_toggle_off=None, **kwargs):
+        super().__init__(master, **kwargs)
+        self.var = tk.BooleanVar(False)
+        
+        self.config(relief=tk.RAISED)
+        
+        self.bind("<ButtonPress-1>", self.on_tap)
+        self.bind("<ButtonRelease-1>", self.on_release)
+        
+        self.on_toggle_on = on_toggle_on
+        self.on_toggle_off = on_toggle_off
+        
+    def on_tap(self, event):
+        self.var.set(True)
+        self.config(relief=tk.SUNKEN)
+        if self.on_toggle_on is not None:
+            self.on_toggle_on()
+
+    def on_release(self, event):
+        self.var.set(False)
+        self.config(relief=tk.RAISED) 
+        if self.on_toggle_off is not None:
+            self.on_toggle_off()
+
+    def config(self, **kwargs):
+        # Pass custom configs to the base Button config
+        super().config({opt:kwargs.get(opt) for opt in self.config_options if opt in kwargs})
+
+
 app = FullscreenApp(root)
 
 exit_button = tk.Button(root, text="Exit", command=app.exit_app, font=custom_font)
-exit_button.pack(expand=True)
+exit_button.config(height=800, width=480)
+exit_button.pack()
 
 root.mainloop()
