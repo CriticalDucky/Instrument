@@ -10,6 +10,12 @@ from kivy.config import Config
 Config.set('kivy', 'desktop', 1)
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
+class ScrollableButton(Button):
+    def on_touch_down(self, touch):
+        if super(ScrollableButton, self).on_touch_down(touch):
+            return True  # Event has been handled by the button
+        return False  # Event has not been handled, allowing it to propagate
+
 class FullScreenApp(App):
     def build(self):
         # Set the window to fullscreen
@@ -92,7 +98,7 @@ class FullScreenApp(App):
 
         # Add 10 instruments to the scroll layout
         for i in range(10):
-            instrument_button = Button(
+            instrument_button = ScrollableButton(
                 text=f'Instrument {i + 1}',
                 size_hint_y=None,
                 height=96
