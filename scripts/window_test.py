@@ -1,7 +1,13 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.button import Button
 from kivy.core.window import Window
+from kivy.config import Config
+
+# make sure it detects touch inputs only
+Config.set('kivy', 'desktop', 1)
+Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
 class FullScreenApp(App):
     def build(self):
@@ -9,7 +15,7 @@ class FullScreenApp(App):
         Window.fullscreen = 'auto'
 
         # Create a layout for the new window
-        layout = BoxLayout(orientation='horizontal')
+        layout = BoxLayout(orientation='horizontal', spacing=10)
 
         # Create a vertical BoxLayout for the buttons
         button_layout = BoxLayout(
@@ -22,7 +28,7 @@ class FullScreenApp(App):
                 group='octaves',
                 allow_no_selection=False
             )
-            button.bind(on_touch_down=self.on_touch_down)
+            button.bind(on_touch_down=self.on_octave_touch_down)
 
             # Set default state to enabled for Octave 4
             if i == 2:
@@ -33,11 +39,29 @@ class FullScreenApp(App):
         # Add the vertical layout to the main horizontal layout
         layout.add_widget(button_layout)
 
+        
+
+        # Create a HOLD button
+        hold_button = Button(
+            text='Hold',
+            size_hint=(None, None),
+            size=(150, 150),
+            pos_hint={'center_y': 0.5}
+        )
+        hold_button.bind(on_touch_down=self.on_hold_touch_down)
+
+        # Add the HOLD button to the main layout
+        layout.add_widget(hold_button)
+
         return layout
 
-    def on_touch_down(self, instance, touch):
+    def on_octave_touch_down(self, instance, touch):
         if instance.collide_point(*touch.pos):
             print(f'Button {instance.text} pressed')
+
+    def on_hold_touch_down(self, instance, touch):
+        if instance.collide_point(*touch.pos):
+            print('HOLD button pressed')
 
 
 if __name__ == '__main__':
