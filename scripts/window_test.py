@@ -93,15 +93,15 @@ class FullScreenApp(App):
         layout.add_widget(chord_layout)
 
         # Create a scroll view for instruments
-        scroll_layout = BoxLayout(orientation='vertical', size_hint_y=None, width=150)
+        scroll_layout = BoxLayout(orientation='vertical', size_hint_y=None, size_hint_x=None, width=150)
         scroll_layout.bind(minimum_height=scroll_layout.setter('height'))
 
         # Add 10 instruments to the scroll layout
-        for i in range(10):
+        for i in range(50):
             instrument_button = ScrollableButton(
                 text=f'Instrument {i + 1}',
                 size_hint_y=None,
-                height=96
+                height=96,
             )
             scroll_layout.add_widget(instrument_button)
 
