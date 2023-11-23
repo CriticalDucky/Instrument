@@ -48,7 +48,10 @@ class FullScreenApp(App):
             size=(150, 150),
             pos_hint={'center_y': 0.5}
         )
-        hold_button.bind(on_touch_down=self.on_hold_touch_down)
+        hold_button.bind(
+            on_touch_down=self.on_hold_touch_down,
+            on_touch_up=self.on_hold_touch_up
+        )
 
         # Add the HOLD button to the main layout
         layout.add_widget(hold_button)
@@ -62,6 +65,10 @@ class FullScreenApp(App):
     def on_hold_touch_down(self, instance, touch):
         if instance.collide_point(*touch.pos):
             print('HOLD button pressed')
+
+    def on_hold_touch_up(self, instance, touch):
+        if instance.collide_point(*touch.pos):
+            print('HOLD button released')
 
 
 if __name__ == '__main__':
