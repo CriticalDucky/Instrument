@@ -10,11 +10,13 @@ from kivy.config import Config
 Config.set('kivy', 'desktop', 1)
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
+
 class ScrollableButton(Button):
     def on_touch_down(self, touch):
         if super(ScrollableButton, self).on_touch_down(touch):
             return True  # Event has been handled by the button
         return False  # Event has not been handled, allowing it to propagate
+
 
 class FullScreenApp(App):
     def build(self):
@@ -46,6 +48,42 @@ class FullScreenApp(App):
         # Add the vertical layout to the main horizontal layout
         layout.add_widget(button_layout)
 
+        # Create a chord layout
+        chord_layout = BoxLayout(
+            orientation='vertical', size_hint=(None, None), width=300, height=200, spacing=10)
+        chord_layout.pos_hint = {'center_y': 0.5}  # Center vertically
+
+        major_minor = BoxLayout(orientation='horizontal')
+        major_button = ToggleButton(
+            text='Major', group='major_minor', allow_no_selection=False)
+        minor_button = ToggleButton(
+            text='Minor', group='major_minor', allow_no_selection=False)
+
+        major_button.state = 'down'
+
+        major_minor.add_widget(major_button)
+        major_minor.add_widget(minor_button)
+
+        inversions = BoxLayout(orientation='horizontal')
+        no_inv_button = ToggleButton(
+            text='No Inv', group='inversions', allow_no_selection=False)
+        first_inv_button = ToggleButton(
+            text='1st Inv', group='inversions', allow_no_selection=False)
+        second_inv_button = ToggleButton(
+            text='2nd Inv', group='inversions', allow_no_selection=False)
+
+        no_inv_button.state = 'down'
+
+        inversions.add_widget(no_inv_button)
+        inversions.add_widget(first_inv_button)
+        inversions.add_widget(second_inv_button)
+
+        chord_layout.add_widget(major_minor)
+        chord_layout.add_widget(inversions)
+
+        # Add the chord layout to the main horizontal layout
+        layout.add_widget(chord_layout)
+
         # Create a HOLD button
         hold_button = Button(
             text='Hold',
@@ -61,39 +99,9 @@ class FullScreenApp(App):
         # Add the HOLD button to the main layout
         layout.add_widget(hold_button)
 
-        # Create a chord layout
-        chord_layout = BoxLayout(
-            orientation='vertical', size_hint=(None, None), width=300, height=200, spacing=10)
-        chord_layout.pos_hint = {'center_y': 0.5}  # Center vertically
-
-        major_minor = BoxLayout(orientation='horizontal')
-        major_button = ToggleButton(text='Major', group='major_minor', allow_no_selection=False)
-        minor_button = ToggleButton(text='Minor', group='major_minor', allow_no_selection=False)
-
-        major_button.state = 'down'
-
-        major_minor.add_widget(major_button)
-        major_minor.add_widget(minor_button)
-
-        inversions = BoxLayout(orientation='horizontal')
-        no_inv_button = ToggleButton(text='No Inv', group='inversions', allow_no_selection=False)
-        first_inv_button = ToggleButton(text='1st Inv', group='inversions', allow_no_selection=False)
-        second_inv_button = ToggleButton(text='2nd Inv', group='inversions', allow_no_selection=False)
-
-        no_inv_button.state = 'down'
-
-        inversions.add_widget(no_inv_button)
-        inversions.add_widget(first_inv_button)
-        inversions.add_widget(second_inv_button)
-
-        chord_layout.add_widget(major_minor)
-        chord_layout.add_widget(inversions)
-
-        # Add the chord layout to the main horizontal layout
-        layout.add_widget(chord_layout)
-
         # Create a scroll view for instruments
-        scroll_layout = BoxLayout(orientation='vertical', size_hint_y=None, size_hint_x=None, width=150)
+        scroll_layout = BoxLayout(
+            orientation='vertical', size_hint_y=None, size_hint_x=None, width=150)
         scroll_layout.bind(minimum_height=scroll_layout.setter('height'))
 
         # Add 10 instruments to the scroll layout
@@ -106,7 +114,8 @@ class FullScreenApp(App):
             scroll_layout.add_widget(instrument_button)
 
         # Create a ScrollView and add the scroll layout to it
-        scroll_view = ScrollView(size_hint=(None, 1), width=170, do_scroll_x=False, do_scroll_y=True)
+        scroll_view = ScrollView(size_hint=(
+            None, 1), width=170, do_scroll_x=False, do_scroll_y=True)
         scroll_view.scroll_type = ['bars']
         scroll_view.bar_width = 20
         scroll_view.bar_color = [1, 1, 1, 1]
