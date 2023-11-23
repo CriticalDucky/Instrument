@@ -101,12 +101,17 @@ class FullScreenApp(App):
             instrument_button = ScrollableButton(
                 text=f'Instrument {i + 1}',
                 size_hint_y=None,
-                height=96
+                height=960
             )
             scroll_layout.add_widget(instrument_button)
 
         # Create a ScrollView and add the scroll layout to it
         scroll_view = ScrollView(size_hint=(None, 1), width=150, do_scroll_x=False, do_scroll_y=True)
+        scroll_view.scroll_type = ['bars']
+        scroll_view.bar_width = 20
+        scroll_view.bar_color = [1, 1, 1, 1]
+        scroll_view.bar_margin = 0
+        scroll_view.scroll_y
         scroll_view.add_widget(scroll_layout)
 
         # Add the ScrollView to the main horizontal layout
