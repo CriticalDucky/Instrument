@@ -13,13 +13,13 @@ class FullScreenApp(App):
 
         # Add ToggleButtons to the layout
         for i in range(5):
-            button = ToggleButton(text=f'Octave {i+2}', size_hint=(1, None), height=100, group='buttons')
-            button.bind(on_press=self.on_button_press)
+            button = ToggleButton(text=f'Octave {i+2}', size_hint=(1, None), height=100, group='octaves')
+            button.bind(on_touch_down=self.on_touch_down)
             layout.add_widget(button)
 
         return layout
 
-    def on_button_press(self, instance):
+    def on_touch_down(self, instance, touch):
         print(f'Button {instance.text} pressed')
 
 if __name__ == '__main__':
