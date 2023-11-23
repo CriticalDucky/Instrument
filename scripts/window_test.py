@@ -9,12 +9,16 @@ class FullScreenApp(App):
         Window.fullscreen = 'auto'
         # Create a layout for the new window
         layout = BoxLayout(orientation='horizontal')
-        # Add widgets or customize the layout as needed
-
+        
         # Add ToggleButtons to the layout
         for i in range(5):
-            button = ToggleButton(text=f'Octave {i+2}', size_hint=(1, None), height=100, group='octaves')
+            button = ToggleButton(text=f'Octave {i+2}', size_hint=(1, None), height=100, group='octaves', allow_no_selection=False)
             button.bind(on_touch_down=self.on_touch_down)
+            
+            # Set default state to enabled for Octave 4
+            if i == 2:
+                button.state = 'down'
+            
             layout.add_widget(button)
 
         return layout
