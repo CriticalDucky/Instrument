@@ -39,8 +39,6 @@ class FullScreenApp(App):
         # Add the vertical layout to the main horizontal layout
         layout.add_widget(button_layout)
 
-        
-
         # Create a HOLD button
         hold_button = Button(
             text='Hold',
@@ -55,6 +53,21 @@ class FullScreenApp(App):
 
         # Add the HOLD button to the main layout
         layout.add_widget(hold_button)
+
+        # Create a chord layout
+        chord_layout = BoxLayout(
+            orientation='vertical', size_hint=(None, None), width=300, height=200, spacing=10)
+        chord_layout.pos_hint = {'center_y': 0.5}  # Center vertically
+
+        # Add two buttons to the chord layout
+        button1 = Button(text='Chord 1')
+        button2 = Button(text='Chord 2')
+
+        chord_layout.add_widget(button1)
+        chord_layout.add_widget(button2)
+
+        # Add the chord layout to the main horizontal layout
+        layout.add_widget(chord_layout)
 
         return layout
 
