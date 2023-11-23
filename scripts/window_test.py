@@ -60,8 +60,8 @@ class FullScreenApp(App):
         chord_layout.pos_hint = {'center_y': 0.5}  # Center vertically
 
         major_minor = BoxLayout(orientation='horizontal')
-        major_button = ToggleButton(text='Major', group='major_minor')
-        minor_button = ToggleButton(text='Minor', group='major_minor')
+        major_button = ToggleButton(text='Major', group='major_minor', allow_no_selection=False)
+        minor_button = ToggleButton(text='Minor', group='major_minor', allow_no_selection=False)
 
         major_button.state = 'down'
 
