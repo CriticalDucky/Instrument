@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.button import Button
+from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 from kivy.config import Config
 
@@ -85,6 +86,26 @@ class FullScreenApp(App):
         # Add the chord layout to the main horizontal layout
         layout.add_widget(chord_layout)
 
+        # Create a scroll view for instruments
+        scroll_layout = BoxLayout(orientation='vertical', spacing=10)
+
+        # Add 10 instruments to the scroll layout
+        for i in range(10):
+            instrument_button = Button(
+                text=f'Instrument {i + 1}',
+                size_hint_y=None,
+                height=500
+            )
+            instrument_button.bind(on_touch_down=self.on_instrument_touch_down)
+            scroll_layout.add_widget(instrument_button)
+
+        # Create a ScrollView and add the scroll layout to it
+        scroll_view = ScrollView(size_hint=(None, 1), width=150, do_scroll_x=False, do_scroll_y=True)
+        scroll_view.add_widget(scroll_layout)
+
+        # Add the ScrollView to the main horizontal layout
+        layout.add_widget(scroll_view)
+
         return layout
 
     def on_octave_touch_down(self, instance, touch):
@@ -98,6 +119,10 @@ class FullScreenApp(App):
     def on_hold_touch_up(self, instance, touch):
         if instance.collide_point(*touch.pos):
             print('HOLD button released')
+
+    def on_instrument_touch_down(self, instance, touch):
+        if instance.collide_point(*touch.pos):
+            print(f'Instrument {instance.text} selected')
 
 
 if __name__ == '__main__':
