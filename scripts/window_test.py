@@ -1,60 +1,26 @@
-import tkinter as tk
-from tkinter import font
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.togglebutton import ToggleButton
+from kivy.core.window import Window
 
-root = tk.Tk()
-root.geometry("800x480")
+class FullScreenApp(App):
+    def build(self):
+        # Set the window to fullscreen
+        Window.fullscreen = 'auto'
+        # Create a layout for the new window
+        layout = BoxLayout(orientation='horizontal')
+        # Add widgets or customize the layout as needed
 
-custom_font = font.Font(family="Quicksand", size=20, weight="bold")
+        # Add ToggleButtons to the layout
+        for i in range(5):
+            button = ToggleButton(text=f'Octave {i+2}', size_hint=(1, None), height=100, group='buttons')
+            button.bind(on_press=self.on_button_press)
+            layout.add_widget(button)
 
-class FullscreenApp:
-    def __init__(self, master, **kwargs):
-        self.master = master
-        master.attributes('-fullscreen', True)
-        master.bind('<Escape>', self.toggle_fullscreen)
+        return layout
 
-    def toggle_fullscreen(self, event=None):
-        self.state = not self.state
-        self.master.attributes('-fullscreen', self.state)
+    def on_button_press(self, instance):
+        print(f'Button {instance.text} pressed')
 
-    def exit_app(self, event=None):
-        self.master.destroy()
-
-class ToggleButton(tk.Button):
-    def __init__(self, master, on_toggle_on=None, on_toggle_off=None, **kwargs):
-        super().__init__(master, **kwargs)
-        self.var = tk.BooleanVar(False)
-        
-        self.config(relief=tk.RAISED)
-        
-        self.bind("<ButtonPress-1>", self.on_tap)
-        self.bind("<Enter>", self.on_tap)
-        self.bind("<ButtonRelease-1>", self.on_release)
-        
-        self.on_toggle_on = on_toggle_on
-        self.on_toggle_off = on_toggle_off
-        
-    def on_tap(self, event):
-        old_value = self.var.get()
-        self.var.set(True)
-        self.config(relief=tk.SUNKEN)
-        if self.on_toggle_on is not None and old_value == False:
-            self.on_toggle_on()
-
-    def on_release(self, event):
-        old_value = self.var.get()
-        self.var.set(False)
-        self.config(relief=tk.RAISED) 
-        # remove the focus from the button
-        self.config(takefocus=0)
-        if self.on_toggle_off is not None and old_value == True:
-            self.on_toggle_off()
-
-app = FullscreenApp(root)
-
-exit_button = tk.Button(root, text="Exit", command=app.exit_app, font=custom_font)
-exit_button.place(relx=0.5, rely=0.5, anchor=tk.W, width=200, height=100)
-
-toggle_button = ToggleButton(root, text="Toggle", font=custom_font)
-toggle_button.place(relx=0.5, rely=0.5, anchor=tk.E, width=200, height=100)
-
-root.mainloop()
+if __name__ == '__main__':
+    FullScreenApp().run()
