@@ -5,6 +5,7 @@ from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 from kivy.config import Config
+from control_panel_data import get_data, set_data
 
 # make sure it detects touch inputs only
 Config.set('kivy', 'desktop', 1)
@@ -52,9 +53,9 @@ class FullScreenApp(App):
             text='Major', group='major_minor', allow_no_selection=False)
         minor_button = ToggleButton(
             text='Minor', group='major_minor', allow_no_selection=False)
-
+        for button in [no_chord_button, major_button, minor_button]:
+            button.bind(on_touch_down=self.on_chord_touch_down)
         no_chord_button.state = 'down'
-
         chord_setting.add_widget(no_chord_button)
         chord_setting.add_widget(major_button)
         chord_setting.add_widget(minor_button)
@@ -66,9 +67,9 @@ class FullScreenApp(App):
             text='1st Inv', group='inversions', allow_no_selection=False)
         second_inv_button = ToggleButton(
             text='2nd Inv', group='inversions', allow_no_selection=False)
-
+        for button in [no_inv_button, first_inv_button, second_inv_button]:
+            button.bind(on_touch_down=self.on_inversion_touch_down)
         no_inv_button.state = 'down'
-
         inversions.add_widget(no_inv_button)
         inversions.add_widget(first_inv_button)
         inversions.add_widget(second_inv_button)
@@ -131,6 +132,18 @@ class FullScreenApp(App):
     def on_octave_touch_down(self, instance, touch):
         if instance.collide_point(*touch.pos):
             print(f'Button {instance.text} pressed')
+            octave = int(instance.text[-1])
+            set_data('octave', octave)
+
+    def on_chord_touch_down(self, instance, touch):
+        if instance.collide_point(*touch.pos):
+            print(f'Chord {instance.text} selected')
+            set_data('chord', instance.text)
+
+    def on_inversion_touch_down(self, instance, touch):
+        if instance.collide_point(*touch.pos):
+            print(f'Inversion {instance.text} selected')
+            set_data('inversion', instance.text)
 
     def on_hold_touch_down(self, instance, touch):
         if instance.collide_point(*touch.pos):
