@@ -1,6 +1,3 @@
-from tof import get_sensor_binaries
-from note_controller import loop as note_controller_loop
-from led_controller import update_with_binaries
 import os
 import subprocess
 
@@ -12,6 +9,10 @@ os.chdir(parent_dir)
 subprocess.run(['python3', 'control_panel.py'])
 
 # Main loop
+
+from tof import get_sensor_binaries
+from note_controller import loop as note_controller_loop
+from led_controller import update_with_binaries
 
 while True:
     note_controller_loop()
