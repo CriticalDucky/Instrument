@@ -110,6 +110,9 @@ class FullScreenApp(App):
             )
             scroll_layout.add_widget(instrument_button)
 
+            if i == 0:
+                instrument_button.state = 'down'
+
         # Create a ScrollView and add the scroll layout to it
         scroll_view = ScrollView(size_hint=(
             None, 1), width=170, do_scroll_x=False, do_scroll_y=True)
