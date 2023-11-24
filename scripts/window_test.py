@@ -53,20 +53,23 @@ class FullScreenApp(App):
             orientation='vertical', size_hint=(None, None), width=300, height=200, spacing=10)
         chord_layout.pos_hint = {'center_y': 0.5}  # Center vertically
 
-        major_minor = BoxLayout(orientation='horizontal')
+        chord_setting = BoxLayout(orientation='horizontal')
+        no_chord_button = ToggleButton(
+            text='None', group='chords', allow_no_selection=False)
         major_button = ToggleButton(
             text='Major', group='major_minor', allow_no_selection=False)
         minor_button = ToggleButton(
             text='Minor', group='major_minor', allow_no_selection=False)
 
-        major_button.state = 'down'
+        no_chord_button.state = 'down'
 
-        major_minor.add_widget(major_button)
-        major_minor.add_widget(minor_button)
+        chord_setting.add_widget(no_chord_button)
+        chord_setting.add_widget(major_button)
+        chord_setting.add_widget(minor_button)
 
         inversions = BoxLayout(orientation='horizontal')
         no_inv_button = ToggleButton(
-            text='No Inv', group='inversions', allow_no_selection=False)
+            text='Root', group='inversions', allow_no_selection=False)
         first_inv_button = ToggleButton(
             text='1st Inv', group='inversions', allow_no_selection=False)
         second_inv_button = ToggleButton(
@@ -78,7 +81,7 @@ class FullScreenApp(App):
         inversions.add_widget(first_inv_button)
         inversions.add_widget(second_inv_button)
 
-        chord_layout.add_widget(major_minor)
+        chord_layout.add_widget(chord_setting)
         chord_layout.add_widget(inversions)
 
         # Add the chord layout to the main horizontal layout
