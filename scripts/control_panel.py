@@ -7,6 +7,7 @@ from kivy.core.window import Window
 from kivy.config import Config
 from control_panel_data import set_data
 import instrument_util
+import threading
 
 # make sure it detects touch inputs only
 Config.set('kivy', 'desktop', 1)
@@ -167,4 +168,9 @@ class FullScreenApp(App):
 
 
 if __name__ == '__main__':
-    FullScreenApp().run()
+    def run_app():
+        FullScreenApp().run()
+
+    thread = threading.Thread(target=run_app)
+    thread.start()
+
