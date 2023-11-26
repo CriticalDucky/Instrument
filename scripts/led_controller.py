@@ -8,12 +8,16 @@ from color_util import Gradient, rainbow
 def write(data):
     data = json.dumps(data)
 
-    command = ["sudo", "python3", "led_admin.py", data]
+    command = ["sudo", "python3", "scripts/led_admin.py", data]
+    command2 = ["sudo", "python3", "led_admin.py", data]
 
     try:
         subprocess.run(command, check=True)
     except subprocess.CalledProcessError as e:
-        print("Error:", e)
+        try:
+            subprocess.run(command2, check=True)
+        except subprocess.CalledProcessError as e:
+            print("Error:", e)
 
 def shift_led_data(data, shift_amount=4): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
     reversed_list = list(reversed(data))
