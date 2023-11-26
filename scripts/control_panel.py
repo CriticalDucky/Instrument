@@ -101,12 +101,12 @@ class FullScreenApp(App):
             orientation='vertical', size_hint_y=None, size_hint_x=None, width=150)
         scroll_layout.bind(minimum_height=scroll_layout.setter('height'))
 
-        # Add 10 instruments to the scroll layout
-        for i in range(50):
-            instruments = instrument_util.get_all_instruments()
+        instruments = instrument_util.get_all_instruments()
 
+        # Add 10 instruments to the scroll layout
+        for i, data in enumerate(instruments):
             instrument_button = ToggleButton(
-                text=f"{i+1}. {instruments[i]['name']}",
+                text=f"{i+1}. {data['name']}",
                 size_hint_y=None,
                 height=96,
                 group='instruments',
