@@ -5,9 +5,11 @@ from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 from kivy.config import Config
-from control_panel_data import set_data
+# from control_panel_data import set_data
 import instrument_util
-import threading
+import sys
+
+set_data = sys.argv[1]
 
 # make sure it detects touch inputs only
 Config.set('kivy', 'desktop', 1)
@@ -168,9 +170,5 @@ class FullScreenApp(App):
 
 
 if __name__ == '__main__':
-    def run_app():
-        FullScreenApp().run()
-
-    thread = threading.Thread(target=run_app)
-    thread.start()
+    FullScreenApp().run()
 
