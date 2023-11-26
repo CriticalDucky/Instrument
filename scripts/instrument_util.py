@@ -35,11 +35,14 @@ def get_all_instruments():
     instruments = []
 
     # Iterate through all files in the sounds folder
-    print(os.walk(sounds_folder))
+    print("WALK STARTING!!!")
     for root, _, files in os.walk(sounds_folder):
+        print("WALKING!!!")
         for file in files:
+            print("FILE!!!")
             # Check if the file is a soundfont file (.sf2)
             if file.endswith(".sf2"):
+                print("SF2!!!")
                 # Extract instrument name from the file name (remove the ".sf2" extension)
                 instrument_name = os.path.splitext(file)[0]
                 
