@@ -8,12 +8,16 @@ data = {
 
 # Ensures that no new keys are accidentally added to the data dictionary
 def get_data(key):
+    global data
+
     if key in data:
         return data[key]
     else:
         raise KeyError(f'Key "{key}" not found in data dictionary')
     
 def set_data(key, value):
+    global data
+        
     if key in data:
         data[key] = value
     else:
