@@ -10,6 +10,8 @@ data = {
 def get_data(key):
     global data
 
+    print(data)
+
     if key in data:
         return data[key]
     else:
@@ -17,8 +19,12 @@ def get_data(key):
     
 def set_data(key, value):
     global data
+
+    print(data)
         
     if key in data:
         data[key] = value
     else:
         raise KeyError(f'Key "{key}" not found in data dictionary')
+    
+print("This should only print once")
