@@ -9,7 +9,10 @@ from kivy.config import Config
 import instrument_util
 import sys
 
-set_data = sys.argv[1]
+data = sys.argv[1]
+
+def set_data(key, value):
+    data[key] = value
 
 # make sure it detects touch inputs only
 Config.set('kivy', 'desktop', 1)

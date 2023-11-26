@@ -1,6 +1,6 @@
 import os
 import subprocess
-from control_panel_data import set_data
+from control_panel_data import data
 import threading
 
 import threading
@@ -12,7 +12,7 @@ def run_control_panel(set_data):
     subprocess.run(['python3', 'control_panel.py', set_data])
 
 # Create a new thread for running the control panel
-control_panel_thread = threading.Thread(target=run_control_panel, args=(set_data))
+control_panel_thread = threading.Thread(target=run_control_panel, args=(data))
 control_panel_thread.start()
 
 # Set up the control panel
