@@ -29,7 +29,8 @@ def get_all_instruments():
     import os
 
     # Path to the sounds folder
-    sounds_folder = "sounds"
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    sounds_folder = os.path.join(script_dir, '..', 'sounds')
 
     # Initialize an empty list to store instrument information
     instruments = []
