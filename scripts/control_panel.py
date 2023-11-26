@@ -106,7 +106,7 @@ class FullScreenApp(App):
             instruments = instrument_util.get_all_instruments()
 
             instrument_button = ToggleButton(
-                text=instruments[i][f'{i+1}.name'],
+                text=f"{i+1}. {instruments[i]['name']}",
                 size_hint_y=None,
                 height=96,
                 group='instruments',
