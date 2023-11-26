@@ -35,6 +35,7 @@ def get_all_instruments():
     instruments = []
 
     # Iterate through all files in the sounds folder
+    print(os.walk(sounds_folder))
     for root, _, files in os.walk(sounds_folder):
         for file in files:
             # Check if the file is a soundfont file (.sf2)

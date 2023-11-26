@@ -3,7 +3,7 @@ data = {
     'chord': 'None', # 'Major', 'Minor', 'None'
     'inversion': 'Root', # '1st Inv', '2nd Inv', 'Root'
     'hold': False,
-    'instrument': 1 # Instrument index number
+    'instrument': 0 # Instrument index number
 }
 
 # Ensures that no new keys are accidentally added to the data dictionary
