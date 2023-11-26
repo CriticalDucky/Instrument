@@ -5,7 +5,8 @@ from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 from kivy.config import Config
-from control_panel_data import get_data, set_data
+from control_panel_data import set_data
+import instrument_util
 
 # make sure it detects touch inputs only
 Config.set('kivy', 'desktop', 1)
@@ -102,13 +103,16 @@ class FullScreenApp(App):
 
         # Add 10 instruments to the scroll layout
         for i in range(50):
+            instruments = instrument_util.get_all_instruments()
+
             instrument_button = ToggleButton(
-                text=f'Instrument {i + 1}',
+                text=instruments[i][f'{i+1}.name'],
                 size_hint_y=None,
                 height=96,
                 group='instruments',
-                allow_no_selection=False
+                allow_no_selection=False,
             )
+            instrument_button.bind(on_touch_down=self.on_instrument_touch_down)
             scroll_layout.add_widget(instrument_button)
 
             if i == 0:
@@ -148,14 +152,18 @@ class FullScreenApp(App):
     def on_hold_touch_down(self, instance, touch):
         if instance.collide_point(*touch.pos):
             print('HOLD button pressed')
+            set_data('hold', True)
 
     def on_hold_touch_up(self, instance, touch):
         if instance.collide_point(*touch.pos):
             print('HOLD button released')
+            set_data('hold', False)
 
     def on_instrument_touch_down(self, instance, touch):
         if instance.collide_point(*touch.pos):
             print(f'Instrument {instance.text} selected')
+            # set the instrument index
+            set_data('instrument', int(instance.text.split('.')[0]) - 1)
 
 
 if __name__ == '__main__':

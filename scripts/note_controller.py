@@ -1,4 +1,5 @@
-from instrument import play, get_selected_instrument, get_selected_octave
+from sound import play
+from instrument_util import get_selected_instrument, get_selected_octave
 from tof import get_sensor_binaries
 
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
