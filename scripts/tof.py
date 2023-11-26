@@ -64,7 +64,7 @@ def get_sensor_binaries(): # A table of 12 1s and 0s, 1 if the sensor has someth
         else:
             binaries.append(0)
 
-    print(binaries)
+    print(cached_data_cm)
 
     return binaries
 
