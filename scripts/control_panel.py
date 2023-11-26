@@ -7,12 +7,6 @@ from kivy.core.window import Window
 from kivy.config import Config
 # from control_panel_data import set_data
 import instrument_util
-import sys
-
-data = sys.argv[1]
-
-def set_data(key, value):
-    data[key] = value
 
 # make sure it detects touch inputs only
 Config.set('kivy', 'desktop', 1)
