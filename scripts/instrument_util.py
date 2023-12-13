@@ -26,6 +26,13 @@ def midi_to_note(midi_note: int):
     # Return the note name and octave as a string
     return note_name + str(octave)
 
+def sensor_to_note(sensor_number: int): # sensor_number: 1-12
+    return octave_notes[sensor_number - 1]
+
+def note_to_sensor(note: str): # note: C4, C#4, D4, D#4, E4, F4, F#4, G4, G#4, A4, A#4, B4
+    note_without_octave = note[:-1]
+    return octave_notes.index(note_without_octave) + 1
+
 def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, minor; inversion: 0, 1, 2
     midi_num = note_to_midi(note)
     midi_table = [midi_num, midi_num + 4, midi_num + 7]
@@ -40,7 +47,6 @@ def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, 
         midi_table[1] += 12
 
     return [midi_to_note(midi) for midi in midi_table]
-
 
 # This function returns an ordered array of instruments as seen in the sounds folder.
 # Structure: [

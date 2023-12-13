@@ -25,6 +25,9 @@ class NoteInstance:
             self.stop_func()
             self.stop_func = None
 
+    def get_notes(self):
+        return [self.note]
+
     def __eq__(self, other):
         return self.instrument == other.instrument and self.note == other.note
     
@@ -41,6 +44,9 @@ class ChordInstance:
     def stop(self):
         for note in self.notes:
             note.stop()
+
+    def get_notes(self):
+        return [instance.note for instance in self.notes]
 
     def __eq__(self, other):
         return self.instrument == other.instrument and self.notes == other.notes
@@ -81,7 +87,7 @@ def loop():
                 notes = create_chord(octave, chord, inversion)
                 instance = ChordInstance(instrument, notes, holding if isBurst else False)
             else:
-                note = octave
+                note = sensor_to_note(sensor_number) + str(octave)
                 instance = NoteInstance(instrument, note, holding if isBurst else False)
 
             instance.play()
@@ -91,6 +97,7 @@ def stop_all():
     for sensor_info in active_sensor_info.values():
         for instance in sensor_info:
             instance.stop()
-            
+    active_sensor_info.clear()
+    active_sensor_info.update({i: [] for i in range(1, 13)})
 
             
