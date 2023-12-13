@@ -6,7 +6,8 @@ from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 from kivy.config import Config
 # from control_panel_data import set_data
-import instrument_util
+import instrument_util 
+from control_panel_data import set_data
 
 # make sure it detects touch inputs only
 Config.set('kivy', 'desktop', 1)
@@ -147,7 +148,11 @@ class FullScreenApp(App):
     def on_inversion_touch_down(self, instance, touch):
         if instance.collide_point(*touch.pos):
             print(f'Inversion {instance.text} selected')
-            set_data('inversion', instance.text)
+            set_data('inversion', {
+                'Root': 0,
+                '1st Inv': 1,
+                '2nd Inv': 2
+            }[instance.text])
 
     def on_hold_touch_down(self, instance, touch):
         if instance.collide_point(*touch.pos):

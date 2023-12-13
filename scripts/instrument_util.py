@@ -1,13 +1,12 @@
 from control_panel_data import get_data
 
+octave_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+note_midi_mapping = {note: midi for midi, note in enumerate(octave_notes)}
+
 # This function converts a note name to a MIDI note number
 def note_to_midi(note: str):
     # Define the mapping of note names to MIDI note numbers
-    note_mapping = {
-        'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3,
-        'E': 4, 'F': 5, 'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8,
-        'Ab': 8, 'A': 9, 'A#': 10, 'Bb': 10, 'B': 11
-    }
+    
 
     # Extract the note name and octave from the input string
     note = note.upper()
@@ -15,10 +14,34 @@ def note_to_midi(note: str):
     octave = int(note[-1])
 
     # Calculate the MIDI note number
-    midi_note = note_mapping[note_name] + octave * 12 + 12
+    midi_note = note_midi_mapping[note_name] + octave * 12 + 12
 
     return midi_note
-            
+
+def midi_to_note(midi_note: int):
+    # Calculate the octave and note name
+    octave = midi_note // 12 - 1
+    note_name = list(note_midi_mapping.keys())[list(note_midi_mapping.values()).index(midi_note % 12)]
+
+    # Return the note name and octave as a string
+    return note_name + str(octave)
+
+def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, minor; inversion: 0, 1, 2
+    midi_num = note_to_midi(note)
+    midi_table = [midi_num, midi_num + 4, midi_num + 7]
+
+    if chord_type == 'minor':
+        midi_table[1] -= 1
+
+    if inversion == 1:
+        midi_table[0] += 12
+    elif inversion == 2:
+        midi_table[0] += 12
+        midi_table[1] += 12
+
+    return [midi_to_note(midi) for midi in midi_table]
+
+
 # This function returns an ordered array of instruments as seen in the sounds folder.
 # Structure: [
 #   {'name': 'Acid SQ Neutral', 'path': 'this is the path to the soundfont file'},
@@ -62,3 +85,12 @@ def get_selected_instrument():
 
 def get_selected_octave():
     return get_data('octave')
+
+def get_selected_chord():
+    return get_data('chord')
+
+def get_selected_inversion():
+    return get_data('inversion')
+
+def is_holding():
+    return get_data('hold')

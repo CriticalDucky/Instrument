@@ -1,5 +1,5 @@
 from sound import play
-from instrument_util import get_selected_instrument, get_selected_octave
+from instrument_util import *
 from tof import get_sensor_binaries
 
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
@@ -7,29 +7,90 @@ BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we
     "Piano.sf2"
 ]
 
-octave_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+# one table for each note in the octave (C-B)
+active_sensor_info = {i: [] for i in range(1, 13)}
 
-active_note_info = {
-    # [1-12]: stop_func, called note_info in the code below
-}
+class NoteInstance:
+    def __init__(self, instrument, note, hold=False):
+        self.instrument = instrument
+        self.note = note
+        self.stop_func = None
+        self.hold = hold
+
+    def play(self):
+        self.stop_func = play(self.instrument, self.note)
+
+    def stop(self):
+        if self.stop_func is not None:
+            self.stop_func()
+            self.stop_func = None
+
+    def __eq__(self, other):
+        return self.instrument == other.instrument and self.note == other.note
+    
+class ChordInstance:
+    def __init__(self, instrument, notes, hold=False):
+        self.instrument = instrument
+        self.hold = hold
+        self.notes = [NoteInstance(instrument, note, hold) for note in notes]
+
+    def play(self):
+        for note in self.notes:
+            note.play()
+
+    def stop(self):
+        for note in self.notes:
+            note.stop()
+
+    def __eq__(self, other):
+        return self.instrument == other.instrument and self.notes == other.notes
 
 def loop():
-    octave = get_selected_octave()
     binaries = get_sensor_binaries()
-    selected_instrument = get_selected_instrument()
-    isBurst = selected_instrument in BURST_INSTRUMENTS
+    holding = get_data('hold')
 
-    for idx, val in enumerate(binaries):
-        sensor_number = idx + 1
-        note_info = active_note_info.get(sensor_number, None) # stop_func
+    for sensor_number, sensor_info in active_sensor_info.items():
+        binary = binaries[sensor_number - 1]
+        should_create_instance = binary == 1 and sensor_info is None
+        clear_these = []
 
-        if val == 1 and note_info is None:
-            note = octave_notes[idx] + str(octave)
+        # Check if we should create a new instance
+        for instance in sensor_info:
+            isBurst = instance.instrument in BURST_INSTRUMENTS
 
-            stop_func = play(selected_instrument, note)
-            active_note_info[sensor_number] = stop_func
-        elif val == 0 and note_info is not None:
-            if isBurst:
-                active_note_info[sensor_number] = None
+            if binary == 0: # If the sensor is not in range
+                if isBurst or (not holding or (holding and not instance.hold)):
+                    if not isBurst: instance.stop()
+                    clear_these.append(instance)
+
+        for instance in clear_these:
+            sensor_info.remove(instance)
+
+        for instance in sensor_info:
+            if not instance.hold:
+                should_create_instance = False
+
+        if should_create_instance:
+            octave = get_selected_octave()
+            chord = get_selected_chord()
+            inversion = get_selected_inversion()
+            instrument = get_selected_instrument()
+            isBurst = instrument in BURST_INSTRUMENTS
+
+            if chord != 'None':
+                notes = create_chord(octave, chord, inversion)
+                instance = ChordInstance(instrument, notes, holding if isBurst else False)
             else:
-                note_info()
+                note = octave
+                instance = NoteInstance(instrument, note, holding if isBurst else False)
+
+            instance.play()
+            sensor_info.append(instance)
+
+def stop_all():
+    for sensor_info in active_sensor_info.values():
+        for instance in sensor_info:
+            instance.stop()
+            
+
+            
