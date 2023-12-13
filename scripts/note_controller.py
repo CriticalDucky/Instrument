@@ -60,6 +60,8 @@ def loop():
         should_create_instance = binary == 1 and sensor_info is None
         clear_these = []
 
+        print(binaries)
+
         # Check if we should create a new instance
         for instance in sensor_info:
             isBurst = instance.instrument in BURST_INSTRUMENTS
