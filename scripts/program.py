@@ -153,9 +153,15 @@ def control_panel_thread():
                 set_data('chord', instance.text)
 
         def on_inversion_touch_down(self, instance, touch):
+            conversion = {
+                'Root': 0,
+                '1st Inv': 1,
+                '2nd Inv': 2
+            }
+
             if instance.collide_point(*touch.pos):
                 print(f'Inversion {instance.text} selected')
-                set_data('inversion', instance.text)
+                set_data(conversion[instance.text])
 
         def on_hold_touch_down(self, instance, touch):
             if instance.collide_point(*touch.pos):
