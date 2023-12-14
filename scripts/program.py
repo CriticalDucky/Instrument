@@ -159,11 +159,9 @@ def control_panel_thread():
                 '2nd Inv': 2
             }
 
-            print(instance.text, conversion[instance.text])
-
             if instance.collide_point(*touch.pos):
                 print(f'Inversion {instance.text} selected')
-                set_data(conversion[instance.text])
+                set_data('inversion', conversion[instance.text])
 
         def on_hold_touch_down(self, instance, touch):
             if instance.collide_point(*touch.pos):
