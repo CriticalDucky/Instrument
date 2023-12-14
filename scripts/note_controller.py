@@ -55,6 +55,8 @@ def loop():
     binaries = get_sensor_binaries()
     holding = get_data('hold')
 
+    print(binaries)
+
     for sensor_number, sensor_info in active_sensor_info.items():
         binary = binaries[sensor_number - 1]
         should_create_instance = binary == 1 and sensor_info is None
