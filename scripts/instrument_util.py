@@ -37,7 +37,7 @@ def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, 
     midi_num = note_to_midi(note)
     midi_table = [midi_num, midi_num + 4, midi_num + 7]
 
-    if chord_type == 'minor':
+    if chord_type == 'Minor':
         midi_table[1] -= 1
 
     if inversion == 1:
