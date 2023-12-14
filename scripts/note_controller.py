@@ -78,16 +78,17 @@ def loop():
 
         if should_create_instance:
             octave = get_selected_octave()
-            chord = get_selected_chord()
+            chord_type = get_selected_chord()
             inversion = get_selected_inversion()
             instrument = get_selected_instrument()
             isBurst = instrument in BURST_INSTRUMENTS
 
-            if chord != 'None':
-                notes = create_chord(octave, chord, inversion)
+            note = sensor_to_note(sensor_number) + str(octave)
+
+            if chord_type != 'None':
+                notes = create_chord(note, chord_type, inversion)
                 instance = ChordInstance(instrument, notes, holding if isBurst else False)
             else:
-                note = sensor_to_note(sensor_number) + str(octave)
                 instance = NoteInstance(instrument, note, holding if isBurst else False)
 
             instance.play()
