@@ -56,7 +56,6 @@ def loop():
     holding = get_data('hold')
 
     for sensor_number, sensor_info in active_sensor_info.items():
-        print("This should print")
         binary = binaries[sensor_number - 1]
         should_create_instance = binary == 1 and sensor_info is None
         clear_these = []
@@ -78,6 +77,9 @@ def loop():
                 should_create_instance = False
 
         if should_create_instance:
+
+            print("Creating new instance for sensor", sensor_number)
+
             octave = get_selected_octave()
             chord = get_selected_chord()
             inversion = get_selected_inversion()
