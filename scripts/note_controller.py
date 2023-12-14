@@ -88,9 +88,9 @@ def loop():
             if chord_type != 'None':
                 print(inversion)
                 notes = create_chord(note, chord_type, inversion)
-                instance = ChordInstance(instrument, notes, holding if isBurst else False)
+                instance = ChordInstance(instrument, notes, holding if not isBurst else False)
             else:
-                instance = NoteInstance(instrument, note, holding if isBurst else False)
+                instance = NoteInstance(instrument, note, holding if not isBurst else False)
 
             instance.play()
             sensor_info.append(instance)
