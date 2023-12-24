@@ -76,7 +76,6 @@ def loop():
             chord_type = get_selected_chord()
             inversion = get_selected_inversion()
             instrument = get_selected_instrument()
-            isBurst = instrument in BURST_INSTRUMENTS
 
             note = sensor_to_note(sensor_number) + str(octave)
 
