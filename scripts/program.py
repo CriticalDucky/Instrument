@@ -89,20 +89,7 @@ def control_panel_thread():
             # Add the chord layout to the main horizontal layout
             layout.add_widget(chord_layout)
 
-            # Create a HOLD button
-            hold_button = Button(
-                text='Hold',
-                size_hint=(None, None),
-                size=(150, 150),
-                pos_hint={'center_y': 0.5}
-            )
-            hold_button.bind(
-                on_touch_down=self.on_hold_touch_down,
-                on_touch_up=self.on_hold_touch_up
-            )
-
-            # Add the HOLD button to the main layout
-            layout.add_widget(hold_button)
+            # Here lies the hold button. Rest in peace.
 
             # Create a scroll view for instruments
             scroll_layout = BoxLayout(
@@ -162,16 +149,6 @@ def control_panel_thread():
             if instance.collide_point(*touch.pos):
                 print(f'Inversion {instance.text} selected')
                 set_data('inversion', conversion[instance.text])
-
-        def on_hold_touch_down(self, instance, touch):
-            if instance.collide_point(*touch.pos):
-                print('HOLD button pressed')
-                set_data('hold', True)
-
-        def on_hold_touch_up(self, instance, touch):
-            if instance.collide_point(*touch.pos):
-                print('HOLD button released')
-                set_data('hold', False)
 
         def on_instrument_touch_down(self, instance, touch):
             if instance.collide_point(*touch.pos):

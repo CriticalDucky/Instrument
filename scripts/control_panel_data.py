@@ -2,7 +2,6 @@ data = {
     'octave': 4, # 2, 3, 4, 5, 6
     'chord': 'None', # 'Major', 'Minor', 'None'
     'inversion': 0, # 0, 1, 2
-    'hold': False,
     'instrument': 0 # Instrument index number
 }
 

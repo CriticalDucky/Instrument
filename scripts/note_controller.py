@@ -11,11 +11,10 @@ BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we
 active_sensor_info = {i: [] for i in range(1, 13)}
 
 class NoteInstance:
-    def __init__(self, instrument, note, hold=False):
+    def __init__(self, instrument, note):
         self.instrument = instrument
         self.note = note
         self.stop_func = None
-        self.hold = hold
 
     def play(self):
         self.stop_func = play(self.instrument, self.note)
@@ -32,10 +31,9 @@ class NoteInstance:
         return self.instrument == other.instrument and self.note == other.note
     
 class ChordInstance:
-    def __init__(self, instrument, notes, hold=False):
+    def __init__(self, instrument, notes):
         self.instrument = instrument
-        self.hold = hold
-        self.notes = [NoteInstance(instrument, note, hold) for note in notes]
+        self.notes = [NoteInstance(instrument, note) for note in notes]
 
     def play(self):
         for note in self.notes:
@@ -53,7 +51,6 @@ class ChordInstance:
 
 def loop():
     binaries = get_sensor_binaries()
-    holding = get_data('hold')
 
     for sensor_number, sensor_info in active_sensor_info.items():
         binary = binaries[sensor_number - 1]
@@ -65,16 +62,14 @@ def loop():
             isBurst = instance.instrument in BURST_INSTRUMENTS
 
             if binary == 0: # If the sensor is not in range
-                if isBurst or (not holding or (holding and not instance.hold)):
-                    if not isBurst: instance.stop()
-                    clear_these.append(instance)
+                if not isBurst: instance.stop()
+                clear_these.append(instance)
 
         for instance in clear_these:
             sensor_info.remove(instance)
 
         for instance in sensor_info:
-            if not instance.hold:
-                should_create_instance = False
+            should_create_instance = False
 
         if should_create_instance:
             octave = get_selected_octave()
@@ -88,9 +83,9 @@ def loop():
             if chord_type != 'None':
                 print(inversion)
                 notes = create_chord(note, chord_type, inversion)
-                instance = ChordInstance(instrument, notes, holding if not isBurst else False)
+                instance = ChordInstance(instrument, notes)
             else:
-                instance = NoteInstance(instrument, note, holding if not isBurst else False)
+                instance = NoteInstance(instrument, note)
 
             instance.play()
             sensor_info.append(instance)

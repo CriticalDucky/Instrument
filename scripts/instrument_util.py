@@ -97,6 +97,3 @@ def get_selected_chord():
 
 def get_selected_inversion():
     return get_data('inversion')
-
-def is_holding():
-    return get_data('hold')
