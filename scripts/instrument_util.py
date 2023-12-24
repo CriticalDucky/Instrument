@@ -1,7 +1,12 @@
 from control_panel_data import get_data
 
-octave_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-note_midi_mapping = {note: midi for midi, note in enumerate(octave_notes)}
+OCTAVE_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+NOTE_MIDI_MAPPING = {note: midi for midi, note in enumerate(OCTAVE_NOTES)}
+
+BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
+    "Acid SQ Neutral.sf2",
+    "Piano.sf2"
+]
 
 # This function converts a note name to a MIDI note number
 def note_to_midi(note: str):
@@ -14,24 +19,24 @@ def note_to_midi(note: str):
     octave = int(note[-1])
 
     # Calculate the MIDI note number
-    midi_note = note_midi_mapping[note_name] + octave * 12 + 12
+    midi_note = NOTE_MIDI_MAPPING[note_name] + octave * 12 + 12
 
     return midi_note
 
 def midi_to_note(midi_note: int):
     # Calculate the octave and note name
     octave = midi_note // 12 - 1
-    note_name = list(note_midi_mapping.keys())[list(note_midi_mapping.values()).index(midi_note % 12)]
+    note_name = list(NOTE_MIDI_MAPPING.keys())[list(NOTE_MIDI_MAPPING.values()).index(midi_note % 12)]
 
     # Return the note name and octave as a string
     return note_name + str(octave)
 
 def sensor_to_note(sensor_number: int): # sensor_number: 1-12
-    return octave_notes[sensor_number - 1]
+    return OCTAVE_NOTES[sensor_number - 1]
 
 def note_to_sensor(note: str): # note: C4, C#4, D4, D#4, E4, F4, F#4, G4, G#4, A4, A#4, B4
     note_without_octave = note[:-1]
-    return octave_notes.index(note_without_octave) + 1
+    return OCTAVE_NOTES.index(note_without_octave) + 1
 
 def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, minor; inversion: 0, 1, 2
     midi_num = note_to_midi(note)

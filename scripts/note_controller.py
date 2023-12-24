@@ -2,11 +2,6 @@ from sound import play
 from instrument_util import *
 from tof import get_sensor_binaries
 
-BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
-    "Acid SQ Neutral.sf2",
-    "Piano.sf2"
-]
-
 # one table for each note in the octave (C-B)
 active_sensor_info = {i: [] for i in range(1, 13)}
 
