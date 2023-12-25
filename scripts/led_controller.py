@@ -80,6 +80,9 @@ class LEDProcessHold(LEDProcess):
         self.process1 = LEDProcessFade(gradient1, 0.25, pixel_nums)
         self.current_process = 1
 
+        for pixel_num in pixel_nums:
+            self.data[pixel_num] = gradient1.get_rgb_at_position(0)
+
     def update(self, active_note_info):
         if self.still_holding:
             isInstanceFound = False
@@ -104,8 +107,8 @@ class LEDProcessHold(LEDProcess):
                     return
                 else:
                     self.current_process = 2
-                    
                     self.process2 = LEDProcessStatic(self.middle_color, self.pixel_nums)
+                    self.data = self.process2.report()
         else:
             if current_process == 1:
                 self.process1.update()
@@ -115,12 +118,14 @@ class LEDProcessHold(LEDProcess):
                     return
                 else:
                     self.current_process = 3
-                    
                     self.process3 = LEDProcessFade(self.gradient2, 0.25, self.pixel_nums)
+                    self.data = self.process3.report()
+
             elif current_process == 2:
                 self.current_process = 3
-                    
                 self.process3 = LEDProcessFade(self.gradient2, 0.25, self.pixel_nums)
+                self.data = self.process3.report()
+
             else:
                 self.process3.update()
                 self.data = self.process3.report()
@@ -211,9 +216,37 @@ def update_with_active_note_info(active_note_info: dict):
             else:
                 continue
 
+            sensor_number = note_to_sensor(notes[0])
+
             if isInstanceChord:
                 for note in notes:
+                    new_process: LEDProcess
+                    dimmed = True if note == instance.original_note else False
+
                     if isBurst:
-                        led_blink1(note_to_sensor(note), True if note == instance.original_note else False)
+                        new_process = led_blink1(sensor_number, dimmed)
                     else:
-                        led_on1(note_to_sensor(note), True if note == instance.original_note else False)
+                        new_process = led_hold1(sensor_number, dimmed)
+
+                    led_processes.append(new_process)
+                    data.append(new_process.report())
+            else:
+                new_process: LEDProcess
+
+                if isBurst:
+                    new_process = led_blink1(sensor_number)
+                else:
+                    new_process = led_hold1(sensor_number)
+
+                led_processes.append(new_process)
+                data.append(new_process.report())
+                
+    final_data = [] # [(r, g, b), ...]
+
+    for pixel_data in data:
+        for pixel_num, pixel_color in pixel_data.items():
+            final_data[pixel_num - 1] = pixel_color
+
+    final_data = shift_led_data(final_data)
+
+    write(final_data)

@@ -46,6 +46,10 @@ class Gradient:
         self.brightness = brightness
 
     def get_rgb_at_position(self, position):
+        # Clamp position to [0.0, 1.0]
+
+        position = max(0.0, min(1.0, position))
+
         # Sort stops by position
         sorted_stops = sorted(self.stops, key=lambda stop: stop.position)
 
