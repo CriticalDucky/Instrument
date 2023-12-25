@@ -3,8 +3,9 @@ LED_GROUPS = 12
 
 import subprocess
 import json
-from color_util import Gradient, rainbow, blink_gradient_1
+from color_util import *
 import time
+from instrument_util import *
 
 # Processes can be added to this table, and every frame they will update.
 led_processes = []
@@ -14,16 +15,19 @@ class LEDProcess:
         self.name = name
         # {pixel_num: (r, g, b)}
         self.data = {}
+        self.stopped = False
 
     def update(self):
         pass
 
     def report(self):
-        pass
+        return self.data
 
     def stop(self):
+        self.stopped = True
+        if self in led_processes:
+            led_processes.remove(self)
         pass
-
 class LEDProcessFade(LEDProcess):
     def __init__(self, gradient: Gradient, duration, pixel_nums):
         super().__init__("LedFade")
@@ -44,9 +48,87 @@ class LEDProcessFade(LEDProcess):
         if self.time >= self.duration:
             self.stop()
 
-    def stop(self):
-        if self in led_processes:
-            led_processes.remove(self)
+class LEDProcessStatic(LEDProcess):
+    def __init__(self, color, pixel_nums, duration: float|int|False):
+        super().__init__("LedStatic")
+        self.color = color
+        self.duration = duration
+        self.start_time = time.time()
+        self.time = 0
+
+        for pixel_num in pixel_nums:
+            self.data[pixel_num] = color
+
+    def update(self):
+        if not self.duration: return
+
+        self.time = time.time() - self.start_time
+
+        if self.time >= self.duration:
+            self.stop()
+
+class LEDProcessHold(LEDProcess):
+    def __init__(self, gradient1, middle_color, gradient2, instance, pixel_nums):
+        super().__init__("LedHold")
+        self.gradient1 = gradient1
+        self.middle_color = middle_color
+        self.gradient2 = gradient2
+        self.instance = instance
+        self.pixel_nums = pixel_nums
+        self.still_holding = True
+
+        self.process1 = LEDProcessFade(gradient1, 0.25, pixel_nums)
+        self.current_process = 1
+
+    def update(self, active_note_info):
+        if self.still_holding:
+            isInstanceFound = False
+
+            for sensor_info in active_note_info.values():
+                for instance in sensor_info:
+                    if instance == self.instance:
+                        isInstanceFound = True
+                        break
+
+            if not isInstanceFound:
+                self.still_holding = False
+
+        if self.still_holding:
+            current_process = self.current_process
+
+            if current_process == 1:
+                self.process1.update()
+                self.data = self.process1.report()
+
+                if not self.process1.stopped:
+                    return
+                else:
+                    self.current_process = 2
+                    
+                    self.process2 = LEDProcessStatic(self.middle_color, self.pixel_nums)
+        else:
+            if current_process == 1:
+                self.process1.update()
+                self.data = self.process1.report()
+
+                if not self.process1.stopped:
+                    return
+                else:
+                    self.current_process = 3
+                    
+                    self.process3 = LEDProcessFade(self.gradient2, 0.25, self.pixel_nums)
+            elif current_process == 2:
+                self.current_process = 3
+                    
+                self.process3 = LEDProcessFade(self.gradient2, 0.25, self.pixel_nums)
+            else:
+                self.process3.update()
+                self.data = self.process3.report()
+
+                if not self.process3.stopped:
+                    return
+                else:
+                    self.stop()
 
 # data: list of tuples (r, g, b)
 def write(data):
@@ -63,15 +145,16 @@ def write(data):
         except subprocess.CalledProcessError as e:
             print("Error:", e)
 
-def shift_led_data(data, shift_amount=4): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
+def shift_led_data(data, shift_amount=(4*LEDS_PER_NOTE)): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
     reversed_list = list(reversed(data))
     shifted_list = reversed_list[shift_amount:] + reversed_list[:shift_amount]
     return shifted_list
 
+
 def update_with_binaries(binaries): # For debug purposes
     data = []
 
-    binaries = shift_led_data(binaries)
+    binaries = shift_led_data(binaries, 4)
 
     for note, val in enumerate(binaries):
         color_off = (0, 0, 0)
@@ -86,10 +169,51 @@ def update_with_binaries(binaries): # For debug purposes
 
     write(data)
 
-def led_blink1(led_group):
+def led_blink1(led_group, dimmed=False):
     process = LEDProcessFade(
-        blink_gradient_1,
+        blink_gradient_1 if not dimmed else blink_gradient_1_dimmed,
         0.5,
         [(led_group - 1) * LEDS_PER_NOTE + i + 1 for i in range(LEDS_PER_NOTE)])
     
     led_processes.append(process)
+
+def led_hold1(led_group, dimmed=False):
+    on = on_gradient_1 if not dimmed else on_gradient_1_dimmed,
+    off = off_gradient_1 if not dimmed else off_gradient_1_dimmed
+
+    process = LEDProcessHold(
+        on,
+        on.get_rgb_at_position(1),
+        off,
+        led_group,
+        [(led_group - 1) * LEDS_PER_NOTE + i + 1 for i in range(LEDS_PER_NOTE)])
+    
+    led_processes.append(process)
+
+def update_with_active_note_info(active_note_info: dict):
+    data = [] # [{pixel_num: (r, g, b)}, ...]
+
+    for process in led_processes:
+        process: LEDProcess
+        process.update(active_note_info)
+        data.append(process.report())
+
+    for sensor_info in active_note_info.values():
+        for instance in sensor_info:
+            notes = instance.get_notes()
+            instrument = instance.instrument
+            
+            isInstanceChord = True if len(notes) > 1 else False
+            isBurst = is_instrument_burst(instrument)
+
+            if not instance.led_primed:
+                instance.set_led_primed()
+            else:
+                continue
+
+            if isInstanceChord:
+                for note in notes:
+                    if isBurst:
+                        led_blink1(note_to_sensor(note), True if note == instance.original_note else False)
+                    else:
+                        led_on1(note_to_sensor(note), True if note == instance.original_note else False)

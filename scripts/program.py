@@ -160,7 +160,6 @@ def control_panel_thread():
     if __name__ == '__main__':
         FullScreenApp().run()
 
-
 # Create a new thread for running the control panel
 control_panel_thread = threading.Thread(target=control_panel_thread)
 control_panel_thread.start()
@@ -170,12 +169,10 @@ control_panel_thread.start()
 # Main loop
 from note_controller import loop as note_controller_loop
 from note_controller import active_sensor_info
-from led_controller import update_with_binaries
+from led_controller import update_with_active_note_info
 from instrument_util import *
 
 while True:
     note_controller_loop()
-    # In active sensor info, if there are any instances in any sensor info, then count that as a 1
-    binaries = [1 if len(sensor_info) > 0 else 0 for sensor_info in active_sensor_info.values()]
-    update_with_binaries(binaries)
+    update_with_active_note_info(active_sensor_info)
 

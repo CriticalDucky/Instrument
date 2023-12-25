@@ -1,4 +1,5 @@
 import colorsys
+import copy
 
 def average_hsv(*hs_vs):
     if not hs_vs:
@@ -33,10 +34,16 @@ class GradientStop:
 class Gradient:
     def __init__(self):
         self.stops = []
+        self.brightness = 1.0  # Default brightness
 
     def add_stop(self, position, color):
         stop = GradientStop(position, color)
         self.stops.append(stop)
+
+    def set_brightness(self, brightness):
+        if not 0.0 <= brightness <= 1.0:
+            raise ValueError("Brightness must be in the range [0.0, 1.0]")
+        self.brightness = brightness
 
     def get_rgb_at_position(self, position):
         # Sort stops by position
@@ -60,8 +67,11 @@ class Gradient:
             int((1 - t) * start_stop.color[2] + t * end_stop.color[2])
         )
 
-        return interpolated_color
-    
+        # Adjust brightness
+        adjusted_color = tuple(int(c * self.brightness) for c in interpolated_color)
+
+        return adjusted_color
+
     def get_hsv_at_position(self, position):
         rgb = self.get_rgb_at_position(position)
         return colorsys.rgb_to_hsv(*rgb)
@@ -97,3 +107,11 @@ for idx, tup in enumerate(blink_gradient_1_stops):
     else:
         offset = blink_gradient_1_stops[3][0]
         off_gradient_1.add_stop((position - offset) / (100 - offset), color)
+
+blink_gradient_1_dimmed = copy.deepcopy(blink_gradient_1)
+on_gradient_1_dimmed = copy.deepcopy(on_gradient_1)
+off_gradient_1_dimmed = copy.deepcopy(off_gradient_1)
+
+blink_gradient_1_dimmed.set_brightness(0.5)
+on_gradient_1_dimmed.set_brightness(0.5)
+off_gradient_1_dimmed.set_brightness(0.5)

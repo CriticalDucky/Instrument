@@ -10,7 +10,7 @@ class NoteInstance:
         self.instrument = instrument
         self.note = note
         self.stop_func = None
-        self.led_bursted = False if is_instrument_burst(instrument) else None
+        self.led_primed = False
 
     def play(self):
         self.stop_func = play(self.instrument, self.note)
@@ -24,17 +24,15 @@ class NoteInstance:
         return [self.note]
     
     # This function is used by LEDS for animation.
-    def set_led_bursted(self):
-        self.led_bursted = True
-
-    def __eq__(self, other):
-        return self.instrument == other.instrument and self.note == other.note
+    def set_led_primed(self):
+        self.led_primed = True
     
 class ChordInstance:
-    def __init__(self, instrument, notes):
+    def __init__(self, instrument, notes, original_note=None):
         self.instrument = instrument
         self.notes = [NoteInstance(instrument, note) for note in notes]
-        self.led_bursted = False if is_instrument_burst(instrument) else None
+        self.led_primed = False
+        self.original_note = original_note
 
     def play(self):
         for note in self.notes:
@@ -47,11 +45,8 @@ class ChordInstance:
     def get_notes(self):
         return [instance.note for instance in self.notes]
     
-    def set_led_bursted(self):
-        self.led_bursted = True
-
-    def __eq__(self, other):
-        return self.instrument == other.instrument and self.notes == other.notes
+    def set_led_primed(self):
+        self.led_primed = True
 
 def loop():
     binaries = get_sensor_binaries()
@@ -61,12 +56,12 @@ def loop():
         should_create_instance = binary == 1
         clear_these = []
 
-        # Check if we should create a new instance, and set led_bursted to True
+        # Check if we should create a new instance, and set led_primed to True
         for instance in sensor_info:
             isBurst = is_instrument_burst(instance.instrument)
 
-            if isBurst and not instance.led_bursted:
-                instance.set_led_bursted()
+            if isBurst and not instance.led_primed:
+                instance.set_led_primed()
 
             if binary == 0: # If the sensor is not in range
                 if not isBurst: instance.stop()
@@ -89,7 +84,7 @@ def loop():
             if chord_type != 'None':
                 print(inversion)
                 notes = create_chord(note, chord_type, inversion)
-                instance = ChordInstance(instrument, notes)
+                instance = ChordInstance(instrument, notes, note)
             else:
                 instance = NoteInstance(instrument, note)
 
