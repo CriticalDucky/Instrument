@@ -1,5 +1,30 @@
 import colorsys
 
+def average_hsv(*hs_vs):
+    if not hs_vs:
+        raise ValueError("At least one HSV tuple must be provided")
+
+    total_weight = 0
+    weighted_hue_sum = 0
+    weighted_saturation_sum = 0
+    max_value = 0
+
+    for hsv in hs_vs:
+        h, s, v = hsv
+        weight = v
+        total_weight += weight
+        weighted_hue_sum += h * weight
+        weighted_saturation_sum += s * weight
+        max_value = max(max_value, v)
+
+    if total_weight == 0:
+        return 0, 0, 0
+
+    average_hue = weighted_hue_sum / total_weight
+    average_saturation = weighted_saturation_sum / total_weight
+
+    return average_hue, average_saturation, max_value
+
 class GradientStop:
     def __init__(self, position, color):
         self.position = position
@@ -13,7 +38,7 @@ class Gradient:
         stop = GradientStop(position, color)
         self.stops.append(stop)
 
-    def get_color_at_position(self, position):
+    def get_rgb_at_position(self, position):
         # Sort stops by position
         sorted_stops = sorted(self.stops, key=lambda stop: stop.position)
 
@@ -37,10 +62,38 @@ class Gradient:
 
         return interpolated_color
     
+    def get_hsv_at_position(self, position):
+        rgb = self.get_rgb_at_position(position)
+        return colorsys.rgb_to_hsv(*rgb)
+    
 rainbow = Gradient()
 
 for i in range(0, 360, 60):
     rgb = colorsys.hsv_to_rgb(i/360, 1, 1)
     rainbow.add_stop(i/360, tuple(int(x * 255) for x in rgb))
 
-rainbow.add_stop(1, (255, 0, 0))
+blink_gradient_1_stops = [
+    (0, (0, 0, 0)),
+    (20, (0, 255, 124)),
+    (32, (0, 249, 255)),
+    (35, (0, 249, 255)),
+    (44, (0, 198, 255)),
+    (59, (145, 0, 255)),
+    (100, (0, 0, 0))
+]
+
+blink_gradient_1 = Gradient()
+on_gradient_1 = Gradient()
+off_gradient_1 = Gradient()
+
+for idx, tup in enumerate(blink_gradient_1_stops):
+    position = tup[0]
+    color = tup[1]
+
+    blink_gradient_1.add_stop(position / 100, color)
+
+    if idx <= 2:
+        on_gradient_1.add_stop(position / blink_gradient_1_stops[2][0], color)
+    else:
+        offset = blink_gradient_1_stops[3][0]
+        off_gradient_1.add_stop((position - offset) / (100 - offset), color)

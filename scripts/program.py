@@ -171,6 +171,7 @@ control_panel_thread.start()
 from note_controller import loop as note_controller_loop
 from note_controller import active_sensor_info
 from led_controller import update_with_binaries
+from instrument_util import *
 
 while True:
     note_controller_loop()

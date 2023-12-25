@@ -10,6 +10,7 @@ class NoteInstance:
         self.instrument = instrument
         self.note = note
         self.stop_func = None
+        self.led_bursted = False if is_instrument_burst(instrument) else None
 
     def play(self):
         self.stop_func = play(self.instrument, self.note)
@@ -21,6 +22,10 @@ class NoteInstance:
 
     def get_notes(self):
         return [self.note]
+    
+    # This function is used by LEDS for animation.
+    def set_led_bursted(self):
+        self.led_bursted = True
 
     def __eq__(self, other):
         return self.instrument == other.instrument and self.note == other.note
@@ -29,6 +34,7 @@ class ChordInstance:
     def __init__(self, instrument, notes):
         self.instrument = instrument
         self.notes = [NoteInstance(instrument, note) for note in notes]
+        self.led_bursted = False if is_instrument_burst(instrument) else None
 
     def play(self):
         for note in self.notes:
@@ -40,6 +46,9 @@ class ChordInstance:
 
     def get_notes(self):
         return [instance.note for instance in self.notes]
+    
+    def set_led_bursted(self):
+        self.led_bursted = True
 
     def __eq__(self, other):
         return self.instrument == other.instrument and self.notes == other.notes
@@ -52,9 +61,12 @@ def loop():
         should_create_instance = binary == 1
         clear_these = []
 
-        # Check if we should create a new instance
+        # Check if we should create a new instance, and set led_bursted to True
         for instance in sensor_info:
-            isBurst = instance.instrument in BURST_INSTRUMENTS
+            isBurst = is_instrument_burst(instance.instrument)
+
+            if isBurst and not instance.led_bursted:
+                instance.set_led_bursted()
 
             if binary == 0: # If the sensor is not in range
                 if not isBurst: instance.stop()

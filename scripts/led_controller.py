@@ -3,8 +3,52 @@ LED_GROUPS = 12
 
 import subprocess
 import json
-from color_util import Gradient, rainbow
-#
+from color_util import Gradient, rainbow, blink_gradient_1
+import time
+
+# Processes can be added to this table, and every frame they will update.
+led_processes = []
+
+class LEDProcess:
+    def __init__(self, name):
+        self.name = name
+        # {pixel_num: (r, g, b)}
+        self.data = {}
+
+    def update(self):
+        pass
+
+    def report(self):
+        pass
+
+    def stop(self):
+        pass
+
+class LEDProcessFade(LEDProcess):
+    def __init__(self, gradient: Gradient, duration, pixel_nums):
+        super().__init__("LedFade")
+        self.duration = duration
+        self.start_time = time.time()
+        self.gradient = gradient
+        self.time = 0
+
+        for pixel_num in pixel_nums:
+            self.data[pixel_num] = gradient.get_rgb_at_position(0)
+
+    def update(self):
+        self.time = time.time() - self.start_time
+
+        for pixel_num in self.data:
+            self.data[pixel_num] = self.gradient.get_rgb_at_position(self.time / self.duration)
+
+        if self.time >= self.duration:
+            self.stop()
+
+    def stop(self):
+        if self in led_processes:
+            led_processes.remove(self)
+
+# data: list of tuples (r, g, b)
 def write(data):
     data = json.dumps(data)
 
@@ -36,8 +80,16 @@ def update_with_binaries(binaries): # For debug purposes
             num_led = note * LEDS_PER_NOTE + led
 
             if val == 1:
-                data.append(rainbow.get_color_at_position(num_led / (LED_GROUPS * LEDS_PER_NOTE)))
+                data.append(rainbow.get_rgb_at_position(num_led / (LED_GROUPS * LEDS_PER_NOTE)))
             else:
                 data.append(color_off)
 
     write(data)
+
+def led_blink1(led_group):
+    process = LEDProcessFade(
+        blink_gradient_1,
+        0.5,
+        [(led_group - 1) * LEDS_PER_NOTE + i + 1 for i in range(LEDS_PER_NOTE)])
+    
+    led_processes.append(process)

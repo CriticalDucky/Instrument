@@ -102,3 +102,6 @@ def get_selected_chord():
 
 def get_selected_inversion():
     return get_data('inversion')
+
+def is_instrument_burst(instrument: str):
+    return instrument in BURST_INSTRUMENTS
