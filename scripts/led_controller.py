@@ -77,7 +77,7 @@ class LEDProcessHold(LEDProcess):
         self.pixel_nums = pixel_nums
         self.still_holding = True
 
-        self.process1 = LEDProcessFade(gradient1, 0.25, pixel_nums)
+        self.process1 = LEDProcessFade(gradient1, 0.2*0.5, pixel_nums)
         self.current_process = 1
 
         for pixel_num in pixel_nums:
@@ -118,12 +118,12 @@ class LEDProcessHold(LEDProcess):
                     return
                 else:
                     self.current_process = 3
-                    self.process3 = LEDProcessFade(self.gradient2, 0.25, self.pixel_nums)
+                    self.process3 = LEDProcessFade(self.gradient2, 0.65*0.5, self.pixel_nums)
                     self.data = self.process3.report()
 
             elif current_process == 2:
                 self.current_process = 3
-                self.process3 = LEDProcessFade(self.gradient2, 0.25, self.pixel_nums)
+                self.process3 = LEDProcessFade(self.gradient2, 0.65*0.5, self.pixel_nums)
                 self.data = self.process3.report()
 
             else:
