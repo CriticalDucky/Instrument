@@ -77,7 +77,7 @@ class LEDProcessHold(LEDProcess):
         self.pixel_nums = pixel_nums
         self.still_holding = True
 
-        self.process1 = LEDProcessFade(gradient1, 0.2*0.5, pixel_nums)
+        self.process1 = LEDProcessFade(gradient1, 0.32*0.5, pixel_nums)
         self.current_process = 1
 
         for pixel_num in pixel_nums:
@@ -240,12 +240,24 @@ def update_with_active_note_info(active_note_info: dict):
 
                 led_processes.append(new_process)
                 data.append(new_process.report())
-                
-    final_data = [] # [(r, g, b), ...]
+
+    data_to_be_merged = [[] for i in range(LEDS_PER_NOTE * LED_GROUPS)]
 
     for pixel_data in data:
         for pixel_num, pixel_color in pixel_data.items():
-            final_data[pixel_num - 1] = pixel_color
+            data_to_be_merged[pixel_num - 1].append(colorsys.rgb_to_hsv(*pixel_color))
+
+    final_data = [] # [(r, g, b), ...]
+
+    for hsv_colors in data_to_be_merged:
+        if len(hsv_colors) == 0:
+            final_data.append((0, 0, 0))
+            continue
+
+        # convert the hsv_colors list to a 
+        average_color = average_hsv(tuple(hsv_colors))
+
+        final_data.append((int(i) for i in colorsys.hsv_to_rgb(*average_color)))
 
     final_data = shift_led_data(final_data)
 

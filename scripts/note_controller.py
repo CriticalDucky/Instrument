@@ -1,6 +1,7 @@
 from sound import play
 from instrument_util import *
 from tof import get_sensor_binaries
+import colorsys
 
 # one table for each note in the octave (C-B)
 active_sensor_info = {i: [] for i in range(1, 13)}
