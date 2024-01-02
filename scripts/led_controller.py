@@ -49,7 +49,7 @@ class LEDProcessFade(LEDProcess):
             self.stop()
 
 class LEDProcessStatic(LEDProcess):
-    def __init__(self, color, pixel_nums, duration: float|int|False):
+    def __init__(self, color, pixel_nums, duration):
         super().__init__("LedStatic")
         self.color = color
         self.duration = duration
