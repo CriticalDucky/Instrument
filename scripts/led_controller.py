@@ -186,6 +186,8 @@ def led_hold1(led_group, dimmed=False):
     on = on_gradient_1 if not dimmed else on_gradient_1_dimmed,
     off = off_gradient_1 if not dimmed else off_gradient_1_dimmed
 
+    print("LOOK HERE!", on, dimmed)
+
     process = LEDProcessHold(
         on,
         on.get_rgb_at_position(1),
