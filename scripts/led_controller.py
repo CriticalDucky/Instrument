@@ -182,7 +182,9 @@ def led_blink1(led_group, dimmed=False):
     
     led_processes.append(process)
 
-def led_hold1(led_group, dimmed=False):
+    return process
+
+def led_hold1(led_group, instance, dimmed=False):
     on = on_gradient_1 if not dimmed else on_gradient_1_dimmed
     off = off_gradient_1 if not dimmed else off_gradient_1_dimmed
 
@@ -190,10 +192,12 @@ def led_hold1(led_group, dimmed=False):
         on,
         on.get_rgb_at_position(1),
         off,
-        led_group,
+        instance,
         [(led_group - 1) * LEDS_PER_NOTE + i + 1 for i in range(LEDS_PER_NOTE)])
     
     led_processes.append(process)
+
+    return process
 
 def update_with_active_note_info(active_note_info: dict):
     data = [] # [{pixel_num: (r, g, b)}, ...]
@@ -226,7 +230,7 @@ def update_with_active_note_info(active_note_info: dict):
                     if isBurst:
                         new_process = led_blink1(sensor_number, dimmed)
                     else:
-                        new_process = led_hold1(sensor_number, dimmed)
+                        new_process = led_hold1(sensor_number, instance, dimmed)
 
                     led_processes.append(new_process)
                     data.append(new_process.report())
@@ -236,7 +240,7 @@ def update_with_active_note_info(active_note_info: dict):
                 if isBurst:
                     new_process = led_blink1(sensor_number)
                 else:
-                    new_process = led_hold1(sensor_number)
+                    new_process = led_hold1(sensor_number, instance)
 
                 led_processes.append(new_process)
                 data.append(new_process.report())
