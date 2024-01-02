@@ -183,13 +183,8 @@ def led_blink1(led_group, dimmed=False):
     led_processes.append(process)
 
 def led_hold1(led_group, dimmed=False):
-    on = on_gradient_1 if not dimmed else on_gradient_1_dimmed,
+    on = on_gradient_1 if not dimmed else on_gradient_1_dimmed
     off = off_gradient_1 if not dimmed else off_gradient_1_dimmed
-
-    print("LOOK HERE!", on, dimmed)
-    print(type(on))
-    print(type(on_gradient_1))
-    print(type(on_gradient_1_dimmed))
 
     process = LEDProcessHold(
         on,
