@@ -1,8 +1,9 @@
 import colorsys
 import copy
 
-def average_hsv(*hs_vs):
-    if not hs_vs:
+# Provide a list or tuple of HSV tuples
+def average_hsv(hsv_list):
+    if not hsv_list:
         raise ValueError("At least one HSV tuple must be provided")
 
     total_weight = 0
@@ -10,8 +11,7 @@ def average_hsv(*hs_vs):
     weighted_saturation_sum = 0
     max_value = 0
 
-    for hsv in hs_vs:
-        print(hsv)
+    for hsv in hsv_list:
         h, s, v = hsv
         weight = v
         total_weight += weight
