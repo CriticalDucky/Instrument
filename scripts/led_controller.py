@@ -260,7 +260,6 @@ def update_with_active_note_info(active_note_info: dict):
 
         # convert the hsv_colors list to a tuple
         average_color = average_hsv(tuple(tuple(row) for row in hsv_colors))
-        print(average_color)
 
         final_data.append((int(i) for i in colorsys.hsv_to_rgb(*average_color)))
 
