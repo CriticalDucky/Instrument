@@ -139,7 +139,6 @@ class LEDProcessHold(LEDProcess):
 
 # data: list of tuples (r, g, b)
 def write(data):
-    print(data)
     data = json.dumps(data)
 
     command = ["sudo", "python3", "scripts/led_admin.py", data]
@@ -263,11 +262,9 @@ def update_with_active_note_info(active_note_info: dict):
 
         # convert the hsv_colors list to a tuple
         average_color = average_hsv(tuple(tuple(row) for row in hsv_colors))
-        print("But I caught you red handed:", average_color)
 
         final_data.append(tuple(int(i) for i in colorsys.hsv_to_rgb(*average_color)))
 
-    print("ONE", final_data)
     final_data = shift_led_data(final_data)
 
     write(final_data)
