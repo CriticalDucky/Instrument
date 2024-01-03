@@ -11,6 +11,7 @@ def average_hsv(*hs_vs):
     max_value = 0
 
     for hsv in hs_vs:
+        print(hsv)
         h, s, v = hsv
         weight = v
         total_weight += weight
