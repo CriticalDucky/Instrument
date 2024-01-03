@@ -137,6 +137,7 @@ class LEDProcessHold(LEDProcess):
 
 # data: list of tuples (r, g, b)
 def write(data):
+    print(data)
     data = json.dumps(data)
 
     command = ["sudo", "python3", "scripts/led_admin.py", data]
