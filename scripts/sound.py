@@ -24,6 +24,7 @@ def play(instrument = int, note = "C4"):
     fs.program_select(0, sfid, 0, 0)
 
     fs.noteon(0, midi, 127)
+    print("Playing", note, "on", instrument)
     
     def stop(secondsUntilStop=0):
         if secondsUntilStop: sleep(secondsUntilStop)
