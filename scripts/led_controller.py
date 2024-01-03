@@ -267,4 +267,7 @@ def update_with_active_note_info(active_note_info: dict):
 
     final_data = shift_led_data(final_data)
 
+    begin_time = time.time()
     write(final_data)
+    end_time = time.time()
+    print(f"Time to write to LEDs: {end_time - begin_time}")
