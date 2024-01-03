@@ -174,12 +174,15 @@ from instrument_util import *
 import time
 
 while True:
-    # Calculate program uptime in milliseconds
-    uptime_ms = time.time() * 1000
-
-    # Print program uptime
-    print("Program uptime:", uptime_ms, "ms")
-    
+    start_time = time.time()
     note_controller_loop()
+    note_controller_time = time.time() - start_time
+
+    start_time = time.time()
     update_with_active_note_info(active_sensor_info)
+    update_time = time.time() - start_time
+
+    print(f"note_controller_loop() time: {note_controller_time}")
+    print(f"update_with_active_note_info() time: {update_time}")
+    print(f"Comparison: {note_controller_time} vs {update_time}")
 
