@@ -110,6 +110,8 @@ class LEDProcessHold(LEDProcess):
                     self.process2 = LEDProcessStatic(self.middle_color, self.pixel_nums)
                     self.data = self.process2.report()
         else:
+            current_process = self.current_process
+
             if current_process == 1:
                 self.process1.update()
                 self.data = self.process1.report()
