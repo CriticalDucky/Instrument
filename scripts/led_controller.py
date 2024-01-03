@@ -264,6 +264,7 @@ def update_with_active_note_info(active_note_info: dict):
 
         final_data.append((int(i) for i in colorsys.hsv_to_rgb(*average_color)))
 
+    print("ONE", final_data)
     final_data = shift_led_data(final_data)
 
     write(final_data)
