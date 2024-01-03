@@ -171,8 +171,15 @@ from note_controller import loop as note_controller_loop
 from note_controller import active_sensor_info
 from led_controller import update_with_active_note_info
 from instrument_util import *
+import time
 
 while True:
+    # Calculate program uptime in milliseconds
+    uptime_ms = time.time() * 1000
+
+    # Print program uptime
+    print("Program uptime:", uptime_ms, "ms")
+    
     note_controller_loop()
     update_with_active_note_info(active_sensor_info)
 
