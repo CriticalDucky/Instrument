@@ -25,6 +25,8 @@ def average_hsv(hsv_list):
     average_hue = weighted_hue_sum / total_weight
     average_saturation = weighted_saturation_sum / total_weight
 
+    print("This is what its returning:", (average_hue, average_saturation, max_value))
+
     return average_hue, average_saturation, max_value
 
 class GradientStop:
