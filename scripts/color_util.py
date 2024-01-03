@@ -3,9 +3,6 @@ import copy
 
 # Provide a list or tuple of HSV tuples
 def average_hsv(hsv_list):
-    if not hsv_list:
-        raise ValueError("At least one HSV tuple must be provided")
-
     total_weight = 0
     weighted_hue_sum = 0
     weighted_saturation_sum = 0

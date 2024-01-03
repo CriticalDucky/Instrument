@@ -263,7 +263,7 @@ def update_with_active_note_info(active_note_info: dict):
         average_color = average_hsv(tuple(tuple(row) for row in hsv_colors))
         print("But I caught you red handed:", average_color)
 
-        final_data.append((int(i) for i in colorsys.hsv_to_rgb(*average_color)))
+        final_data.append(tuple(int(i) for i in colorsys.hsv_to_rgb(*average_color)))
 
     print("ONE", final_data)
     final_data = shift_led_data(final_data)
