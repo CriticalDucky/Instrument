@@ -141,8 +141,8 @@ class LEDProcessHold(LEDProcess):
 def write(data):
     data = json.dumps(data)
 
-    command = ["sudo", "python3", "scripts/led_admin.py", data]
-    command2 = ["sudo", "python3", "led_admin.py", data]
+    command = ["sudo", "python3", "scripts/led_admin_command.py", data]
+    command2 = ["sudo", "python3", "led_admin_command.py", data]
 
     try:
         subprocess.run(command, check=True)

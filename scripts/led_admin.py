@@ -9,9 +9,6 @@ import time
 from rpi_ws281x import *
 import argparse
 
-import sys
-import json
-
 # LED strip configuration:
 LED_COUNT      = 156      # Number of LED pixels.
 LED_PIN        = 13      # GPIO pin connected to the pixels (18 uses PWM!).
@@ -27,12 +24,8 @@ strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 
 # Intialize the library (must be called once before other functions).
 strip.begin()
 
-json_string = sys.argv[1]
-
-data = json.loads(json_string)
-# [[r, g, b], [r, g, b], ...]
-
-for idx, val in enumerate(data):
-    strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
+def give_data(data):
+    for idx, val in enumerate(data):
+        strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
 
 strip.show()
