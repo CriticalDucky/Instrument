@@ -5,7 +5,9 @@ NOTE_MIDI_MAPPING = {note: midi for midi, note in enumerate(OCTAVE_NOTES)}
 
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
     "Acid SQ Neutral.sf2",
+    "Acid SQ Neutral",
     "Piano.sf2"
+    "Piano"
 ]
 
 # This function converts a note name to a MIDI note number
