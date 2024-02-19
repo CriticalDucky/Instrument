@@ -28,7 +28,7 @@ def give_data(data):
     print(data)
     for idx, val in enumerate(data):
         strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
-        strip.show()
+    strip.show()
 
 
 strip.show()
