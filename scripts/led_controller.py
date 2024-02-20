@@ -165,8 +165,8 @@ def write(data):
 
     print(data)
 
-    if end - start > 0.1:
-        print(f"Time taken to send data: {end - start} seconds")
+    # if end - start > 0.1:
+    print(f"Time taken to send data: {end - start} seconds")
     
 
 def shift_led_data(data, shift_amount=(4*LEDS_PER_NOTE)): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
