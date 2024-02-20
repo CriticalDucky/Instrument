@@ -25,7 +25,6 @@ strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 
 strip.begin()
 
 def give_data(data):
-    print(data)
     for idx, val in enumerate(data):
         strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
     strip.show()
