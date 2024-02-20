@@ -37,14 +37,15 @@ try:
 
     print(2)
 
+    conn, addr = server_socket.accept()
+    print('Got connection from', addr)
+
     while True:
         print(3)
         # Accept connections
-        client_socket, addr = server_socket.accept()
-        print('Got connection from', addr)
 
         # create variable for the data
-        received_data = client_socket.recv(2048)
+        received_data = conn.recv(2048)
 
         #     # Receive the serialized data
         # received_data = b''
@@ -60,7 +61,8 @@ try:
 
         for idx, val in enumerate(data):
             strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
-            strip.show()
+            
+        strip.show()
 
 except KeyboardInterrupt:
     print("Ctrl+C pressed. Closing the server...")
