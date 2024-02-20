@@ -2,6 +2,7 @@ import os
 import subprocess
 from control_panel_data import set_data
 import threading
+from time import sleep
 
 def control_panel_thread():
     from kivy.app import App
@@ -174,6 +175,8 @@ from instrument_util import *
 import time
 
 while True:
+    sleep(1/24)
+
     note_controller_loop()
     update_with_active_note_info(active_sensor_info)
 
