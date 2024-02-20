@@ -74,11 +74,11 @@ try:
 
             received_data = received_data[len(full_list):]
 
-            print(data)
+            # print(data)
 
             data = json.loads(data)
 
-            print('Received', data, type(data))
+            # print('Received', data, type(data))
 
             use_data(data)
 
