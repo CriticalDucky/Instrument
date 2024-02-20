@@ -84,7 +84,7 @@ def loop():
             note = sensor_to_note(sensor_number) + str(octave)
 
             if chord_type != 'None':
-                print(inversion)
+                print(f'Creating chord {note} {chord_type} {inversion}')
                 notes = create_chord(note, chord_type, inversion)
                 instance = ChordInstance(instrument, notes, note)
             else:

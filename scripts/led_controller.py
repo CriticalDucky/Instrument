@@ -251,7 +251,8 @@ def update_with_active_note_info(active_note_info: dict):
             if isInstanceChord:
                 for note in notes:
                     new_process: LEDProcess
-                    dimmed = True if note == instance.original_note else False
+                    dimmed = True if note != instance.original_note else False
+                    print(f"Dimmed: {dimmed}", note, instance.original_note)
 
                     if isBurst:
                         new_process = led_blink1(sensor_number, dimmed)
