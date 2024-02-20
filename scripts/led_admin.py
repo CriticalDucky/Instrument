@@ -44,7 +44,7 @@ try:
         print('Got connection from', addr)
 
         data = client_socket.recv(1024).decode('utf-8')
-        print('Received', data)
+        print('Received', data, type(data))
         data = json.loads(data)
 
         for idx, val in enumerate(data):
