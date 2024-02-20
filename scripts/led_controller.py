@@ -165,6 +165,8 @@ def write(data):
     client_socket.sendall(data.encode())
     end = time.time()
 
+    global test
+
     test += 1
 
     if end - start > 0.1:
