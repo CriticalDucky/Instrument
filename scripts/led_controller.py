@@ -6,6 +6,7 @@ import json
 from color_util import *
 import time
 from instrument_util import *
+from led_admin import *
 
 # Processes can be added to this table, and every frame they will update.
 led_processes = []
@@ -139,18 +140,19 @@ class LEDProcessHold(LEDProcess):
 
 # data: list of tuples (r, g, b)
 def write(data):
-    data = json.dumps(data)
+    # data = json.dumps(data)
 
-    command = ["sudo", "python3", "scripts/led_admin_command.py", data]
-    command2 = ["sudo", "python3", "led_admin_command.py", data]
+    # command = ["sudo", "python3", "scripts/led_admin_command.py", data]
+    # command2 = ["sudo", "python3", "led_admin_command.py", data]
 
-    try:
-        subprocess.run(command, check=True)
-    except subprocess.CalledProcessError as e:
-        try:
-            subprocess.run(command2, check=True)
-        except subprocess.CalledProcessError as e:
-            print("Error:", e)
+    # try:
+    #     subprocess.run(command, check=True)
+    # except subprocess.CalledProcessError as e:
+    #     try:
+    #         subprocess.run(command2, check=True)
+    #     except subprocess.CalledProcessError as e:
+    #         print("Error:", e)
+    give_data(data)
 
 def shift_led_data(data, shift_amount=(4*LEDS_PER_NOTE)): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
     reversed_list = list(reversed(data))
