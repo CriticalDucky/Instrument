@@ -21,5 +21,3 @@ def set_data(key, value):
         data[key] = value
     else:
         raise KeyError(f'Key "{key}" not found in data dictionary')
-    
-print("This should only print once")
