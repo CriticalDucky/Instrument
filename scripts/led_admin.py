@@ -39,7 +39,7 @@ try:
     # Bind to the port
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((socket.gethostname(), 50001))
-    server_socket.listen(0)
+    server_socket.listen(5)
 
     print(2)
 
@@ -56,7 +56,7 @@ try:
             return None
 
     while True:
-        chunk = conn.recv(2048)  # Adjust buffer size as needed
+        chunk = conn.recv(1024)  # Adjust buffer size as needed
         # if not chunk and string ends with a closing 
         if not chunk:
             break
