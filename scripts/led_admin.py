@@ -43,9 +43,16 @@ try:
         client_socket, addr = server_socket.accept()
         print('Got connection from', addr)
 
-        data = client_socket.recv(1024).decode('utf-8')
+            # Receive the serialized data
+        received_data = b''
+        while True:
+            chunk = client_socket.recv(2048)  # Adjust buffer size as needed
+            if not chunk:
+                break
+            received_data += chunk
+
+        data = json.loads(received_data.decode('utf-8'))
         print('Received', data, type(data))
-        data = json.loads(data)
 
         for idx, val in enumerate(data):
             strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
