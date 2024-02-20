@@ -12,7 +12,7 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 host = socket.gethostname()
 
-client_socket.connect(('localhost', 50001))
+client_socket.connect((host, 50001))
 
 # Processes can be added to this table, and every frame they will update.
 led_processes = []
