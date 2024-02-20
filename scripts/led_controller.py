@@ -163,6 +163,8 @@ def write(data):
     client_socket.sendall(data.encode())
     end = time.time()
 
+    print(data)
+
     if end - start > 0.1:
         print(f"Time taken to send data: {end - start} seconds")
     
