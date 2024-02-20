@@ -39,7 +39,7 @@ try:
     # Bind to the port
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((socket.gethostname(), 50001))
-    server_socket.listen()
+    server_socket.listen(0)
 
     print(2)
 
@@ -50,15 +50,19 @@ try:
         # Accept connections
 
         # create variable for the data
+        # received_data = b''
+
         data = conn.recv(2048)
 
-        #     # Receive the serialized data
-        # received_data = b''
+        # if not data:
+        #     break
+
         # while True:
-        #     chunk = client_socket.recv(2048)  # Adjust buffer size as needed
+        #     chunk = conn.recv(2048)  # Adjust buffer size as needed
+        #     # if not chunk and string ends with a closing 
         #     if not chunk:
         #         break
-        #     received_data += chunk
+        #     received_data += chunk.decode('utf-8')
 
         print(data.decode('utf-8'))
         data = json.loads(data.decode('utf-8'))
