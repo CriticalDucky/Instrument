@@ -43,13 +43,16 @@ try:
         client_socket, addr = server_socket.accept()
         print('Got connection from', addr)
 
-            # Receive the serialized data
-        received_data = b''
-        while True:
-            chunk = client_socket.recv(2048)  # Adjust buffer size as needed
-            if not chunk:
-                break
-            received_data += chunk
+        # create variable for the data
+        received_data = client_socket.recv(2048)
+
+        #     # Receive the serialized data
+        # received_data = b''
+        # while True:
+        #     chunk = client_socket.recv(2048)  # Adjust buffer size as needed
+        #     if not chunk:
+        #         break
+        #     received_data += chunk
 
         print(received_data.decode('utf-8'))
         data = json.loads(received_data.decode('utf-8'))
