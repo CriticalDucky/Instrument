@@ -159,10 +159,10 @@ def write(data):
     #     except subprocess.CalledProcessError as e:
     #         print("Error:", e)
     # Ping the system's time before and after the sendall() function to measure the time it takes to send the data
-    start = time.time()
-    client_socket.sendall(data.encode())
-    end = time.time()
-    print(f"Time taken to send data: {end - start} seconds")
+    # start = time.time()
+    # client_socket.sendall(data.encode())
+    # end = time.time()
+    # print(f"Time taken to send data: {end - start} seconds")
     
 
 def shift_led_data(data, shift_amount=(4*LEDS_PER_NOTE)): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
