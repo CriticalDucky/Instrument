@@ -8,6 +8,9 @@
 import time
 from rpi_ws281x import *
 import argparse
+import socket
+import sys
+import json
 
 # LED strip configuration:
 LED_COUNT      = 156      # Number of LED pixels.
@@ -24,10 +27,26 @@ strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 
 # Intialize the library (must be called once before other functions).
 strip.begin()
 
-def give_data(data):
-    for idx, val in enumerate(data):
-        strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
-    strip.show()
+try:
+    # Bind to the port
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.bind(socket.gethostname(), 50001)
+    server_socket.listen(5)
 
+    while True:
+        # Accept connections
+        client_socket, addr = server_socket.accept()
+        print('Got connection from', addr)
 
-strip.show()
+        data = client_socket.recv(1024).decode()
+        data = json.loads(data)
+
+        for idx, val in enumerate(data):
+            strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
+            strip.show()
+
+except KeyboardInterrupt:
+    print("Ctrl+C pressed. Closing the server...")
+    # Close the server socket
+    server_socket.close()
+    sys.exit(0)
