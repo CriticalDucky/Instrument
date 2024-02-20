@@ -251,8 +251,7 @@ def update_with_active_note_info(active_note_info: dict):
             if isInstanceChord:
                 for note in notes:
                     new_process: LEDProcess
-                    dimmed = True if note != instance.original_note else False
-                    print(f"Dimmed: {dimmed}", note, instance.original_note)
+                    dimmed = False#True if note != instance.original_note else False
 
                     if isBurst:
                         new_process = led_blink1(sensor_number, dimmed)
@@ -272,7 +271,7 @@ def update_with_active_note_info(active_note_info: dict):
                 led_processes.append(new_process)
                 data.append(new_process.report())
 
-    data_to_be_merged = [[] for i in range(LEDS_PER_NOTE * LED_GROUPS)]
+    data_to_be_merged = [[] for _ in range(LEDS_PER_NOTE * LED_GROUPS)]
 
     for pixel_data in data:
         for pixel_num, pixel_color in pixel_data.items():
