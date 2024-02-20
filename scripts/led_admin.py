@@ -51,6 +51,7 @@ try:
                 break
             received_data += chunk
 
+        print(received_data.decode('utf-8'))
         data = json.loads(received_data.decode('utf-8'))
         print('Received', data, type(data))
 
