@@ -46,29 +46,41 @@ try:
     conn, addr = server_socket.accept()
     print('Got connection from', addr)
 
-    while True: # A JSON string will be sent to the server in multiple packets. 
-        # Accept connections
+    received_data = ''
 
-        # create variable for the data
-        # received_data = b''
+    # Check if the data *has* a full list (this list contains lists within it, so check for [[).
+    def is_there_full_list(data: str):
+        if ']]' in data:
+            return data[:data.index(']]')+2]
+        else:
+            return None
 
-        data = conn.recv(2048)
+    while True:
+        chunk = conn.recv(2048)  # Adjust buffer size as needed
+        # if not chunk and string ends with a closing 
+        if not chunk:
+            break
 
-        # if not data:
-        #     break
+        received_data += chunk.decode('utf-8')
 
-        # while True:
-        #     chunk = conn.recv(2048)  # Adjust buffer size as needed
-        #     # if not chunk and string ends with a closing 
-        #     if not chunk:
-        #         break
-        #     received_data += chunk.decode('utf-8')
+        # Check if the data *has* a full list (this list contains lists within it, so check for [[).
 
-        print(data.decode('utf-8'))
-        data = json.loads(data.decode('utf-8'))
-        print('Received', data, type(data))
+        full_list = is_there_full_list(received_data)
 
-        use_data(data)
+        if full_list:
+            data = full_list
+
+            # Remove the full list from the received data
+
+            received_data = received_data[len(full_list):]
+
+            print(data)
+
+            data = json.loads(data)
+
+            print('Received', data, type(data))
+
+            use_data(data)
 
 except KeyboardInterrupt:
     print("Ctrl+C pressed. Closing the server...")
