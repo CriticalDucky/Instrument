@@ -29,23 +29,28 @@ strip.begin()
 
 print(1)
 
+def use_data(data):
+    for idx, val in enumerate(data):
+        strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
+        
+    strip.show()
+
 try:
     # Bind to the port
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((socket.gethostname(), 50001))
-    server_socket.listen(5)
+    server_socket.listen()
 
     print(2)
 
     conn, addr = server_socket.accept()
     print('Got connection from', addr)
 
-    while True:
-        print(3)
+    while True: # A JSON string will be sent to the server in multiple packets. 
         # Accept connections
 
         # create variable for the data
-        received_data = conn.recv(2048)
+        data = conn.recv(2048)
 
         #     # Receive the serialized data
         # received_data = b''
@@ -55,14 +60,11 @@ try:
         #         break
         #     received_data += chunk
 
-        print(received_data.decode('utf-8'))
-        data = json.loads(received_data.decode('utf-8'))
+        print(data.decode('utf-8'))
+        data = json.loads(data.decode('utf-8'))
         print('Received', data, type(data))
 
-        for idx, val in enumerate(data):
-            strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
-            
-        strip.show()
+        use_data(data)
 
 except KeyboardInterrupt:
     print("Ctrl+C pressed. Closing the server...")
