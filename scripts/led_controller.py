@@ -144,6 +144,7 @@ class LEDProcessHold(LEDProcess):
                 else:
                     self.stop()
 
+test = 0
 # data: list of tuples (r, g, b)
 def write(data):
     # data = [1,1,1]
@@ -164,9 +165,13 @@ def write(data):
     client_socket.sendall(data.encode())
     end = time.time()
 
+    test += 1
+
     if end - start > 0.1:
         print(data)
-        print(f"Time taken to send data: {end - start} seconds")
+        print(f"Time taken to send data: {end - start} seconds; Num times sent: {test}")
+
+        test = 0
     
 
 def shift_led_data(data, shift_amount=(4*LEDS_PER_NOTE)): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
