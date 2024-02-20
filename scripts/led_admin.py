@@ -27,13 +27,18 @@ strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 
 # Intialize the library (must be called once before other functions).
 strip.begin()
 
+print(1)
+
 try:
     # Bind to the port
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(socket.gethostname(), 50001)
     server_socket.listen(5)
 
+    print(2)
+
     while True:
+        print(3)
         # Accept connections
         client_socket, addr = server_socket.accept()
         print('Got connection from', addr)
