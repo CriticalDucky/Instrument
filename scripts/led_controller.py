@@ -246,21 +246,22 @@ def update_with_active_note_info(active_note_info: dict):
             else:
                 continue
 
-            sensor_number = note_to_sensor(notes[0])
-
             if isInstanceChord:
                 for note in notes:
                     new_process: LEDProcess
-                    dimmed = False#True if note != instance.original_note else False
+                    dimmed = True if note != instance.original_note else False
+
+                    led_group = OCTAVE_NOTES.index(note[:-1]) + 1
 
                     if isBurst:
-                        new_process = led_blink1(sensor_number, dimmed)
+                        new_process = led_blink1(led_group, dimmed)
                     else:
-                        new_process = led_hold1(sensor_number, instance, dimmed)
+                        new_process = led_hold1(led_group, instance, dimmed)
 
                     led_processes.append(new_process)
                     data.append(new_process.report())
             else:
+                sensor_number = note_to_sensor(notes[0])
                 new_process: LEDProcess
 
                 if isBurst:
