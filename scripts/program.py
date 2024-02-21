@@ -175,7 +175,7 @@ from instrument_util import *
 import time
 
 while True:
-    sleep(1/100)
+    sleep(1/50)
 
     note_controller_loop()
     update_with_active_note_info(active_sensor_info)
