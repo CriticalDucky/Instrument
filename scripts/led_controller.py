@@ -127,12 +127,12 @@ class LEDProcessHold(LEDProcess):
                     return
                 else:
                     self.current_process = 3
-                    self.process3 = LEDProcessFade(self.gradient2, 0.65*0.5, self.pixel_nums)
+                    self.process3 = LEDProcessFade(self.gradient2, 0.65, self.pixel_nums)
                     self.data = self.process3.report()
 
             elif current_process == 2:
                 self.current_process = 3
-                self.process3 = LEDProcessFade(self.gradient2, 0.65*0.5, self.pixel_nums)
+                self.process3 = LEDProcessFade(self.gradient2, 0.65, self.pixel_nums)
                 self.data = self.process3.report()
 
             else:
