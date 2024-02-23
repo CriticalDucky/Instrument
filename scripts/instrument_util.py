@@ -75,7 +75,7 @@ def get_all_instruments():
     for root, _, files in os.walk(sounds_folder):
         for file in files:
             # Check if the file is a soundfont file (.sf2)
-            if file.endswith(".sf2"):
+            if file.endswith(".sf2") or file.endswith(".SF2"):
                 # Extract instrument name from the file name (remove the ".sf2" extension)
                 instrument_name = os.path.splitext(file)[0]
                 
