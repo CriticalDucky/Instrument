@@ -55,7 +55,27 @@ def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, 
 
     return [midi_to_note(midi) for midi in midi_table]
 
-# This function returns an ordered array of instruments as seen in the sounds folder.
+'''
+[
+    {
+        'name': 'Library 1',
+        'data': [
+            {'name': 'Instrument 1', 'path': 'path/to/instrument1.sf2'},
+            {'name': 'Instrument 2', 'path': 'path/to/instrument2.sf2'},
+            ...
+        ]
+    },
+    {
+        'name': 'Library 2',
+        'data': [
+            {'name': 'Instrument 1', 'path': 'path/to/instrument1.sf2'},
+            {'name': 'Instrument 2', 'path': 'path/to/instrument2.sf2'},
+            ...
+        ]
+    },
+    ...
+]
+'''
 def get_libraries():
     import os
 

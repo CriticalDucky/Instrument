@@ -15,7 +15,7 @@ else:
 
 def play(library: int, instrument: int, note = "C4"):
     midi = note_to_midi(note)
-    file = get_libraries()[library][instrument]['path']
+    file = get_libraries()[library]['data'][instrument]['path']
 
     if file is None:
         raise Exception("Could not find soundfont file for instrument " + instrument)

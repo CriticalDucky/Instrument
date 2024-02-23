@@ -165,6 +165,7 @@ def control_panel_thread():
             if instance.collide_point(*touch.pos):
                 library_index = self.libraries.index(
                     next((item for item in self.libraries if item['name'] == instance.text), None))
+                set_data('instrument', 0)
                 set_data('library', library_index)
                 self.update_instrument_buttons(library_index)
 
