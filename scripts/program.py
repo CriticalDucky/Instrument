@@ -116,8 +116,6 @@ def control_panel_thread():
 
                 self.library_buttons.add_widget(toggle_button)
 
-            layout.add_widget(self.library_buttons)
-
             # Update instrument buttons for the default library (index 0)
             self.update_instrument_buttons(0)
 
@@ -134,12 +132,9 @@ def control_panel_thread():
             # Add the ScrollView to the main horizontal layout
             layout.add_widget(scroll_view)
 
-            return layout
+            layout.add_widget(self.library_buttons)
 
-        def on_library_selected(self, instance):
-            selected_library_index = self.library_buttons.children.index(instance)
-            self.update_instrument_buttons(selected_library_index)
-            set_data('library', selected_library_index)
+            return layout
 
         def update_instrument_buttons(self, library_index):
             self.scroll_layout.clear_widgets()
@@ -160,6 +155,18 @@ def control_panel_thread():
 
                 if i == 0:
                     instrument_button.state = 'down'
+
+            #                 def on_library_selected(self, instance, touch):
+            # selected_library_index = self.library_buttons.children.index(instance)
+            # self.update_instrument_buttons(selected_library_index)
+            # set_data('library', selected_library_index)
+
+        def on_library_selected(self, instance, touch):
+            if instance.collide_point(*touch.pos):
+                library_index = self.libraries.index(
+                    next((item for item in self.libraries if item['name'] == instance.text), None))
+                set_data('library', library_index)
+                self.update_instrument_buttons(library_index)
 
         def on_octave_touch_down(self, instance, touch):
             if instance.collide_point(*touch.pos):
