@@ -7,14 +7,15 @@ import colorsys
 active_sensor_info = {i: [] for i in range(1, 13)}
 
 class NoteInstance:
-    def __init__(self, instrument, note):
+    def __init__(self, library, instrument, note):
+        self.library = library
         self.instrument = instrument
         self.note = note
         self.stop_func = None
         self.led_primed = False
 
     def play(self):
-        self.stop_func = play(self.instrument, self.note)
+        self.stop_func = play(self.library, self.instrument, self.note)
 
     def stop(self):
         if self.stop_func is not None:
@@ -29,7 +30,8 @@ class NoteInstance:
         self.led_primed = True
     
 class ChordInstance:
-    def __init__(self, instrument, notes, original_note=None):
+    def __init__(self, library, instrument, notes, original_note=None):
+        self.library = library
         self.instrument = instrument
         self.notes = [NoteInstance(instrument, note) for note in notes]
         self.led_primed = False
@@ -79,15 +81,16 @@ def loop():
             octave = get_selected_octave()
             chord_type = get_selected_chord()
             inversion = get_selected_inversion()
+            library = get_selected_library()
             instrument = get_selected_instrument()
 
             note = sensor_to_note(sensor_number) + str(octave)
 
             if chord_type != 'None':
                 notes = create_chord(note, chord_type, inversion)
-                instance = ChordInstance(instrument, notes, note)
+                instance = ChordInstance(library, instrument, notes, note)
             else:
-                instance = NoteInstance(instrument, note)
+                instance = NoteInstance(library, instrument, note)
 
             instance.play()
             sensor_info.append(instance)

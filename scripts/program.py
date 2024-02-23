@@ -96,18 +96,30 @@ def control_panel_thread():
                 orientation='vertical', size_hint_y=None, size_hint_x=None, width=150)
             self.scroll_layout.bind(minimum_height=self.scroll_layout.setter('height'))
 
-            self.instruments = instrument_util.get_libraries()
+            self.libraries = instrument_util.get_libraries()
 
             # Add toggle buttons to switch libraries
-            self.library_buttons = BoxLayout(orientation='horizontal', size_hint=(None, None))
-            for library_name in self.instruments.keys():
-                toggle_button = ToggleButton(text=library_name, size_hint=(None, None))
-                toggle_button.bind(on_press=self.on_library_selected)
+            self.library_buttons = BoxLayout(orientation='vertical', size_hint=(None, 1), width=150)
+            for library in self.libraries:
+                toggle_button = ToggleButton(
+                    text=library['name'],
+                    size_hint_y=None,
+                    height=48,
+                    group='libraries',
+                    allow_no_selection=False
+                )
+                toggle_button.bind(on_touch_down=self.on_library_selected)
+
+                # Set the first library to be selected by default
+                if self.libraries.index(library) == 0:
+                    toggle_button.state = 'down'
+
                 self.library_buttons.add_widget(toggle_button)
 
             layout.add_widget(self.library_buttons)
 
-            self.update_instrument_buttons()
+            # Update instrument buttons for the default library (index 0)
+            self.update_instrument_buttons(0)
 
             # Create a ScrollView and add the scroll layout to it
             scroll_view = ScrollView(size_hint=(
@@ -125,18 +137,15 @@ def control_panel_thread():
             return layout
 
         def on_library_selected(self, instance):
-            selected_library = instance.text
-            self.update_instrument_buttons(selected_library)
+            selected_library_index = self.library_buttons.children.index(instance)
+            self.update_instrument_buttons(selected_library_index)
+            set_data('library', selected_library_index)
 
-        def update_instrument_buttons(self, selected_library=None):
+        def update_instrument_buttons(self, library_index):
             self.scroll_layout.clear_widgets()
 
-            if selected_library:
-                instruments = self.instruments.get(selected_library, [])
-            else:
-                # Default to the first library if none selected
-                selected_library = list(self.instruments.keys())[0]
-                instruments = self.instruments[selected_library]
+            library = self.libraries[library_index]
+            instruments = library['data']
 
             for i, data in enumerate(instruments):
                 instrument_button = ToggleButton(

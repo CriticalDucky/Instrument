@@ -56,11 +56,6 @@ def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, 
     return [midi_to_note(midi) for midi in midi_table]
 
 # This function returns an ordered array of instruments as seen in the sounds folder.
-# Structure: [
-#   {'name': 'Acid SQ Neutral', 'path': 'this is the path to the soundfont file'},
-#   {'name': 'Piano', 'path': 'this is the path to the soundfont file'},
-#   ...
-# ]
 def get_libraries():
     import os
 
@@ -68,9 +63,9 @@ def get_libraries():
     script_dir = os.path.dirname(os.path.realpath(__file__))
     sounds_folder = os.path.join(script_dir, '..', 'sounds')
 
-    # Initialize an empty dictionary to store library instrument information
-    # The dictionary key is the name of the folder the file is in, and the value is a table with the file name and the full path to the file
-    libraries = {}
+    # Initialize an empty list to store library instrument information
+    # Each item in the list is a dictionary containing the library name and instrument data
+    libraries = []
 
     # Iterate through all files in the sounds folder
     for root, _, files in os.walk(sounds_folder):
@@ -83,17 +78,19 @@ def get_libraries():
                 # Get the full path to the soundfont file
                 instrument_path = os.path.join(root, file)
 
-                # Create a dictionary with instrument information and append it to the list
+                # Create a dictionary with instrument information
                 instrument_info = {'name': instrument_name, 'path': instrument_path}
                 
                 # Get the name of the folder the file is in
                 folder_name = os.path.basename(root)
 
-                # Add the instrument to the list of instruments in the corresponding library
-                if folder_name in libraries:
-                    libraries[folder_name].append(instrument_info)
+                # Check if the library already exists in the list
+                existing_library = next((item for item in libraries if item['name'] == folder_name), None)
+                if existing_library:
+                    existing_library['data'].append(instrument_info)
                 else:
-                    libraries[folder_name] = [instrument_info]
+                    # Create a new library entry
+                    libraries.append({'name': folder_name, 'data': [instrument_info]})
 
                 
 
@@ -101,13 +98,16 @@ def get_libraries():
 
     # instruments = sorted(instruments, key=lambda x: x['name'])
                     
-    # sort the instruments in each library
-    for library in libraries:
-        libraries[library] = sorted(libraries[library], key=lambda x: x['name'])
+    # # sort the instruments in each library
+    # for library in libraries:
+    #     libraries[library] = sorted(libraries[library], key=lambda x: x['name'])
 
     return libraries
 
             
+def get_selected_library():
+    return get_data('library')
+
 def get_selected_instrument():
     return get_data('instrument')
 
