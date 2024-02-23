@@ -1,5 +1,5 @@
 from time import sleep
-from instrument_util import note_to_midi, get_all_instruments
+from instrument_util import note_to_midi, get_libraries
 import fluidsynth
 import platform
 
@@ -15,7 +15,7 @@ else:
 
 def play(instrument = int, note = "C4"):
     midi = note_to_midi(note)
-    file = get_all_instruments()[instrument]['path']
+    file = get_libraries()[instrument]['path']
 
     if file is None:
         raise Exception("Could not find soundfont file for instrument " + instrument)
