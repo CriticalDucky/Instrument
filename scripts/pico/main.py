@@ -1,73 +1,68 @@
-TIMING_BUDGET = 10000  # us
+while True:
+    try:
+        TIMING_BUDGET = 10000  # us
 
-from machine import Pin, I2C, UART
-from vl53l0x import setup_tofl_device, TBOOT
-import utime
-import _thread
+        from machine import Pin, I2C, UART
+        from vl53l0x import setup_tofl_device, TBOOT
+        import utime
 
-def setup_sensors():
-    i2c_0_xshut = [
-        Pin(16, Pin.OUT),
-        Pin(17, Pin.OUT),
-        Pin(18, Pin.OUT),
-        Pin(19, Pin.OUT),
-        Pin(20, Pin.OUT),
-        Pin(21, Pin.OUT),
-    ]
+        def setup_sensors():
+            i2c_0_xshut = [
+                Pin(16, Pin.OUT),
+                Pin(17, Pin.OUT),
+                Pin(18, Pin.OUT),
+                Pin(19, Pin.OUT),
+                Pin(20, Pin.OUT),
+                Pin(21, Pin.OUT),
+            ]
 
-    i2c_1_xshut = [
-        Pin(22, Pin.OUT),
-        Pin(26, Pin.OUT),
-        Pin(27, Pin.OUT),
-        Pin(28, Pin.OUT),
-        Pin(2, Pin.OUT),
-        Pin(3, Pin.OUT),
-    ]
+            i2c_1_xshut = [
+                Pin(22, Pin.OUT),
+                Pin(26, Pin.OUT),
+                Pin(27, Pin.OUT),
+                Pin(28, Pin.OUT),
+                Pin(2, Pin.OUT),
+                Pin(3, Pin.OUT),
+            ]
 
-    i2c_0 = I2C(id=1, sda=Pin(14), scl=Pin(15))
-    i2c_1 = I2C(id=0, sda=Pin(0), scl=Pin(1))
+            i2c_0 = I2C(id=1, sda=Pin(14), scl=Pin(15))
+            i2c_1 = I2C(id=0, sda=Pin(0), scl=Pin(1))
 
-    for pin in i2c_0_xshut + i2c_1_xshut:
-        pin.value(0)
+            for pin in i2c_0_xshut + i2c_1_xshut:
+                pin.value(0)
 
-    tofl_sensors = []
+            tofl_sensors = []
 
-    i2c_sensors = [(i2c_0, i2c_0_xshut), (i2c_1, i2c_1_xshut)]
+            i2c_sensors = [(i2c_0, i2c_0_xshut), (i2c_1, i2c_1_xshut)]
 
-    for i2c, xshut_pins in i2c_sensors:
-        for idx, pin in enumerate(xshut_pins):
-            pin.value(1)
-            utime.sleep_us(TBOOT)
-            tofl_sensor = setup_tofl_device(i2c, TIMING_BUDGET, 12, 14)
-            tofl_sensor.set_address(0x31 + idx)
-            tofl_sensors.append(tofl_sensor)
+            for i2c, xshut_pins in i2c_sensors:
+                for idx, pin in enumerate(xshut_pins):
+                    pin.value(1)
+                    utime.sleep_us(TBOOT)
+                    tofl_sensor = setup_tofl_device(i2c, TIMING_BUDGET, 12, 14)
+                    tofl_sensor.set_address(0x31 + idx)
+                    tofl_sensors.append(tofl_sensor)
 
-    return tofl_sensors
+            return tofl_sensors
 
-def main():
-    tofl_sensors = setup_sensors()
-    tofl_data = [0] * len(tofl_sensors)
+        def main():
+            tofl_sensors = setup_sensors()
+            tofl_data = [0] * len(tofl_sensors)
 
-    while True:
-        try:
-            for idx, tofl in enumerate(tofl_sensors):
-                distance_mm = tofl.ping()
-                utime.sleep_us(1200)
-                tofl_data[idx] = distance_mm
+            while True:
+                for idx, tofl in enumerate(tofl_sensors):
+                    distance_mm = tofl.ping()
+                    utime.sleep_us(1200)
+                    tofl_data[idx] = distance_mm
+                print(' '.join(map(str, tofl_data)))
 
-                if distance_mm < 70:
-                    # intentionally crete an exception to break the loop
-                    raise Exception("Sensor too close")
-            print(' '.join(map(str, tofl_data)))
+        if __name__ == "__main__":
+            main()
 
-        except Exception as e:
-            print(e)
-            print("Restarting in 2 seconds...")
-            utime.sleep(2)
-            _thread.interrupt_main()
-
-if __name__ == "__main__":
-    main()
+    except Exception as e:
+        print(e)
+        print("Restarting script in 2 seconds...")
+        utime.sleep(2)
 
 # def thread0():
 #     global tofl1
