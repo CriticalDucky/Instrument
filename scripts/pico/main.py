@@ -54,13 +54,17 @@ def main():
                 distance_mm = tofl.ping()
                 utime.sleep_us(1200)
                 tofl_data[idx] = distance_mm
+
+                if distance_mm < 70:
+                    # intentionally crete an exception to break the loop
+                    raise Exception("Sensor too close")
             print(' '.join(map(str, tofl_data)))
 
         except Exception as e:
             print(e)
             print("Restarting in 2 seconds...")
             utime.sleep(2)
-            _thread.interrupt_main()  # raise KeyboardInterrupt to restart script
+            _thread.interrupt_main()
 
 if __name__ == "__main__":
     main()
