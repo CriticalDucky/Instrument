@@ -12,7 +12,6 @@ def control_panel_thread():
     from kivy.uix.scrollview import ScrollView
     from kivy.core.window import Window
     from kivy.config import Config
-    # from control_panel_data import set_data
     import instrument_util
 
     global set_data
@@ -93,26 +92,22 @@ def control_panel_thread():
             # Here lies the hold button. Rest in peace.
 
             # Create a scroll view for instruments
-            scroll_layout = BoxLayout(
+            self.scroll_layout = BoxLayout(
                 orientation='vertical', size_hint_y=None, size_hint_x=None, width=150)
-            scroll_layout.bind(minimum_height=scroll_layout.setter('height'))
+            self.scroll_layout.bind(minimum_height=self.scroll_layout.setter('height'))
 
-            instruments = instrument_util.get_all_instruments()
+            self.instruments = instrument_util.get_libraries()
 
-            # Add 10 instruments to the scroll layout
-            for i, data in enumerate(instruments):
-                instrument_button = ToggleButton(
-                    text=f"{i+1}. {data['name']}",
-                    size_hint_y=None,
-                    height=96,
-                    group='instruments',
-                    allow_no_selection=False,
-                )
-                instrument_button.bind(on_touch_down=self.on_instrument_touch_down)
-                scroll_layout.add_widget(instrument_button)
+            # Add toggle buttons to switch libraries
+            self.library_buttons = BoxLayout(orientation='horizontal', size_hint=(None, None))
+            for library_name in self.instruments.keys():
+                toggle_button = ToggleButton(text=library_name, size_hint=(None, None))
+                toggle_button.bind(on_press=self.on_library_selected)
+                self.library_buttons.add_widget(toggle_button)
 
-                if i == 0:
-                    instrument_button.state = 'down'
+            layout.add_widget(self.library_buttons)
+
+            self.update_instrument_buttons()
 
             # Create a ScrollView and add the scroll layout to it
             scroll_view = ScrollView(size_hint=(
@@ -122,12 +117,40 @@ def control_panel_thread():
             scroll_view.bar_color = [1, 1, 1, 1]
             scroll_view.bar_margin = 0
             scroll_view.scroll_y
-            scroll_view.add_widget(scroll_layout)
+            scroll_view.add_widget(self.scroll_layout)
 
             # Add the ScrollView to the main horizontal layout
             layout.add_widget(scroll_view)
 
             return layout
+
+        def on_library_selected(self, instance):
+            selected_library = instance.text
+            self.update_instrument_buttons(selected_library)
+
+        def update_instrument_buttons(self, selected_library=None):
+            self.scroll_layout.clear_widgets()
+
+            if selected_library:
+                instruments = self.instruments.get(selected_library, [])
+            else:
+                # Default to the first library if none selected
+                selected_library = list(self.instruments.keys())[0]
+                instruments = self.instruments[selected_library]
+
+            for i, data in enumerate(instruments):
+                instrument_button = ToggleButton(
+                    text=f"{i+1}. {data['name']}",
+                    size_hint_y=None,
+                    height=96,
+                    group='instruments',
+                    allow_no_selection=False,
+                )
+                instrument_button.bind(on_touch_down=self.on_instrument_touch_down)
+                self.scroll_layout.add_widget(instrument_button)
+
+                if i == 0:
+                    instrument_button.state = 'down'
 
         def on_octave_touch_down(self, instance, touch):
             if instance.collide_point(*touch.pos):
