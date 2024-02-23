@@ -61,15 +61,16 @@ def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, 
 #   {'name': 'Piano', 'path': 'this is the path to the soundfont file'},
 #   ...
 # ]
-def get_all_instruments():
+def get_libraries():
     import os
 
     # Path to the sounds folder
     script_dir = os.path.dirname(os.path.realpath(__file__))
     sounds_folder = os.path.join(script_dir, '..', 'sounds')
 
-    # Initialize an empty list to store instrument information
-    instruments = []
+    # Initialize an empty dictionary to store library instrument information
+    # The dictionary key is the name of the folder the file is in, and the value is a table with the file name and the full path to the file
+    libraries = {}
 
     # Iterate through all files in the sounds folder
     for root, _, files in os.walk(sounds_folder):
@@ -84,13 +85,27 @@ def get_all_instruments():
 
                 # Create a dictionary with instrument information and append it to the list
                 instrument_info = {'name': instrument_name, 'path': instrument_path}
-                instruments.append(instrument_info)
+                
+                # Get the name of the folder the file is in
+                folder_name = os.path.basename(root)
+
+                # Add the instrument to the list of instruments in the corresponding library
+                if folder_name in libraries:
+                    libraries[folder_name].append(instrument_info)
+                else:
+                    libraries[folder_name] = [instrument_info]
+
+                
 
     # Return the list of instruments
 
-    instruments = sorted(instruments, key=lambda x: x['name'])
+    # instruments = sorted(instruments, key=lambda x: x['name'])
+                    
+    # sort the instruments in each library
+    for library in libraries:
+        libraries[library] = sorted(libraries[library], key=lambda x: x['name'])
 
-    return instruments
+    return libraries
 
             
 def get_selected_instrument():
