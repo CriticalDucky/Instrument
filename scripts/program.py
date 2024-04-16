@@ -1,6 +1,6 @@
 import os
 import subprocess
-from control_panel_data import set_data
+from scripts.data.control_panel_data import set_data
 import threading
 from time import sleep
 
@@ -12,7 +12,7 @@ def control_panel_thread():
     from kivy.uix.scrollview import ScrollView
     from kivy.core.window import Window
     from kivy.config import Config
-    import instrument_util
+    import scripts.utilities.notation as notation
 
     global set_data
 
@@ -96,7 +96,7 @@ def control_panel_thread():
                 orientation='vertical', size_hint_y=None, size_hint_x=None, width=150)
             self.scroll_layout.bind(minimum_height=self.scroll_layout.setter('height'))
 
-            self.libraries = instrument_util.get_libraries()
+            self.libraries = notation.get_libraries()
 
             # Add toggle buttons to switch libraries
             self.library_buttons = BoxLayout(orientation='vertical', size_hint=(None, 1), width=150)
@@ -211,7 +211,7 @@ control_panel_thread.start()
 from note_controller import loop as note_controller_loop
 from note_controller import active_sensor_info
 from led_controller import update_with_active_note_info
-from instrument_util import *
+from scripts.utilities.notation import *
 import time
 
 while True:

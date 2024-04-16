@@ -3,9 +3,9 @@ LED_GROUPS = 12
 
 import subprocess
 import json
-from color_util import *
+from scripts.utilities.color import *
 import time
-from instrument_util import *
+from scripts.utilities.notation import *
 import socket
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,44 +16,6 @@ client_socket.connect((host, 50001))
 
 # Processes can be added to this table, and every frame they will update.
 led_processes = []
-
-class LEDProcess:
-    def __init__(self, name):
-        self.name = name
-        # {pixel_num: (r, g, b)}
-        self.data = {}
-        self.stopped = False
-
-    def update(self):
-        pass
-
-    def report(self):
-        return self.data
-
-    def stop(self):
-        self.stopped = True
-        if self in led_processes:
-            led_processes.remove(self)
-        pass
-class LEDProcessFade(LEDProcess):
-    def __init__(self, gradient: Gradient, duration, pixel_nums):
-        super().__init__("LedFade")
-        self.duration = duration
-        self.start_time = time.time()
-        self.gradient = gradient
-        self.time = 0
-
-        for pixel_num in pixel_nums:
-            self.data[pixel_num] = gradient.get_rgb_at_position(0)
-
-    def update(self):
-        self.time = time.time() - self.start_time
-
-        for pixel_num in self.data:
-            self.data[pixel_num] = self.gradient.get_rgb_at_position(self.time / self.duration)
-
-        if self.time >= self.duration:
-            self.stop()
 
 class LEDProcessStatic(LEDProcess):
     def __init__(self, color, pixel_nums, duration=None):
@@ -84,7 +46,7 @@ class LEDProcessHold(LEDProcess):
         self.pixel_nums = pixel_nums
         self.still_holding = True
 
-        self.process1 = LEDProcessFade(gradient1, 0.32*0.5, pixel_nums)
+        self.process1 = LEDFade(gradient1, 0.32*0.5, pixel_nums)
         self.current_process = 1
 
         for pixel_num in pixel_nums:
@@ -127,12 +89,12 @@ class LEDProcessHold(LEDProcess):
                     return
                 else:
                     self.current_process = 3
-                    self.process3 = LEDProcessFade(self.gradient2, 0.65, self.pixel_nums)
+                    self.process3 = LEDFade(self.gradient2, 0.65, self.pixel_nums)
                     self.data = self.process3.report()
 
             elif current_process == 2:
                 self.current_process = 3
-                self.process3 = LEDProcessFade(self.gradient2, 0.65, self.pixel_nums)
+                self.process3 = LEDFade(self.gradient2, 0.65, self.pixel_nums)
                 self.data = self.process3.report()
 
             else:
@@ -201,7 +163,7 @@ def update_with_binaries(binaries): # For debug purposes
     write(data)
 
 def led_blink1(led_group, dimmed=False):
-    process = LEDProcessFade(
+    process = LEDFade(
         blink_gradient_1 if not dimmed else blink_gradient_1_dimmed,
         0.5,
         [(led_group - 1) * LEDS_PER_NOTE + i + 1 for i in range(LEDS_PER_NOTE)])

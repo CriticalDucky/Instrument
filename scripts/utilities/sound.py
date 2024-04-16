@@ -1,5 +1,5 @@
 from time import sleep
-from instrument_util import note_to_midi, get_libraries
+from scripts.utilities.notation import note_to_midi, get_libraries
 import fluidsynth
 import platform
 
