@@ -13,6 +13,3 @@ class LEDProcess:
 
     def stop(self):
         self.stopped = True
-        if self in led_processes:
-            led_processes.remove(self)
-        pass

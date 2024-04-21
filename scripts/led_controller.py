@@ -1,11 +1,12 @@
-LEDS_PER_NOTE = 13
-LED_GROUPS = 12
-
 import subprocess
 import json
 from scripts.utilities.color import *
-import time
 from scripts.utilities.notation import *
+from scripts.utilities.led_util import *
+from led_stock.base.LEDFade import LEDFade
+from led_stock.base.LEDHold import LEDHold
+from led_stock.base.LEDProcess import LEDProcess
+import time
 import socket
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,95 +17,6 @@ client_socket.connect((host, 50001))
 
 # Processes can be added to this table, and every frame they will update.
 led_processes = []
-
-class LEDProcessStatic(LEDProcess):
-    def __init__(self, color, pixel_nums, duration=None):
-        super().__init__("LedStatic")
-        self.color = color
-        self.duration = duration
-        self.start_time = time.time()
-        self.time = 0
-
-        for pixel_num in pixel_nums:
-            self.data[pixel_num] = color
-
-    def update(self):
-        if not self.duration: return
-
-        self.time = time.time() - self.start_time
-
-        if self.time >= self.duration:
-            self.stop()
-
-class LEDProcessHold(LEDProcess):
-    def __init__(self, gradient1, middle_color, gradient2, instance, pixel_nums):
-        super().__init__("LedHold")
-        self.gradient1 = gradient1
-        self.middle_color = middle_color
-        self.gradient2 = gradient2
-        self.instance = instance
-        self.pixel_nums = pixel_nums
-        self.still_holding = True
-
-        self.process1 = LEDFade(gradient1, 0.32*0.5, pixel_nums)
-        self.current_process = 1
-
-        for pixel_num in pixel_nums:
-            self.data[pixel_num] = gradient1.get_rgb_at_position(0)
-
-    def update(self, active_note_info):
-        if self.still_holding:
-            isInstanceFound = False
-
-            for sensor_info in active_note_info.values():
-                for instance in sensor_info:
-                    if instance == self.instance:
-                        isInstanceFound = True
-                        break
-
-            if not isInstanceFound:
-                self.still_holding = False
-
-        if self.still_holding:
-            current_process = self.current_process
-
-            if current_process == 1:
-                self.process1.update()
-                self.data = self.process1.report()
-
-                if not self.process1.stopped:
-                    return
-                else:
-                    self.current_process = 2
-                    self.process2 = LEDProcessStatic(self.middle_color, self.pixel_nums)
-                    self.data = self.process2.report()
-        else:
-            current_process = self.current_process
-
-            if current_process == 1:
-                self.process1.update()
-                self.data = self.process1.report()
-
-                if not self.process1.stopped:
-                    return
-                else:
-                    self.current_process = 3
-                    self.process3 = LEDFade(self.gradient2, 0.65, self.pixel_nums)
-                    self.data = self.process3.report()
-
-            elif current_process == 2:
-                self.current_process = 3
-                self.process3 = LEDFade(self.gradient2, 0.65, self.pixel_nums)
-                self.data = self.process3.report()
-
-            else:
-                self.process3.update()
-                self.data = self.process3.report()
-
-                if not self.process3.stopped:
-                    return
-                else:
-                    self.stop()
 
 test = 0
 # data: list of tuples (r, g, b)
@@ -176,7 +88,7 @@ def led_hold1(led_group, instance, dimmed=False):
     on = on_gradient_1 if not dimmed else on_gradient_1_dimmed
     off = off_gradient_1 if not dimmed else off_gradient_1_dimmed
 
-    process = LEDProcessHold(
+    process = LEDHold(
         on,
         on.get_rgb_at_position(1),
         off,
@@ -192,6 +104,10 @@ def update_with_active_note_info(active_note_info: dict):
 
     for process in led_processes:
         process: LEDProcess
+
+        if process.stopped:
+            led_processes.remove(process)
+
         process.update(active_note_info)
         data.append(process.report())
 

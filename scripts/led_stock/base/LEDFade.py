@@ -1,3 +1,5 @@
+from LEDProcess import LEDProcess
+from scripts.utilities.color import *
 import time
 
 class LEDFade(LEDProcess):
