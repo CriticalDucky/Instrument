@@ -1,6 +1,6 @@
 import os
 import subprocess
-from scripts.data.control_panel_data import set_data
+from ..scripts.data.control_panel_data import set_data
 import threading
 from time import sleep
 
