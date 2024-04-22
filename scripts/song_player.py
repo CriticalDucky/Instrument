@@ -1,8 +1,10 @@
 import pygame
+import os
 import time
 from led_scheduler import LEDScheduler
 
-audio_file = "song.mp3"
+current_dir = os.path.dirname(__file__)
+audio_file = os.path.join(current_dir, "song.mp3")
 # led_scheduler = led_scheduler
 start_time = None
 current_time = 0
