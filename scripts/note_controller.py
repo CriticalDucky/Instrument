@@ -33,7 +33,7 @@ class ChordInstance:
     def __init__(self, library, instrument, notes, original_note=None):
         self.library = library
         self.instrument = instrument
-        self.notes = [NoteInstance(instrument, note) for note in notes]
+        self.notes = [NoteInstance(library, instrument, note) for note in notes]
         self.led_primed = False
         self.original_note = original_note
 
