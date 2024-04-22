@@ -1,7 +1,7 @@
 from LEDProcess import LEDProcess
-from scripts.utilities.color import *
-from led_stock.base.LEDFade import LEDFade
-from led_stock.base.LEDStatic import LEDStatic
+from color import *
+from LEDFade import LEDFade
+from LEDStatic import LEDStatic
 import time
 
 class LEDHold(LEDProcess):

@@ -1,4 +1,4 @@
-from scripts.data.control_panel_data import get_data
+from data.control_panel_data import get_data
 
 OCTAVE_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 NOTE_MIDI_MAPPING = {note: midi for midi, note in enumerate(OCTAVE_NOTES)}

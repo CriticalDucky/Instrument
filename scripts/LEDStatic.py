@@ -1,5 +1,5 @@
 from LEDProcess import LEDProcess
-from scripts.utilities.color import *
+from color import *
 import time
 
 class LEDStatic(LEDProcess):

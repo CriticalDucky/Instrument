@@ -1,11 +1,11 @@
 import subprocess
 import json
-from utilities.color import *
-from utilities.notation import *
-from utilities.led_util import *
-from led_stock.base.LEDFade import LEDFade
-from led_stock.base.LEDHold import LEDHold
-from led_stock.base.LEDProcess import LEDProcess
+from color import *
+from notation import *
+from led_util import *
+from LEDFade import LEDFade
+from LEDHold import LEDHold
+from LEDProcess import LEDProcess
 import time
 import socket
 
