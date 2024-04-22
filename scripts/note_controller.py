@@ -1,4 +1,4 @@
-from scripts.note_player import play
+from note_player import play
 from notation import *
 from tof import get_sensor_binaries
 import colorsys

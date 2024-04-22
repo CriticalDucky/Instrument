@@ -52,7 +52,7 @@ def control_panel_thread():
 
             # Create a chord layout
             chord_layout = BoxLayout(
-                orientation='vertical', size_hint=(None, None), width=300, height=200, spacing=10)
+                orientation='vertical', size_hint=(None, None), width=300, height=320, spacing=10)
             chord_layout.pos_hint = {'center_y': 0.5}  # Center vertically
 
             chord_setting = BoxLayout(orientation='horizontal')
@@ -92,10 +92,9 @@ def control_panel_thread():
             song_buttons.add_widget(play_button)
             song_buttons.add_widget(stop_button)
 
-            # Add the song buttons to the main layout
-            chord_layout.add_widget(song_buttons)
             chord_layout.add_widget(chord_setting)
             chord_layout.add_widget(inversions)
+            chord_layout.add_widget(song_buttons)
 
             # Add the chord layout to the main horizontal layout
             layout.add_widget(chord_layout)
