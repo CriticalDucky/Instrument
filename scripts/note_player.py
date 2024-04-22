@@ -6,7 +6,6 @@ import fluidsynth
 import platform
 
 fs = fluidsynth.Synth()
-fs.set_gain(0.2)
 
 isRaspberryPi = platform.system() == "Linux" and (platform.machine() == "armv7l" or platform.machine() == "aarch64")
 print(platform.system(), platform.machine(), isRaspberryPi)
