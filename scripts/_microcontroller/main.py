@@ -55,8 +55,8 @@ while True:
                     utime.sleep_us(1200)
                     tofl_data[idx] = distance_mm
 
-                    if distance_mm < 70: 
-                        raise Exception(f"Sensor {idx + 1} failed")
+                    # if distance_mm < 70: 
+                    #     raise Exception(f"Sensor {idx + 1} failed")
                 print(' '.join(map(str, tofl_data)))
 
         if __name__ == "__main__":
