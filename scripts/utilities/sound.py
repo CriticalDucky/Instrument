@@ -1,4 +1,6 @@
+import os
 from time import sleep
+
 from notation import note_to_midi, get_libraries
 import fluidsynth
 import platform

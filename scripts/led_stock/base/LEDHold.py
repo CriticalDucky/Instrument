@@ -1,5 +1,5 @@
 from LEDProcess import LEDProcess
-from utilities.color import *
+from scripts.utilities.color import *
 from led_stock.base.LEDFade import LEDFade
 from led_stock.base.LEDStatic import LEDStatic
 import time
