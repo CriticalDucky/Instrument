@@ -3,7 +3,7 @@ import subprocess
 from data.control_panel_data import set_data, get_data
 import threading
 from time import sleep
-from song_player import start as start_song, stop as stop_song, playing as song_playing
+from song_player import start as start_song, stop as stop_song, is_playing as song_playing
 
 def control_panel_thread():
     from kivy.app import App
@@ -240,10 +240,10 @@ while True:
 
     stop = get_data('stop')
     play = get_data('play')
-    if stop:
+    if stop and song_playing():
         stop_song()
         set_data('stop', False)
-    if play:
+    if play and not song_playing():
         start_song()
         set_data('play', False)
 

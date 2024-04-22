@@ -37,6 +37,9 @@ def update_current_time():
     else:
         current_time = 0
 
+def is_playing():
+    return playing
+
 # def get_led_data():
 #     update_current_time()  # Update current time before getting LED data
 #     led_data = led_scheduler.ping(current_time)
