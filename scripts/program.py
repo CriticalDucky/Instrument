@@ -83,6 +83,17 @@ def control_panel_thread():
             inversions.add_widget(first_inv_button)
             inversions.add_widget(second_inv_button)
 
+            # Add a set of song controlling buttons that will play or stop the song. Two buttons will be added to the box layout
+            song_buttons = BoxLayout(orientation='horizontal')
+            play_button = Button(text='Play')
+            play_button.bind(on_touch_down=self.on_play_button_touch_down)
+            stop_button = Button(text='Stop')
+            stop_button.bind(on_touch_down=self.on_stop_button_touch_down)
+            song_buttons.add_widget(play_button)
+            song_buttons.add_widget(stop_button)
+
+            # Add the song buttons to the main layout
+            chord_layout.add_widget(song_buttons)
             chord_layout.add_widget(chord_setting)
             chord_layout.add_widget(inversions)
 
@@ -196,6 +207,16 @@ def control_panel_thread():
                 print(f'Instrument {instance.text} selected')
                 # set the instrument index
                 set_data('instrument', int(instance.text.split('.')[0]) - 1)
+
+        def on_play_button_touch_down(self, instance, touch):
+            if instance.collide_point(*touch.pos):
+                print(f'Play button pressed')
+                set_data('play', True)
+
+        def on_stop_button_touch_down(self, instance, touch):
+            if instance.collide_point(*touch.pos):
+                print(f'Stop button pressed')
+                set_data('stop', True)
 
 
     if __name__ == '__main__':

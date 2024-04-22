@@ -3,7 +3,9 @@ data = {
     'chord': 'None', # 'Major', 'Minor', 'None'
     'inversion': 0, # 0, 1, 2
     'instrument': 0, # Instrument index number
-    'library': 0 # Library index number
+    'library': 0, # Library index number
+    'play': False,
+    'stop': False,
 }
 
 # Ensures that no new keys are accidentally added to the data dictionary
