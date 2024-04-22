@@ -3,7 +3,7 @@ import time
 from led_scheduler import LEDScheduler
 
 audio_file = "song.mp3"
-led_scheduler = led_scheduler
+# led_scheduler = led_scheduler
 start_time = None
 current_time = 0
 playing = False
@@ -34,7 +34,7 @@ def update_current_time():
     else:
         current_time = 0
 
-def get_led_data():
-    update_current_time()  # Update current time before getting LED data
-    led_data = led_scheduler.ping(current_time)
-    return led_data
+# def get_led_data():
+#     update_current_time()  # Update current time before getting LED data
+#     led_data = led_scheduler.ping(current_time)
+#     return led_data
