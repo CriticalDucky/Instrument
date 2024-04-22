@@ -12,7 +12,7 @@ def control_panel_thread():
     from kivy.uix.scrollview import ScrollView
     from kivy.core.window import Window
     from kivy.config import Config
-    import utilities.notation as notation
+    import notation
 
     global set_data
 
@@ -211,7 +211,7 @@ control_panel_thread.start()
 from note_controller import loop as note_controller_loop
 from note_controller import active_sensor_info
 from led_controller import update_with_active_note_info
-from utilities.notation import *
+from notation import *
 import time
 
 while True:
