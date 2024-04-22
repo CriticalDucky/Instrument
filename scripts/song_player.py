@@ -21,6 +21,7 @@ def start():
     print("Playing audio...")
 
 def stop():
+    print("Stopping audio...")
     global start_time, playing, current_time
     pygame.mixer.music.stop()
     playing = False

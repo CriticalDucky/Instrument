@@ -240,7 +240,7 @@ while True:
 
     stop = get_data('stop')
     play = get_data('play')
-    if stop and song_playing:
+    if stop:
         stop_song()
         set_data('stop', False)
     if play and not song_playing:
