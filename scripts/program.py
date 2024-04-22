@@ -243,7 +243,7 @@ while True:
     if stop:
         stop_song()
         set_data('stop', False)
-    if play and not song_playing:
+    if play:
         start_song()
         set_data('play', False)
 
