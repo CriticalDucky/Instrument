@@ -1,8 +1,8 @@
 import subprocess
 import json
-from scripts.utilities.color import *
-from scripts.utilities.notation import *
-from scripts.utilities.led_util import *
+from utilities.color import *
+from utilities.notation import *
+from utilities.led_util import *
 from led_stock.base.LEDFade import LEDFade
 from led_stock.base.LEDHold import LEDHold
 from led_stock.base.LEDProcess import LEDProcess

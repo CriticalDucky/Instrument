@@ -1,6 +1,6 @@
-from scripts.utilities.sound import play
-from scripts.utilities.notation import *
-from scripts.utilities.tof import get_sensor_binaries
+from utilities.sound import play
+from utilities.notation import *
+from utilities.tof import get_sensor_binaries
 import colorsys
 
 # one table for each note in the octave (C-B)
