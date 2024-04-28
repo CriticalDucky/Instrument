@@ -106,6 +106,7 @@ def control_panel_thread():
 
             chord_layout.add_widget(chord_setting)
             chord_layout.add_widget(inversions)
+            chord_layout.add_widget(key_buttons)
             chord_layout.add_widget(song_buttons)
 
             # Add the chord layout to the main horizontal layout
