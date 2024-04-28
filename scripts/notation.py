@@ -3,10 +3,14 @@ from data.control_panel_data import get_data
 OCTAVE_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 NOTE_MIDI_MAPPING = {note: midi for midi, note in enumerate(OCTAVE_NOTES)}
 
+KEY_NOTES = {
+    'A Minor': ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+}
+
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
     "Acid SQ Neutral.sf2",
     "Acid SQ Neutral",
-    "Piano.sf2"
+    "Piano.sf2",
     "Piano"
 ]
 

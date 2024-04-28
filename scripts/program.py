@@ -84,6 +84,17 @@ def control_panel_thread():
             inversions.add_widget(first_inv_button)
             inversions.add_widget(second_inv_button)
 
+            key_buttons = BoxLayout(orientation='horizontal')
+            no_key_button = ToggleButton(
+                text='None', group='keys', allow_no_selection=False)
+            a_minor_button = ToggleButton(
+                text='A Minor', group='keys', allow_no_selection=False)
+            for button in [no_key_button, a_minor_button]:
+                button.bind(on_touch_down=self.on_key_touch_down)
+            no_key_button.state = 'down'
+            key_buttons.add_widget(no_key_button)
+            key_buttons.add_widget(a_minor_button)
+
             # Add a set of song controlling buttons that will play or stop the song. Two buttons will be added to the box layout
             song_buttons = BoxLayout(orientation='horizontal')
             play_button = Button(text='Play')
@@ -201,6 +212,11 @@ def control_panel_thread():
             if instance.collide_point(*touch.pos):
                 print(f'Inversion {instance.text} selected')
                 set_data('inversion', conversion[instance.text])
+
+        def on_key_touch_down(self, instance, touch):
+            if instance.collide_point(*touch.pos):
+                print(f'Key {instance.text} selected')
+                set_data('key', instance.text)
 
         def on_instrument_touch_down(self, instance, touch):
             if instance.collide_point(*touch.pos):

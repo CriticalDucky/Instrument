@@ -56,6 +56,15 @@ def loop():
     # print(binaries)
 
     for sensor_number, sensor_info in active_sensor_info.items():
+        key = get_data('key')
+        if key != 'None':
+            key_notes = KEY_NOTES[key]
+            if OCTAVE_NOTES[sensor_number - 1] not in key_notes:
+                for instance in sensor_info:
+                    instance.stop()
+                active_sensor_info[sensor_number] = []
+                continue
+
         binary = binaries[sensor_number - 1]
         should_create_instance = binary == 1
         clear_these = []

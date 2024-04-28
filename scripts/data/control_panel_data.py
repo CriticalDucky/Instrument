@@ -3,6 +3,7 @@ data = {
     'chord': 'None', # 'Major', 'Minor', 'None'
     'inversion': 0, # 0, 1, 2
     'instrument': 0, # Instrument index number
+    'key': 'None', # 'A Minor'
     'library': 0, # Library index number
     'play': False,
     'stop': False,
