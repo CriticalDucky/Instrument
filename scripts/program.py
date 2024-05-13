@@ -87,13 +87,13 @@ def control_panel_thread():
             key_buttons = BoxLayout(orientation='horizontal')
             no_key_button = ToggleButton(
                 text='None', group='keys', allow_no_selection=False)
-            a_minor_button = ToggleButton(
-                text='A Minor', group='keys', allow_no_selection=False)
-            for button in [no_key_button, a_minor_button]:
+            c_major_button = ToggleButton(
+                text='C Major', group='keys', allow_no_selection=False)
+            for button in [no_key_button, c_major_button]:
                 button.bind(on_touch_down=self.on_key_touch_down)
             no_key_button.state = 'down'
             key_buttons.add_widget(no_key_button)
-            key_buttons.add_widget(a_minor_button)
+            key_buttons.add_widget(c_major_button)
 
             # Add a set of song controlling buttons that will play or stop the song. Two buttons will be added to the box layout
             song_buttons = BoxLayout(orientation='horizontal')
