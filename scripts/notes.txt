@@ -1,0 +1,9 @@
+some notes:
+
+scheduler.start()
+
+led_process1 = LEDProcess(...)
+led_process2 = LEDProcess(...)
+
+scheduler.add(led_process1, start_time, end_time)
+scheduler.add(led_process2, start_time, end_time)
