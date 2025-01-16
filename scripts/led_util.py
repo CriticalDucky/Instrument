@@ -1,5 +1,6 @@
 LEDS_PER_NOTE = 13
 LED_GROUPS = 12
+LED_STRIP_SHIFT = LEDS_PER_NOTE * 4
 
 def get_section_leds(section: int):
     start = (section - 1) * LEDS_PER_NOTE + 1
@@ -22,3 +23,4 @@ def pattern_leds(leds: list, size: int, gaps: int):
         new_leds += leds[i:i+size]
 
     return new_leds 
+
