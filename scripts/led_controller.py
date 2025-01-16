@@ -21,8 +21,11 @@ led_processes = []
 test = 0
 # data: list of tuples (r, g, b)
 def write(data):
-    # data = [1,1,1]
-    data = json.dumps(data)
+    # data = [[1,1,1]...136]
+    reversed_list = list(reversed(data))
+    shifted_list = reversed_list[LED_STRIP_SHIFT] + reversed_list[LED_STRIP_SHIFT]
+
+    data = json.dumps(shifted_list)
 
     # command = ["sudo", "python3", "scripts/led_admin_command.py", data]
     # command2 = ["sudo", "python3", "led_admin_command.py", data]
@@ -48,31 +51,6 @@ def write(data):
         print(f"Time taken to send data: {end - start} seconds; Num times sent: {test}")
 
         test = 0
-    
-
-def shift_led_data(data, shift_amount=(4*LEDS_PER_NOTE)): # The beginning of the LED strip is not at sensor 1, so we need to shift the data (binaries). The data is also reversed.
-    reversed_list = list(reversed(data))
-    shifted_list = reversed_list[shift_amount:] + reversed_list[:shift_amount]
-    return shifted_list
-
-
-def update_with_binaries(binaries): # For debug purposes
-    data = []
-
-    binaries = shift_led_data(binaries, 4)
-
-    for note, val in enumerate(binaries):
-        color_off = (0, 0, 0)
-
-        for led in range(LEDS_PER_NOTE):
-            num_led = note * LEDS_PER_NOTE + led
-
-            if val == 1:
-                data.append(rainbow.get_rgb_at_position(num_led / (LED_GROUPS * LEDS_PER_NOTE)))
-            else:
-                data.append(color_off)
-
-    write(data)
 
 def led_blink1(led_group, dimmed=False):
     process = LEDFade(
@@ -167,7 +145,5 @@ def update_with_active_note_info(active_note_info: dict):
         average_color = average_hsv(tuple(tuple(row) for row in hsv_colors))
 
         final_data.append(tuple(int(i) for i in colorsys.hsv_to_rgb(*average_color)))
-
-    final_data = shift_led_data(final_data)
-
+    
     write(final_data)
