@@ -23,4 +23,3 @@ def pattern_leds(leds: list, size: int, gaps: int):
         new_leds += leds[i:i+size]
 
     return new_leds 
-

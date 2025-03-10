@@ -1,6 +1,10 @@
 import time
 from LEDProcess import LEDProcess
 
+'''
+This function 
+'''
+
 class LEDScheduler:
     def __init__(self):
         self.led_processes = []
