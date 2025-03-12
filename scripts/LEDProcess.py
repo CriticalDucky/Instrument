@@ -29,6 +29,8 @@ class LEDFade(LEDProcess):
             self.data[pixel_num] = gradient.get_rgb_at_position(0)
 
     def update(self):
+
+
         self.time = time.time() - self.start_time
 
         for pixel_num in self.data:
@@ -37,6 +39,7 @@ class LEDFade(LEDProcess):
         if self.time >= self.duration:
             self.stop()
 
+# pixel_nums is a list of pixel numbers: [0, 1, 2, 3, 4]
 class LEDStatic(LEDProcess):
     def __init__(self, color, pixel_nums, duration=None, start_time=None):
         super().__init__("LedStatic")
