@@ -263,12 +263,10 @@ while True:
     if stop and song_playing():
         stop_song()
         set_data('stop', False)
-        set_data('key', 'None')
         led_scheduler = None
     if play and not song_playing():
         start_song()
         set_data('play', False)
-        set_data('key', 'C Major')
         led_scheduler = begin_led_scheduler()
 
     note_controller_loop()

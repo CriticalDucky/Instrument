@@ -2,7 +2,6 @@ from note_player import play
 from notation import *
 from tof import get_sensor_binaries
 import colorsys
-from song_player import is_playing
 
 # one table for each note in the octave (C-B)
 active_sensor_info = {i: [] for i in range(1, 13)}
@@ -94,18 +93,12 @@ def loop():
             library = get_selected_library()
             instrument = get_selected_instrument()
 
-            song_playing = is_playing()
-
             note = sensor_to_note(sensor_number) + str(octave)
 
             #debug
             print(f"Sensor {sensor_number} triggered: {note}")
 
-            if song_playing:
-                print(1, note)
-                notes = get_htpf_chord(note, inversion)
-                instance = ChordInstance(library, instrument, notes, note)
-            elif chord_type != 'None':
+            if chord_type != 'None':
                 print(2, note)
                 notes = create_chord(note, chord_type, inversion)
                 instance = ChordInstance(library, instrument, notes, note)
