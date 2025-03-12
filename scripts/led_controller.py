@@ -91,9 +91,9 @@ def update_with_active_note_info(active_note_info: dict, led_scheduler: LEDSched
         process.update(active_note_info)
         data.append(process.report())
 
-    # if led_scheduler is not None:
-    #     data_scheduler = led_scheduler.report()
-    #     data.extend(data_scheduler)
+    if led_scheduler is not None:
+        data_scheduler = led_scheduler.report()
+        data.extend(data_scheduler)
 
     for sensor_info in active_note_info.values():
         for instance in sensor_info:
