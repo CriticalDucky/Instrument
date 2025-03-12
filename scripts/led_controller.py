@@ -76,7 +76,7 @@ def led_hold1(led_group, instance, dimmed=False):
 
     return process
 
-def update_with_active_note_info(active_note_info: dict, led_scheduler: LEDScheduler | None):
+def update_with_active_note_info(active_note_info: dict, led_scheduler: LEDScheduler = None):
     data = [] # [{pixel_num: (r, g, b)}, ...]
 
     for process in led_processes:
