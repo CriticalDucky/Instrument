@@ -3,9 +3,8 @@ import json
 from color import *
 from notation import *
 from led_util import *
-from LEDFade import LEDFade
-from LEDHold import LEDHold
-from LEDProcess import LEDProcess
+from LEDProcess import *
+from led_scheduler import LEDScheduler
 import time
 import socket
 
@@ -77,7 +76,7 @@ def led_hold1(led_group, instance, dimmed=False):
 
     return process
 
-def update_with_active_note_info(active_note_info: dict):
+def update_with_active_note_info(active_note_info: dict, led_scheduler: LEDScheduler | None):
     data = [] # [{pixel_num: (r, g, b)}, ...]
 
     for process in led_processes:
@@ -88,6 +87,10 @@ def update_with_active_note_info(active_note_info: dict):
 
         process.update(active_note_info)
         data.append(process.report())
+
+    if led_scheduler is not None:
+        data_scheduler = led_scheduler.report()
+        data.extend(data_scheduler)
 
     for sensor_info in active_note_info.values():
         for instance in sensor_info:
