@@ -256,7 +256,7 @@ import time
 led_scheduler = None
 
 while True:
-    sleep(1/50)
+    sleep(1/60)
 
     stop = get_data('stop')
     play = get_data('play')
