@@ -84,30 +84,43 @@ for i in range(0, 360, 60):
     rgb = colorsys.hsv_to_rgb(i/360, 1, 1)
     rainbow.add_stop(i/360, tuple(int(x * 255) for x in rgb))
 
-blink_gradient_1_stops = [
+# blink_gradient_1_stops = [
+#     (0, (0, 0, 0)),
+#     (20, (0, 255, 124)),
+#     (32, (0, 249, 255)),
+#     (35, (0, 249, 255)),
+#     (44, (0, 198, 255)),
+#     (59, (145, 0, 255)),
+#     (100, (0, 0, 0))
+# ]
+
+# Shift the white peak slightly to the left
+blink_grayish_cyan_stops = [
     (0, (0, 0, 0)),
-    (20, (0, 255, 124)),
-    (32, (0, 249, 255)),
-    (35, (0, 249, 255)),
-    (44, (0, 198, 255)),
-    (59, (145, 0, 255)),
+    (18, (120, 180, 190)),
+    (28, (180, 220, 230)),
+    (35, (255, 255, 255)),  # Shifted peak left
+    (44, (255, 255, 255)),  # Extended white area, slightly earlier
+    (52, (180, 220, 230)),
+    (67, (120, 180, 190)),
     (100, (0, 0, 0))
 ]
+
 
 blink_gradient_1 = Gradient()
 on_gradient_1 = Gradient()
 off_gradient_1 = Gradient()
 
-for idx, tup in enumerate(blink_gradient_1_stops):
+for idx, tup in enumerate(blink_grayish_cyan_stops):
     position = tup[0]
     color = tup[1]
 
     blink_gradient_1.add_stop(position / 100, color)
 
-    if idx <= 2:
-        on_gradient_1.add_stop(position / blink_gradient_1_stops[2][0], color)
+    if idx <= 3:
+        on_gradient_1.add_stop(position / blink_grayish_cyan_stops[3][0], color)
     else:
-        offset = blink_gradient_1_stops[3][0]
+        offset = blink_grayish_cyan_stops[4][0]
         off_gradient_1.add_stop((position - offset) / (100 - offset), color)
 
 blink_gradient_1_dimmed = copy.deepcopy(blink_gradient_1)
