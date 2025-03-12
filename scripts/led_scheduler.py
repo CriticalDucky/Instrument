@@ -11,7 +11,15 @@ class LEDScheduler:
 
     def update_processes(self):
         for led_process, _ in self.led_processes:
+            if led_process.stopped:
+                self.led_processes.remove((led_process, _))
+                continue
+
             led_process.update()
+
+            if led_process.stopped:
+                self.led_processes.remove((led_process, _))
+                continue
 
     def report(self):
         results = [] # list of dicts: [{pixel_num: (r, g, b)}]
