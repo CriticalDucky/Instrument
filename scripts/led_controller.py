@@ -26,6 +26,8 @@ def write(data):
 
     data = json.dumps(shifted_list)
 
+    print(data)
+
     # command = ["sudo", "python3", "scripts/led_admin_command.py", data]
     # command2 = ["sudo", "python3", "led_admin_command.py", data]
 
