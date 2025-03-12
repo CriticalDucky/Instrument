@@ -24,7 +24,7 @@ class LEDScheduler:
     def report(self):
         results = [] # list of dicts: [{pixel_num: (r, g, b)}]
         self.update_processes()
-        for led_process, _ in self.led_processes:
+        for led_process in self.led_processes:
             results.append(led_process.report())
         return results
 
