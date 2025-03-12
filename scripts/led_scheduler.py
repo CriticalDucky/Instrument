@@ -33,6 +33,6 @@ def begin():
 
     led_scheduler = LEDScheduler()
 
-    led_scheduler.add_process(LEDStatic((255, 0, 0), [n for n in range(0, 135)], 10, start_time))
+    led_scheduler.add_process(LEDStatic((200, 0, 0), [n for n in range(0, 155)], 10, start_time))
 
     return led_scheduler
