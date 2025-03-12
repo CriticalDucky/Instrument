@@ -7,6 +7,24 @@ KEY_NOTES = {
     'C Major': ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 }
 
+HTPF_CHORDS = { # Still subject to inversion; Scale is Amin; this is only relevant when song playing
+    # Am
+    'A': ['A', 'C', 'E'],
+    # Bdim
+    'B': ['B', 'D', 'F'],
+    # C
+    'C': ['C', 'E', 'G'],
+    # Dm
+    'D': ['D', 'F', 'A'],
+    # Em
+    'E': ['E', 'G', 'B'],
+    # F
+    'F': ['F', 'A', 'C'],
+    # G
+    'G': ['G', 'B', 'D'],
+
+}
+
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
     "Acid SQ Neutral.sf2",
     "Acid SQ Neutral",
@@ -50,6 +68,19 @@ def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, 
 
     if chord_type == 'Minor':
         midi_table[1] -= 1
+
+    if inversion == 1:
+        midi_table[0] += 12
+    elif inversion == 2:
+        midi_table[0] += 12
+        midi_table[1] += 12
+
+    return [midi_to_note(midi) for midi in midi_table]
+
+# in htpf mode, the chord type is locked and based only on HTPF_CHORDS, and note will always be an Am note
+def get_htpf_chord(note: str, inversion=0): # inversion: 0, 1, 2
+    chord = HTPF_CHORDS[note]
+    midi_table = [note_to_midi(note) for note in chord]
 
     if inversion == 1:
         midi_table[0] += 12
