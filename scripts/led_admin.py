@@ -50,7 +50,7 @@ try:
 
     # Check if the data *has* a full list (this list contains lists within it, so check for [[).
     def is_there_full_list(data: str):
-        if ']]' in data:
+        if ']]' in data or ')]' in data:
             return data[:data.index(']]')+2]
         else:
             return None
