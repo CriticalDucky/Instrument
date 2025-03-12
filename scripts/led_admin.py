@@ -34,7 +34,7 @@ def use_data(data):
         strip.setPixelColor(idx, Color(val[0], val[1], val[2]))
         
     strip.show()
-
+    print("Data sent to strip")
 try:
     # Bind to the port
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
