@@ -1,7 +1,6 @@
 import time
 from LEDProcess import *
 from data.song_settings import *
-from 
 
 class LEDScheduler:
     def __init__(self):
