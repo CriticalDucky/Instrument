@@ -54,7 +54,7 @@ class ChordInstance:
 
 def loop():
     binaries = get_sensor_binaries()
-    # print(binaries)
+    print(binaries)
 
     for sensor_number, sensor_info in active_sensor_info.items():
         key = get_data('key')
