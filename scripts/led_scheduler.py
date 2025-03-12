@@ -1,6 +1,7 @@
 import time
 from LEDProcess import *
 from data.song_settings import *
+from 
 
 class LEDScheduler:
     def __init__(self):
@@ -32,5 +33,7 @@ def begin():
     start_time = time.time()
 
     led_scheduler = LEDScheduler()
+
+    led_scheduler.add_process(LEDStatic((255, 0, 0), [n for n in range(0, 135)], 10, start_time))
 
     return led_scheduler
