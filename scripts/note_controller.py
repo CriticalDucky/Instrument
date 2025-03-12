@@ -98,18 +98,24 @@ def loop():
 
             note = sensor_to_note(sensor_number) + str(octave)
 
+            #debug
+            print(f"Sensor {sensor_number} triggered: {note}")
+
             if song_playing:
+                print(1, note)
                 key_notes_list = KEY_NOTES['C Major']
-                
+
                 if note not in key_notes_list:
                     continue
 
                 notes = get_htpf_chord(note, inversion)
                 instance = ChordInstance(library, instrument, notes, note)
             elif chord_type != 'None':
+                print(2, note)
                 notes = create_chord(note, chord_type, inversion)
                 instance = ChordInstance(library, instrument, notes, note)
             else:
+                print(3, note)
                 instance = NoteInstance(library, instrument, note)
 
             instance.play()
