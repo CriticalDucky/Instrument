@@ -99,6 +99,11 @@ def loop():
             note = sensor_to_note(sensor_number) + str(octave)
 
             if song_playing:
+                key_notes_list = KEY_NOTES['C Major']
+                
+                if note not in key_notes_list:
+                    continue
+
                 notes = get_htpf_chord(note, inversion)
                 instance = ChordInstance(library, instrument, notes, note)
             elif chord_type != 'None':

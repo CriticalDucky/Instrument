@@ -79,7 +79,7 @@ def create_chord(note: str, chord_type: str, inversion=0): # chord_type: major, 
 
 # in htpf mode, the chord type is locked and based only on HTPF_CHORDS, and note will always be an Am note
 def get_htpf_chord(note: str, inversion=0): # inversion: 0, 1, 2
-    chord = HTPF_CHORDS[note]
+    chord = HTPF_CHORDS[note[:-1]] #
     midi_table = [note_to_midi(note) for note in chord]
 
     if inversion == 1:
