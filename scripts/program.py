@@ -4,6 +4,7 @@ from data.control_panel_data import set_data, get_data
 import threading
 from time import sleep
 from song_player import start as start_song, stop as stop_song, is_playing as song_playing
+from led_scheduler import begin as begin_led_scheduler
 
 def control_panel_thread():
     from kivy.app import App
@@ -252,6 +253,8 @@ from led_controller import update_with_active_note_info
 from notation import *
 import time
 
+led_scheduler = None
+
 while True:
     sleep(1/50)
 
@@ -260,10 +263,12 @@ while True:
     if stop and song_playing():
         stop_song()
         set_data('stop', False)
+        led_scheduler = None
     if play and not song_playing():
         start_song()
         set_data('play', False)
+        led_scheduler = begin_led_scheduler()
 
     note_controller_loop()
-    update_with_active_note_info(active_sensor_info)
+    update_with_active_note_info(active_sensor_info, led_scheduler)
 
