@@ -10,15 +10,15 @@ class LEDScheduler:
         self.led_processes.append(led_process)
 
     def update_processes(self):
-        for led_process, _ in self.led_processes:
+        for led_process in self.led_processes:
             if led_process.stopped:
-                self.led_processes.remove((led_process, _))
+                self.led_processes.remove(led_process)
                 continue
 
             led_process.update()
 
             if led_process.stopped:
-                self.led_processes.remove((led_process, _))
+                self.led_processes.remove(led_process)
                 continue
 
     def report(self):
