@@ -21,10 +21,10 @@ test = 0
 # data: list of tuples (r, g, b)
 def write(data):
     # data = [[1,1,1]...136]
-    print("Sending data to LED strip")
-    print(data)
+    # print("Sending data to LED strip")
+    # print(data)
     reversed_list = list(reversed(data))
-    shifted_list = reversed_list[LED_STRIP_SHIFT] + reversed_list[LED_STRIP_SHIFT]
+    shifted_list = reversed_list[LED_STRIP_SHIFT:] + reversed_list[:LED_STRIP_SHIFT]
 
     data = json.dumps(shifted_list)
 
