@@ -52,6 +52,7 @@ def write(data):
         test = 0
 
 def led_blink1(led_group, dimmed=False):
+    
     process = LEDFade(
         blink_gradient_1 if not dimmed else blink_gradient_1_dimmed,
         0.5,
@@ -62,6 +63,7 @@ def led_blink1(led_group, dimmed=False):
     return process
 
 def led_hold1(led_group, instance, dimmed=False):
+    print("led_h")
     on = on_gradient_1 if not dimmed else on_gradient_1_dimmed
     off = off_gradient_1 if not dimmed else off_gradient_1_dimmed
 
@@ -88,9 +90,9 @@ def update_with_active_note_info(active_note_info: dict, led_scheduler: LEDSched
         process.update(active_note_info)
         data.append(process.report())
 
-    if led_scheduler is not None:
-        data_scheduler = led_scheduler.report()
-        data.extend(data_scheduler)
+    # if led_scheduler is not None:
+    #     data_scheduler = led_scheduler.report()
+    #     data.extend(data_scheduler)
 
     for sensor_info in active_note_info.values():
         for instance in sensor_info:
@@ -149,4 +151,5 @@ def update_with_active_note_info(active_note_info: dict, led_scheduler: LEDSched
 
         final_data.append(tuple(int(i) for i in colorsys.hsv_to_rgb(*average_color)))
     
+    print(final_data)
     write(final_data)

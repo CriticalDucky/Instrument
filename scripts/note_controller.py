@@ -53,7 +53,7 @@ class ChordInstance:
 
 def loop():
     binaries = get_sensor_binaries()
-    print(binaries)
+    # print(binaries)
 
     for sensor_number, sensor_info in active_sensor_info.items():
         key = get_data('key')
@@ -96,14 +96,11 @@ def loop():
             note = sensor_to_note(sensor_number) + str(octave)
 
             #debug
-            print(f"Sensor {sensor_number} triggered: {note}")
 
             if chord_type != 'None':
-                print(2, note)
                 notes = create_chord(note, chord_type, inversion)
                 instance = ChordInstance(library, instrument, notes, note)
             else:
-                print(3, note)
                 instance = NoteInstance(library, instrument, note)
 
             instance.play()
