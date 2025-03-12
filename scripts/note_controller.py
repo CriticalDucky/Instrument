@@ -103,11 +103,6 @@ def loop():
 
             if song_playing:
                 print(1, note)
-                key_notes_list = KEY_NOTES['C Major']
-
-                if note not in key_notes_list:
-                    continue
-
                 notes = get_htpf_chord(note, inversion)
                 instance = ChordInstance(library, instrument, notes, note)
             elif chord_type != 'None':
