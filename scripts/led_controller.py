@@ -21,12 +21,12 @@ test = 0
 # data: list of tuples (r, g, b)
 def write(data):
     # data = [[1,1,1]...136]
+    print("Sending data to LED strip")
+    print(data)
     reversed_list = list(reversed(data))
     shifted_list = reversed_list[LED_STRIP_SHIFT] + reversed_list[LED_STRIP_SHIFT]
 
     data = json.dumps(shifted_list)
-
-    print(data)
 
     # command = ["sudo", "python3", "scripts/led_admin_command.py", data]
     # command2 = ["sudo", "python3", "led_admin_command.py", data]
@@ -65,7 +65,6 @@ def led_blink1(led_group, dimmed=False):
     return process
 
 def led_hold1(led_group, instance, dimmed=False):
-    print("led_h")
     on = on_gradient_1 if not dimmed else on_gradient_1_dimmed
     off = off_gradient_1 if not dimmed else off_gradient_1_dimmed
 
