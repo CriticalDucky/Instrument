@@ -63,6 +63,8 @@ try:
 
         received_data += chunk.decode('utf-8')
 
+        print("OOOO", received_data)
+
         # Check if the data *has* a full list (this list contains lists within it, so check for [[).
 
         full_list = is_there_full_list(received_data)

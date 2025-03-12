@@ -151,5 +151,5 @@ def update_with_active_note_info(active_note_info: dict, led_scheduler: LEDSched
 
         final_data.append(tuple(int(i) for i in colorsys.hsv_to_rgb(*average_color)))
     
-    print(final_data)
+    # print(final_data)
     write(final_data)
