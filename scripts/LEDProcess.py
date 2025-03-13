@@ -138,10 +138,10 @@ class FullIllumination(LEDProcess): #
         self.gradient = gradient
         self.time = 0
 
-        for pixel_num in range(1, 156):
-            self.data[pixel_num] = gradient.get_rgb_at_position(0)
-
     def update(self):
+        if self.start_time - time.time() > 0:
+            return
+
         self.time = time.time() - self.start_time
 
         for pixel_num in self.data:
