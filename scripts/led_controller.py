@@ -5,14 +5,17 @@ from notation import *
 from led_util import *
 from LEDProcess import *
 from led_scheduler import LEDScheduler
+import redis
 import time
 import socket
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+r = redis.Redis()
 
-host = socket.gethostname()
+# client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-client_socket.connect((host, 50001))
+# host = socket.gethostname()
+
+# client_socket.connect((host, 50001))
 
 # Processes can be added to this table, and every frame they will update.
 led_processes = []
@@ -28,6 +31,8 @@ def write(data):
 
     data = json.dumps(shifted_list)
 
+    r.publish("led_channel", data)
+
     # command = ["sudo", "python3", "scripts/led_admin_command.py", data]
     # command2 = ["sudo", "python3", "led_admin_command.py", data]
 
@@ -39,19 +44,19 @@ def write(data):
     #     except subprocess.CalledProcessError as e:
     #         print("Error:", e)
     # Ping the system's time before and after the sendall() function to measure the time it takes to send the data
-    start = time.time()
-    client_socket.sendall(data.encode())
-    end = time.time()
+    # start = time.time()
+    # client_socket.sendall(data.encode())
+    # end = time.time()
 
-    global test
+    # global test
 
-    test += 1
+    # test += 1
 
-    if end - start > 0.1:
-        print(data)
-        print(f"Time taken to send data: {end - start} seconds; Num times sent: {test}")
+    # if end - start > 0.1:
+    #     print(data)
+    #     print(f"Time taken to send data: {end - start} seconds; Num times sent: {test}")
 
-        test = 0
+    #     test = 0
 
 def led_blink1(led_group, dimmed=False):
     

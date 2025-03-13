@@ -7,10 +7,11 @@
 
 import time
 from rpi_ws281x import *
+import redis
 import argparse
 import socket
 import sys
-import json
+import json 
 
 # LED strip configuration:
 LED_COUNT      = 156      # Number of LED pixels.
@@ -35,55 +36,70 @@ def use_data(data):
         
     strip.show()
     # print("Data sent to strip")
-try:
-    # Bind to the port
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind((socket.gethostname(), 50001))
-    server_socket.listen(1)
 
-    print(2)
+# Connect to Redis
+r = redis.Redis()
+pubsub = r.pubsub()
+pubsub.subscribe("led_channel")
 
-    conn, addr = server_socket.accept()
-    print('Got connection from', addr)
+print("Listening for LED updates...")
+for message in pubsub.listen():
+    if message["type"] == "message":
+        data = json.loads(message["data"])
+        use_data(data)
+        # print("Data received:", data)
 
-    received_data = ''
 
-    # Check if the data *has* a full list (this list contains lists within it, so check for [[).
-    def is_there_full_list(data: str):
-        if ']]' in data or ')]' in data:
-            return data[:data.index(']]')+2]
-        else:
-            return None
 
-    while True:
-        chunk = conn.recv(1024)  # Adjust buffer size as needed
-        # if not chunk and string ends with a closing 
-        if not chunk:
-            break
+# try:
+#     # Bind to the port
+#     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     server_socket.bind((socket.gethostname(), 50001))
+#     server_socket.listen(1)
 
-        received_data += chunk.decode('utf-8')
+#     print(2)
 
-        # Check if the data *has* a full list (this list contains lists within it, so check for [[).
+#     conn, addr = server_socket.accept()
+#     print('Got connection from', addr)
 
-        full_list = is_there_full_list(received_data)
+#     received_data = ''
 
-        if full_list:
-            data = full_list
+#     # Check if the data *has* a full list (this list contains lists within it, so check for [[).
+#     def is_there_full_list(data: str):
+#         if ']]' in data or ')]' in data:
+#             return data[:data.index(']]')+2]
+#         else:
+#             return None
 
-            # Remove the full list from the received data
+#     while True:
+#         chunk = conn.recv(1024)  # Adjust buffer size as needed
+#         # if not chunk and string ends with a closing 
+#         if not chunk:
+#             break
 
-            received_data = received_data[len(full_list):]
+#         received_data += chunk.decode('utf-8')
 
-            # print(data)
+#         # Check if the data *has* a full list (this list contains lists within it, so check for [[).
 
-            data = json.loads(data)
+#         full_list = is_there_full_list(received_data)
 
-            # print('Received', data, type(data))
+#         if full_list:
+#             data = full_list
 
-            use_data(data)
+#             # Remove the full list from the received data
 
-except KeyboardInterrupt:
-    print("Ctrl+C pressed. Closing the server...")
-    # Close the server socket
-    server_socket.close()
-    sys.exit(0)
+#             received_data = received_data[len(full_list):]
+
+#             # print(data)
+
+#             data = json.loads(data)
+
+#             # print('Received', data, type(data))
+
+#             use_data(data)
+
+# except KeyboardInterrupt:
+#     print("Ctrl+C pressed. Closing the server...")
+#     # Close the server socket
+#     server_socket.close()
+#     sys.exit(0)
