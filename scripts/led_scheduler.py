@@ -30,7 +30,7 @@ class LEDScheduler:
         return results
 
 def begin():
-    start_time = time.time()
+    start_time = time.time() + 0.2 #delay to account for initial delay in start of song
 
     led_scheduler = LEDScheduler()
 
