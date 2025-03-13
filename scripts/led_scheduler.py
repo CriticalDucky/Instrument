@@ -114,11 +114,33 @@ def begin():
     talk_gradient1.add_stop(0.5, (255, 0, 0))
     talk_gradient1.add_stop(1.0, (0, 0, 0))
 
+    ghost_gradient = Gradient()
+    ghost_gradient.add_stop(0.0, (255, 255, 255))
+    ghost_gradient.add_stop(1, (0, 0, 0))
+
     led_scheduler.add_process(FullRotatingGradient(cool_gradient, HTPF_SPB*8, 2, time_base4))
 
     led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base4 + HTPF_SPB*8))
     led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base4 + HTPF_SPB*10))
     led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base4 + HTPF_SPB*12))
     led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base4 + HTPF_SPB*14))
-    
+
+    led_scheduler.add_process(FullIllumination(ghost_gradient, 2, time_base4 + HTPF_SPB*16))
+
+    time_base5 = start_time + 60 + 14.8
+
+    blood_gradient = Gradient()
+    blood_gradient.add_stop(0.0, (255, 0, 0))
+    blood_gradient.add_stop(1.0, (0, 0, 0))
+
+    led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5))
+    led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + HTPF_SPB/2))
+    led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + 5*HTPF_SPB/2))
+    led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + 6*HTPF_SPB/2))
+    led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + 7*HTPF_SPB/2))
+    led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + 12*HTPF_SPB/2))
+    led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + 13*HTPF_SPB/2))
+    led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + 17*HTPF_SPB/2))
+    led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + 18*HTPF_SPB/2))
+
     return led_scheduler
