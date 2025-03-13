@@ -44,6 +44,28 @@ def begin():
     led_scheduler.add_process(FullIllumination(amber_gradient, 1, time_base1))
     led_scheduler.add_process(FullIllumination(amber_gradient, 1, time_base1 + 2*HTPF_SPB))
     led_scheduler.add_process(FullIllumination(amber_gradient, 1, time_base1 + 4*HTPF_SPB))
+    led_scheduler.add_process(FullIllumination(amber_gradient, 1, time_base1 + 6*HTPF_SPB))
 
+    time_base2 = start_time + 6.875
+
+    chord_sequence1_gradient = Gradient()
+
+    stops = [
+        (0, (0, 0, 0)),          # Black (Fade-in Start)
+        (2, (194, 0, 255)),      # Main Color Start
+        (25, (194, 0, 255)),     # Holding Purple
+        (27, (57, 0, 255)),      # Transition to Deep Blue
+        (50, (57, 0, 255)),      # Holding Deep Blue
+        (52, (0, 166, 255)),     # Transition to Cyan
+        (75, (0, 166, 255)),     # Holding Cyan
+        (77, (57, 0, 255)),      # Transition Back to Deep Blue
+        (98, (57, 0, 255)),      # Holding Deep Blue Before Fade
+        (100, (0, 0, 0))         # Black (Fade-out End)
+    ]
+
+    for position, color in stops:
+        chord_sequence1_gradient.add_stop(position / 100, color)
+
+    led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base2))
 
     return led_scheduler
