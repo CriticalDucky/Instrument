@@ -80,10 +80,10 @@ def begin():
         (0, (0, 0, 0)),           # Black
         (6, (255, 121, 0)),       # Bright Orange
         (25, (255, 160, 0)),      # Yellow-Orange
-        (50, (144, 0, 0)),        # Deep Red
+        (50, (255, 0, 0)),        # Deep Red
         (56, (255, 121, 0)),      # Bright Orange Again
         (75, (255, 160, 0)),      # Yellow-Orange Again
-        (88, (181, 53, 0)),       # Deep Orange-Red
+        (88, (220, 53, 0)),       # Deep Orange-Red
         (100, (0, 0, 0))          # Black
     ]
 
