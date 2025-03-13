@@ -143,4 +143,24 @@ def begin():
     led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + 17*HTPF_SPB/3))
     led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base5 + 18*HTPF_SPB/3))
 
+    time_base6 = start_time + 60 + 20.208
+
+    # basically repeat the first part of the song
+
+    led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base6))
+    #repeat
+    led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base6 + HTPF_SPB*16))
+    #once more
+    led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base6 + HTPF_SPB*32))
+
+    time_base7 = start_time + 60 + 46.875
+
+    led_scheduler.add_process(FullIllumination(warm_gradient, HTPF_SPB*16, time_base7))
+    led_scheduler.add_process(FullRotatingGradient(cool_gradient, HTPF_SPB*8, 2, time_base7 + HTPF_SPB*16))
+
+    led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base7 + HTPF_SPB*24))
+    led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base7 + HTPF_SPB*26))
+    led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base7 + HTPF_SPB*28))
+    led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base7 + HTPF_SPB*30))
+
     return led_scheduler
