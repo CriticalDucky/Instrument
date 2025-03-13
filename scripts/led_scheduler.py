@@ -167,23 +167,34 @@ def begin():
 
     rotating_gradient1 = Gradient()
     rotating_gradient1.add_stop(0.0, (0, 4, 134))
-    rotating_gradient1.add_stop(1, (0, 163, 91))
+    rotating_gradient1.add_stop(0.5, (0, 163, 91))
+    rotating_gradient1.add_stop(1.0, (0, 4, 134))
 
     rotating_gradient2 = Gradient()
     rotating_gradient2.add_stop(0.0, (80, 0, 134))
-    rotating_gradient2.add_stop(1, (0, 106, 163))
+    rotating_gradient2.add_stop(0.5, (0, 106, 163))
+    rotating_gradient2.add_stop(1.0, (80, 0, 134))
 
     rotating_gradient3 = Gradient()
     rotating_gradient3.add_stop(0.0, (127, 0, 134))
-    rotating_gradient3.add_stop(1, (0, 13, 163))
+    rotating_gradient3.add_stop(0.5, (0, 13, 163))
+    rotating_gradient3.add_stop(1.0, (127, 0, 134))
 
     rotating_gradient4 = Gradient()
     rotating_gradient4.add_stop(0.0, (134, 0, 58))
-    rotating_gradient4.add_stop(1, (97, 0, 163))
+    rotating_gradient4.add_stop(0.5, (97, 0, 163))
+    rotating_gradient4.add_stop(1.0, (134, 0, 58))
 
     led_scheduler.add_process(FullRotatingGradient(rotating_gradient1, HTPF_SPB*4, 3, time_base8))
     led_scheduler.add_process(FullRotatingGradient(rotating_gradient2, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*4))
     led_scheduler.add_process(FullRotatingGradient(rotating_gradient3, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*8))
     led_scheduler.add_process(FullRotatingGradient(rotating_gradient4, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*12))
+
+    # the above four rotating gradients will repeat once more
+
+    led_scheduler.add_process(FullRotatingGradient(rotating_gradient1, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*16))
+    led_scheduler.add_process(FullRotatingGradient(rotating_gradient2, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*20))
+    led_scheduler.add_process(FullRotatingGradient(rotating_gradient3, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*24))
+    led_scheduler.add_process(FullRotatingGradient(rotating_gradient4, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*28))
 
     return led_scheduler
