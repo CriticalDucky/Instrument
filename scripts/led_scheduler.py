@@ -71,5 +71,27 @@ def begin():
     led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base2))
     #repeat
     led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base2 + HTPF_SPB*16))
+    #once more
+    led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base2 + HTPF_SPB*32))
+
+    time_base3 = start_time + 46.875
+
+    warm_gradient_stops = [
+        (0, (0, 0, 0)),           # Black
+        (6, (255, 121, 0)),       # Bright Orange
+        (25, (255, 160, 0)),      # Yellow-Orange
+        (50, (144, 0, 0)),        # Deep Red
+        (56, (255, 121, 0)),      # Bright Orange Again
+        (75, (255, 160, 0)),      # Yellow-Orange Again
+        (88, (181, 53, 0)),       # Deep Orange-Red
+        (100, (0, 0, 0))          # Black
+    ]
+
+    warm_gradient = Gradient()
+    for position, color in warm_gradient_stops:
+        warm_gradient.add_stop(position / 100, color)
+
+    warm_gradient.set_brightness(0.5)
+    led_scheduler.add_process(FullIllumination(warm_gradient, HTPF_SPB*16, time_base3))
 
     return led_scheduler
