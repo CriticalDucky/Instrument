@@ -143,7 +143,7 @@ class FullIllumination(LEDProcess): #
         if time.time() < self.start_time:
             return
         
-        print("FullIllumination.update()")
+        print("FullIllumination.update()", self.data)
 
         self.time = time.time() - self.start_time
 
