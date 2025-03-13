@@ -143,11 +143,9 @@ class FullIllumination(LEDProcess): #
         if time.time() < self.start_time:
             return
         
-        print("FullIllumination.update()", self.data)
-
         self.time = time.time() - self.start_time
 
-        for pixel_num in self.data:
+        for pixel_num in range(LED_GROUPS*LEDS_PER_NOTE):
             self.data[pixel_num] = self.gradient.get_rgb_at_position(self.time / self.duration)
 
         if self.time >= self.duration:
