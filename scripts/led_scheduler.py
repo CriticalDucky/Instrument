@@ -97,13 +97,11 @@ def begin():
     time_base4 = start_time + 60
 
     cool_gradient_stops = [
-        (0, (0, 255, 229)),       # Cyan
-        (11, (157, 255, 0)),      # Bright Green
-        (26, (255, 177, 0)),      # Orange-Yellow
-        (43, (255, 109, 0)),      # Deep Orange
-        (61, (255, 0, 123)),      # Magenta-Pink
-        (79, (143, 0, 255)),      # Deep Purple
-        (100, (0, 255, 229))      # Cyan Again
+        (0, (131, 58, 180)),      # Purple
+        (25, (253, 29, 29)),      # Red
+        (50, (252, 176, 69)),     # Orange-Yellow
+        (75, (253, 29, 29)),      # Red Again
+        (100, (131, 58, 180))     # Purple Again
     ]
     cool_gradient = Gradient()
     for position, color in cool_gradient_stops:
