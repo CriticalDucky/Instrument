@@ -69,5 +69,7 @@ def begin():
     chord_sequence1_gradient.set_brightness(0.5)
 
     led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base2))
+    #repeat
+    led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base2 + HTPF_SPB*16))
 
     return led_scheduler
