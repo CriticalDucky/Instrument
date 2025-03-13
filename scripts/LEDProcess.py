@@ -139,8 +139,11 @@ class FullIllumination(LEDProcess): #
         self.time = 0
 
     def update(self):
-        if self.start_time - time.time() > 0:
+        # only update if the current time has reached the start time
+        if time.time() < self.start_time:
             return
+        
+        print("FullIllumination.update()")
 
         self.time = time.time() - self.start_time
 
