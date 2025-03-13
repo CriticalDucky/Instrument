@@ -98,10 +98,11 @@ def begin():
 
     cool_gradient_stops = [
         (0, (0, 255, 229)),       # Cyan
-        (31, (0, 140, 255)),      # Deep Blue
-        (45, (39, 169, 191)),     # Teal
-        (57, (91, 208, 103)),     # Greenish Cyan
-        (68, (153, 255, 0)),      # Lime Green
+        (11, (157, 255, 0)),      # Bright Green
+        (26, (255, 177, 0)),      # Orange-Yellow
+        (43, (255, 109, 0)),      # Deep Orange
+        (61, (255, 0, 123)),      # Magenta-Pink
+        (79, (143, 0, 255)),      # Deep Purple
         (100, (0, 255, 229))      # Cyan Again
     ]
     cool_gradient = Gradient()
