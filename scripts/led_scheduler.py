@@ -66,6 +66,8 @@ def begin():
     for position, color in stops:
         chord_sequence1_gradient.add_stop(position / 100, color)
 
+    chord_sequence1_gradient.set_brightness(0.5)
+
     led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base2))
 
     return led_scheduler
