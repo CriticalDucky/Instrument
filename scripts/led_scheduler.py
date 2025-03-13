@@ -94,4 +94,22 @@ def begin():
     warm_gradient.set_brightness(0.5)
     led_scheduler.add_process(FullIllumination(warm_gradient, HTPF_SPB*16, time_base3))
 
+    time_base4 = start_time + 60
+
+    cool_gradient_stops = [
+        (0, (0, 255, 229)),       # Cyan
+        (31, (0, 140, 255)),      # Deep Blue
+        (45, (39, 169, 191)),     # Teal
+        (57, (91, 208, 103)),     # Greenish Cyan
+        (68, (153, 255, 0)),      # Lime Green
+        (100, (0, 255, 229))      # Cyan Again
+    ]
+    cool_gradient = Gradient()
+    for position, color in cool_gradient_stops:
+        cool_gradient.add_stop(position / 100, color)
+
+    cool_gradient.set_brightness(0.5)
+
+    led_scheduler.add_process(FullRotatingGradient(cool_gradient, HTPF_SPB*8, 2, time_base4))
+
     return led_scheduler
