@@ -151,7 +151,7 @@ def begin():
     #repeat
     led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base6 + HTPF_SPB*16))
     #once more
-    led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base6 + HTPF_SPB*32))
+    # led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base6 + HTPF_SPB*32))
 
     time_base7 = start_time + 60 + 46.875
 
