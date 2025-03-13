@@ -109,6 +109,16 @@ def begin():
 
     cool_gradient.set_brightness(0.5)
 
+    talk_gradient1 = Gradient()
+    talk_gradient1.add_stop(0.0, (255, 121, 0))
+    talk_gradient1.add_stop(0.5, (255, 0, 0))
+    talk_gradient1.add_stop(1.0, (0, 0, 0))
+
     led_scheduler.add_process(FullRotatingGradient(cool_gradient, HTPF_SPB*8, 2, time_base4))
 
+    led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base4 + HTPF_SPB*8))
+    led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base4 + HTPF_SPB*10))
+    led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base4 + HTPF_SPB*12))
+    led_scheduler.add_process(FullIllumination(talk_gradient1, HTPF_SPB*2, time_base4 + HTPF_SPB*14))
+    
     return led_scheduler
