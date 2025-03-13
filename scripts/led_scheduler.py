@@ -197,4 +197,12 @@ def begin():
     led_scheduler.add_process(FullRotatingGradient(rotating_gradient3, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*24))
     led_scheduler.add_process(FullRotatingGradient(rotating_gradient4, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*28))
 
+    time_base9 = None
+
+    time_base10 = start_time + 60 + 60 + 47.041
+
+    # We have 24 bloods, all triples, separated by 1/3 of a SPB
+    for i in range(24):
+        led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base10 + i * HTPF_SPB / 3))
+
     return led_scheduler
