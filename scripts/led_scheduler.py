@@ -41,9 +41,9 @@ def begin():
 
     time_base1 = start_time + 1
 
-    led_scheduler.add_process(FullIllumination(amber_gradient, 2*HTPF_SPB, time_base1))
-    led_scheduler.add_process(FullIllumination(amber_gradient, 2*HTPF_SPB, time_base1 + 2*HTPF_SPB))
-    led_scheduler.add_process(FullIllumination(amber_gradient, 2*HTPF_SPB, time_base1 + 4*HTPF_SPB))
+    led_scheduler.add_process(FullIllumination(amber_gradient, HTPF_SPB, time_base1))
+    led_scheduler.add_process(FullIllumination(amber_gradient, HTPF_SPB, time_base1 + 2*HTPF_SPB))
+    led_scheduler.add_process(FullIllumination(amber_gradient, HTPF_SPB, time_base1 + 4*HTPF_SPB))
 
 
     return led_scheduler
