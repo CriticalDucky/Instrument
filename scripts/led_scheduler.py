@@ -44,8 +44,8 @@ def begin():
     print(HTPF_SPB)
 
     led_scheduler.add_process(FullIllumination(amber_gradient, 0.5, time_base1))
-    led_scheduler.add_process(FullIllumination(amber_gradient, 0.5, time_base1 + 2*HTPF_SPB))
-    led_scheduler.add_process(FullIllumination(amber_gradient, 0.5, time_base1 + 4*HTPF_SPB))
+    # led_scheduler.add_process(FullIllumination(amber_gradient, 0.5, time_base1 + 2*HTPF_SPB))
+    # led_scheduler.add_process(FullIllumination(amber_gradient, 0.5, time_base1 + 4*HTPF_SPB))
 
 
     return led_scheduler
