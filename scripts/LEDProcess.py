@@ -1,4 +1,5 @@
 from color import *
+from led_util import *
 import time
 
 class LEDProcess:
@@ -128,3 +129,24 @@ class LEDHold(LEDProcess):
                     return
                 else:
                     self.stop()
+
+class FullIllumination(LEDProcess): #
+    def __init__(self, gradient: Gradient, duration, start_time=None):
+        super().__init__("FullIllumination")
+        self.start_time = start_time if start_time is not None else time.time()
+        self.duration = duration
+        self.gradient = gradient
+        self.time = 0
+
+        for pixel_num in range(1, 156):
+            self.data[pixel_num] = gradient.get_rgb_at_position(0)
+
+    def update(self):
+        self.time = time.time() - self.start_time
+
+        for pixel_num in self.data:
+            self.data[pixel_num] = self.gradient.get_rgb_at_position(self.time / self.duration)
+
+        if self.time >= self.duration:
+            self.stop()
+        

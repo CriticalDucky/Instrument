@@ -1,6 +1,7 @@
 import time
 from LEDProcess import *
 from data.song_settings import *
+from color import *
 
 class LEDScheduler:
     def __init__(self):
@@ -33,6 +34,16 @@ def begin():
 
     led_scheduler = LEDScheduler()
 
-    led_scheduler.add_process(LEDStatic((255, 81, 0), [n for n in range(0, 155)], 10, start_time))
+    amber_gradient = Gradient()
+    amber_gradient.add_stop(0.0, (255, 81, 0))
+    amber_gradient.add_stop(0.5, (255, 0, 0))
+    amber_gradient.add_stop(1.0, (0, 0, 0))
+
+    time_base1 = start_time + 1
+
+    led_scheduler.add_process(FullIllumination(amber_gradient, 2, time_base1))
+    led_scheduler.add_process(FullIllumination(amber_gradient, 2, time_base1 + 2*HTPF_SPB))
+    led_scheduler.add_process(FullIllumination(amber_gradient, 2, time_base1 + 4*HTPF_SPB))
+
 
     return led_scheduler
