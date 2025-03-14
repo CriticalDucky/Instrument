@@ -253,6 +253,6 @@ def begin():
     pulsate_gradient2.add_stop(1.0, (0, 0, 0))
 
     led_scheduler.add_process(FullRotatingGradient(pulsate_gradient1, HTPF_SPB*16, 1*4, time_base11))
-    led_scheduler.add_process(FullRotatingGradient(pulsate_gradient2, HTPF_SPB*16, -1*4, time_base11))
+    led_scheduler.add_process(FullRotatingGradient(pulsate_gradient2, HTPF_SPB*16, -1.2*4, time_base11))
 
     return led_scheduler
