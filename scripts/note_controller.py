@@ -99,7 +99,7 @@ def loop():
 
             if key != 'None':
                 if note in key_chords:
-                    scale_cord = KEY_CHORDS[note]
+                    scale_cord = key_chords[note]
                     if scale_cord.endswith('m'):
                         chord = 'Minor'
                     else:
