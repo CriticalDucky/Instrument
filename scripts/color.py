@@ -2,75 +2,75 @@ import colorsys
 import copy
 import math
 
-def average_hsv(hsv_list):
-    if not hsv_list:
-        return 0, 0, 0
-    
-    total_weight = 0
-    weighted_x_sum = 0  # For hue x-component
-    weighted_y_sum = 0  # For hue y-component
-    weighted_saturation_sum = 0
-    max_value = 0
-    
-    for hsv in hsv_list:
-        h, s, v = hsv
-        weight = v  # Weight by value
-        
-        # Skip completely black or zero-value colors
-        if v <= 0:
-            continue
-            
-        # Convert hue to x,y coordinates on a unit circle
-        h_rad = h * (math.pi / 180)  # Convert degrees to radians
-        x = math.cos(h_rad)
-        y = math.sin(h_rad)
-        
-        total_weight += weight
-        weighted_x_sum += x * weight
-        weighted_y_sum += y * weight
-        weighted_saturation_sum += s * weight
-        max_value = max(max_value, v)
-    
-    if total_weight == 0:
-        return 0, 0, 0
-        
-    # Calculate average x,y coordinates
-    avg_x = weighted_x_sum / total_weight
-    avg_y = weighted_y_sum / total_weight
-    
-    # Convert back to hue angle
-    average_hue = math.atan2(avg_y, avg_x) * (180 / math.pi)
-    
-    # Ensure hue is in range 0-360
-    average_hue = (average_hue + 360) % 360
-    
-    average_saturation = weighted_saturation_sum / total_weight
-    
-    return average_hue, average_saturation, max_value
-
-
-# # Provide a list or tuple of HSV tuples
 # def average_hsv(hsv_list):
+#     if not hsv_list:
+#         return 0, 0, 0
+    
 #     total_weight = 0
-#     weighted_hue_sum = 0
+#     weighted_x_sum = 0  # For hue x-component
+#     weighted_y_sum = 0  # For hue y-component
 #     weighted_saturation_sum = 0
 #     max_value = 0
-
+    
 #     for hsv in hsv_list:
 #         h, s, v = hsv
-#         weight = v
+#         weight = v  # Weight by value
+        
+#         # Skip completely black or zero-value colors
+#         if v <= 0:
+#             continue
+            
+#         # Convert hue to x,y coordinates on a unit circle
+#         h_rad = h * (math.pi / 180)  # Convert degrees to radians
+#         x = math.cos(h_rad)
+#         y = math.sin(h_rad)
+        
 #         total_weight += weight
-#         weighted_hue_sum += h * weight
+#         weighted_x_sum += x * weight
+#         weighted_y_sum += y * weight
 #         weighted_saturation_sum += s * weight
 #         max_value = max(max_value, v)
-
+    
 #     if total_weight == 0:
 #         return 0, 0, 0
-
-#     average_hue = weighted_hue_sum / total_weight
+        
+#     # Calculate average x,y coordinates
+#     avg_x = weighted_x_sum / total_weight
+#     avg_y = weighted_y_sum / total_weight
+    
+#     # Convert back to hue angle
+#     average_hue = math.atan2(avg_y, avg_x) * (180 / math.pi)
+    
+#     # Ensure hue is in range 0-360
+#     average_hue = (average_hue + 360) % 360
+    
 #     average_saturation = weighted_saturation_sum / total_weight
-
+    
 #     return average_hue, average_saturation, max_value
+
+
+# Provide a list or tuple of HSV tuples
+def average_hsv(hsv_list):
+    total_weight = 0
+    weighted_hue_sum = 0
+    weighted_saturation_sum = 0
+    max_value = 0
+
+    for hsv in hsv_list:
+        h, s, v = hsv
+        weight = v
+        total_weight += weight
+        weighted_hue_sum += h * weight
+        weighted_saturation_sum += s * weight
+        max_value = max(max_value, v)
+
+    if total_weight == 0:
+        return 0, 0, 0
+
+    average_hue = weighted_hue_sum / total_weight
+    average_saturation = weighted_saturation_sum / total_weight
+
+    return average_hue, average_saturation, max_value
 
 class GradientStop:
     def __init__(self, position, color):

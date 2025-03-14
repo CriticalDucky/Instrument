@@ -255,4 +255,32 @@ def begin():
     led_scheduler.add_process(FullRotatingGradient(pulsate_gradient1, HTPF_SPB*16, 1*4, time_base11))
     led_scheduler.add_process(FullRotatingGradient(pulsate_gradient2, HTPF_SPB*16, -1.2*4, time_base11))
 
+    rainbow_stops = [
+        (0, (255, 0, 0)),      # Red
+        (10, (255, 154, 0)),   # Orange
+        (20, (208, 222, 33)),  # Yellow-Green
+        (30, (79, 220, 74)),   # Green
+        (40, (63, 218, 216)),  # Cyan
+        (50, (47, 201, 226)),  # Light Blue
+        (60, (28, 127, 238)),  # Blue
+        (70, (95, 21, 242)),   # Indigo
+        (80, (186, 12, 248)),  # Violet
+        (90, (251, 7, 217)),   # Pink
+        (100, (255, 0, 0))     # Red Again
+    ]
+
+    rainbow = Gradient()
+    for position, color in rainbow_stops:
+        rainbow.add_stop(position / 100, color)
+    rainbow.set_brightness(0.5)
+    led_scheduler.add_process(FullRotatingGradient(rainbow, HTPF_SPB*16, 1, time_base11 + HTPF_SPB*16))
+
+    time_base12 = start_time + 60 + 60 + 60 + 21.041
+
+    led_scheduler.add_process(FullIllumination(amber_gradient, 1, time_base12))
+    led_scheduler.add_process(FullIllumination(amber_gradient, 1, time_base12 + 2*HTPF_SPB))
+    led_scheduler.add_process(FullIllumination(amber_gradient, 1, time_base12 + 4*HTPF_SPB))
+    led_scheduler.add_process(FullIllumination(amber_gradient, 1, time_base12 + 6*HTPF_SPB))
+
+
     return led_scheduler
