@@ -205,19 +205,19 @@ def begin():
 
     splash_gradient1 = Gradient()
     splash_gradient1.add_stop(0.0, (252, 3, 3))
-    splash_gradient1.add_stop(1, (0))
+    splash_gradient1.add_stop(1, (0, 0, 0))
 
     splash_gradient2 = Gradient()
     splash_gradient2.add_stop(0.0, (252, 186, 3))
-    splash_gradient2.add_stop(1, (0))
+    splash_gradient2.add_stop(1, (0, 0, 0))
 
     splash_gradient3 = Gradient()
     splash_gradient3.add_stop(0.0, (255, 255, 255))
-    splash_gradient3.add_stop(1, (0))
+    splash_gradient3.add_stop(1, (0, 0, 0))
 
     splash_gradient4 = Gradient()
     splash_gradient4.add_stop(0.0, (50, 50, 255))
-    splash_gradient4.add_stop(1, (0))
+    splash_gradient4.add_stop(1, (0, 0, 0))
 
     # We have 24 splashes, all triples, separated by 1/3 of a SPB. 6 of each color.
     for i in range(24):
