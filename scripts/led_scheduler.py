@@ -66,8 +66,6 @@ def begin():
     for position, color in stops:
         chord_sequence1_gradient.add_stop(position / 100, color)
 
-    chord_sequence1_gradient.set_brightness(0.5)
-
     led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base2))
     #repeat
     led_scheduler.add_process(FullIllumination(chord_sequence1_gradient, HTPF_SPB*16, time_base2 + HTPF_SPB*16))
@@ -91,7 +89,6 @@ def begin():
     for position, color in warm_gradient_stops:
         warm_gradient.add_stop(position / 100, color)
 
-    warm_gradient.set_brightness(0.5)
     led_scheduler.add_process(FullIllumination(warm_gradient, HTPF_SPB*16, time_base3))
 
     time_base4 = start_time + 60
@@ -106,8 +103,6 @@ def begin():
     cool_gradient = Gradient()
     for position, color in cool_gradient_stops:
         cool_gradient.add_stop(position / 100, color)
-
-    cool_gradient.set_brightness(0.5)
 
     talk_gradient1 = Gradient()
     talk_gradient1.add_stop(0.0, (255, 121, 0))
@@ -268,6 +263,10 @@ def begin():
         (90, (251, 7, 217)),   # Pink
         (100, (255, 0, 0))     # Red Again
     ]
+
+    rainbow = Gradient()
+    for position, color in rainbow_stops:
+        rainbow.add_stop(position / 100, color)
 
     led_scheduler.add_process(FullRotatingGradient(rainbow, HTPF_SPB*16, 2, time_base11 + HTPF_SPB*16))
 
