@@ -230,7 +230,7 @@ def begin():
         else:
             gradient = splash_gradient4
 
-        led_scheduler.add_process(FullIllumination(gradient, 0.5, time_base10 + (i * HTPF_SPB / 3)))
+        led_scheduler.add_process(FullIllumination(gradient, 0.2, time_base10 + (i * HTPF_SPB / 3)))
 
     # and then a ghost fade out
 
