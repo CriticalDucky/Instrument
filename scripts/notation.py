@@ -7,6 +7,16 @@ KEY_NOTES = {
     'C Major': ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 }
 
+KEY_CHORDS = {
+    'C Major': {
+        'A': 'Am',
+        'C': 'C',
+        'D': 'Dm',
+        'F': 'F',
+        'G': 'G'
+    }
+}
+
 BURST_INSTRUMENTS = [  # Instruments that we do not need to stop playing when we change notes
     "Acid SQ Neutral.sf2",
     "Acid SQ Neutral",

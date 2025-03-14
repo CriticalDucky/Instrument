@@ -58,8 +58,8 @@ def loop():
     for sensor_number, sensor_info in active_sensor_info.items():
         key = get_data('key')
         if key != 'None':
-            key_notes = KEY_NOTES[key]
-            if OCTAVE_NOTES[sensor_number - 1] not in key_notes:
+            key_chords = KEY_CHORDS[key]
+            if OCTAVE_NOTES[sensor_number - 1] not in key_chords:
                 for instance in sensor_info:
                     instance.stop()
                 active_sensor_info[sensor_number] = []
@@ -88,20 +88,32 @@ def loop():
 
         if should_create_instance:
             octave = get_selected_octave()
-            chord_type = get_selected_chord()
+            chord = get_selected_chord()
             inversion = get_selected_inversion()
             library = get_selected_library()
             instrument = get_selected_instrument()
+            key = get_data('key')
 
-            note = sensor_to_note(sensor_number) + str(octave)
+            note = sensor_to_note(sensor_number)
+            note_and_octave = note + str(octave)
+
+            if key != 'None':
+                if note in key_chords:
+                    scale_cord = KEY_CHORDS[note]
+                    if scale_cord.endswith('m'):
+                        chord = 'Minor'
+                    else:
+                        chord = 'Major'
+                else:
+                    continue
 
             #debug
 
-            if chord_type != 'None':
-                notes = create_chord(note, chord_type, inversion)
-                instance = ChordInstance(library, instrument, notes, note)
+            if chord != 'None':
+                notes = create_chord(note_and_octave, chord, inversion)
+                instance = ChordInstance(library, instrument, notes, note_and_octave)
             else:
-                instance = NoteInstance(library, instrument, note)
+                instance = NoteInstance(library, instrument, note_and_octave)
 
             instance.play()
             sensor_info.append(instance)
