@@ -269,10 +269,6 @@ def begin():
         (100, (255, 0, 0))     # Red Again
     ]
 
-    rainbow = Gradient()
-    for position, color in rainbow_stops:
-        rainbow.add_stop(position / 100, color)
-    rainbow.set_brightness(0.5)
     led_scheduler.add_process(FullRotatingGradient(rainbow, HTPF_SPB*16, 1, time_base11 + HTPF_SPB*16))
 
     time_base12 = start_time + 60 + 60 + 60 + 21.041
