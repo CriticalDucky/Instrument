@@ -197,12 +197,43 @@ def begin():
     led_scheduler.add_process(FullRotatingGradient(rotating_gradient3, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*24))
     led_scheduler.add_process(FullRotatingGradient(rotating_gradient4, HTPF_SPB*4, 3, time_base8 + HTPF_SPB*28))
 
-    time_base9 = None
+    time_base9 = start_time + 60 + 60 + 40.2
+
+    led_scheduler.add_process(FullRotatingGradient(cool_gradient, HTPF_SPB*8, 3, time_base9))
 
     time_base10 = start_time + 60 + 60 + 47.041
 
-    # We have 24 bloods, all triples, separated by 1/3 of a SPB
+    splash_gradient1 = Gradient()
+    splash_gradient1.add_stop(0.0, (252, 3, 3))
+    splash_gradient1.add_stop(1, (0))
+
+    splash_gradient2 = Gradient()
+    splash_gradient2.add_stop(0.0, (252, 186, 3))
+    splash_gradient2.add_stop(1, (0))
+
+    splash_gradient3 = Gradient()
+    splash_gradient3.add_stop(0.0, (255, 255, 255))
+    splash_gradient3.add_stop(1, (0))
+
+    splash_gradient4 = Gradient()
+    splash_gradient4.add_stop(0.0, (50, 50, 255))
+    splash_gradient4.add_stop(1, (0))
+
+    # We have 24 splashes, all triples, separated by 1/3 of a SPB. 6 of each color.
     for i in range(24):
-        led_scheduler.add_process(FullIllumination(blood_gradient, 0.2, time_base10 + i * HTPF_SPB / 3))
+        if i < 6:
+            gradient = splash_gradient1
+        elif i < 12:
+            gradient = splash_gradient2
+        elif i < 18:
+            gradient = splash_gradient3
+        else:
+            gradient = splash_gradient4
+
+        led_scheduler.add_process(FullIllumination(gradient, 0.5, time_base10 + (i * HTPF_SPB / 3)))
+
+    # and then a ghost fade out
+
+    led_scheduler.add_process(FullIllumination(ghost_gradient, 2, time_base10 + 24 * HTPF_SPB / 3))
 
     return led_scheduler
