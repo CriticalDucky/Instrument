@@ -1,28 +1,57 @@
 import colorsys
 import copy
+import math
 
-# Provide a list or tuple of HSV tuples
 def average_hsv(hsv_list):
     total_weight = 0
-    weighted_hue_sum = 0
     weighted_saturation_sum = 0
     max_value = 0
+    sum_x = 0
+    sum_y = 0
 
-    for hsv in hsv_list:
-        h, s, v = hsv
-        weight = v
+    for h, s, v in hsv_list:
+        weight = v  # Use brightness as weight
         total_weight += weight
-        weighted_hue_sum += h * weight
         weighted_saturation_sum += s * weight
         max_value = max(max_value, v)
+
+        # Convert hue to unit circle representation
+        radians = math.radians(h)
+        sum_x += math.cos(radians) * weight
+        sum_y += math.sin(radians) * weight
 
     if total_weight == 0:
         return 0, 0, 0
 
-    average_hue = weighted_hue_sum / total_weight
+    # Compute averaged hue from the unit circle mean
+    average_hue = math.degrees(math.atan2(sum_y, sum_x)) % 360
     average_saturation = weighted_saturation_sum / total_weight
 
     return average_hue, average_saturation, max_value
+
+
+# # Provide a list or tuple of HSV tuples
+# def average_hsv(hsv_list):
+#     total_weight = 0
+#     weighted_hue_sum = 0
+#     weighted_saturation_sum = 0
+#     max_value = 0
+
+#     for hsv in hsv_list:
+#         h, s, v = hsv
+#         weight = v
+#         total_weight += weight
+#         weighted_hue_sum += h * weight
+#         weighted_saturation_sum += s * weight
+#         max_value = max(max_value, v)
+
+#     if total_weight == 0:
+#         return 0, 0, 0
+
+#     average_hue = weighted_hue_sum / total_weight
+#     average_saturation = weighted_saturation_sum / total_weight
+
+#     return average_hue, average_saturation, max_value
 
 class GradientStop:
     def __init__(self, position, color):
