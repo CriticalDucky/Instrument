@@ -269,7 +269,7 @@ def begin():
         (100, (255, 0, 0))     # Red Again
     ]
 
-    led_scheduler.add_process(FullRotatingGradient(rainbow, HTPF_SPB*16, 1, time_base11 + HTPF_SPB*16))
+    led_scheduler.add_process(FullRotatingGradient(rainbow, HTPF_SPB*16, 2, time_base11 + HTPF_SPB*16))
 
     time_base12 = start_time + 60 + 60 + 60 + 21.041
 
