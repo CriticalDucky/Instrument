@@ -35,7 +35,7 @@ def control_panel_thread():
                 orientation='vertical', size_hint=(None, 1), width=150)
 
             # Add ToggleButtons to the vertical layout
-            for i in range(5):
+            for i in range(3):
                 button = ToggleButton(
                     text=f'Octave {i+2}',
                     group='octaves',
